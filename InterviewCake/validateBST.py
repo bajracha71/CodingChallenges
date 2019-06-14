@@ -33,7 +33,9 @@ def is_binary_search_tree(root):
 
     return helper(root, float("-inf"), float("inf"))
 
-
+# Complexity:
+# Space = O(n)
+# Time = O(n)
 
 # Tests
 
