@@ -98,3 +98,8 @@ class Test(unittest.TestCase):
 
 
 unittest.main(verbosity=2)
+
+
+# Complexity:
+# Time: O(n) where n is the length of array
+# Space: O(1), note: The output array does not count as extra space for the purpose of space complexity analysis.
