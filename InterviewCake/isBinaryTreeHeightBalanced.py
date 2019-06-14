@@ -79,11 +79,14 @@ class Test(unittest.TestCase):
         left_left_left = left_left.insert_left(10)
         left_left_left.insert_left(20)
 
-
         self.assertEqual(isBalanced_BF(root), False)
 
     
 unittest.main(verbosity=2)
+
+
+# Complexity:
+# Time: O(n^2) where n is the number of nodes
     
 
     
