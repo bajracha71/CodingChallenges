@@ -25,11 +25,10 @@ def is_binary_search_tree(root):
             if val <= lower or val >= upper:
                 return False
 
-            if not helper(node.right, val, upper):
-                return False
-            if not helper(node.left, lower, val):
-                return False
-            return True
+            if helper(node.right, val, upper) and  helper(node.left, lower, val):
+                return True
+            
+            return False
 
     return helper(root, float("-inf"), float("inf"))
 
