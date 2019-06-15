@@ -15,3 +15,4 @@
 13. [Find Rotation Point](https://www.interviewcake.com/question/python3/find-rotation-point)
 14. [Inflight Entertainment](https://www.interviewcake.com/question/python3/inflight-entertainment)
 15. [Compute nth Fibonacci Number](https://www.interviewcake.com/question/python3/nth-fibonacci)
+16. [Cake Thief](https://www.interviewcake.com/question/python3/cake-thief)
