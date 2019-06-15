@@ -49,6 +49,9 @@ def find_second_largest(root_node):
 # Time : O(h) where h is the height of BST
 # Space : O(h)
 
+# Reference:
+# https://medium.com/@johnathanchen/find-the-2nd-largest-element-in-a-binary-search-tree-interview-question-f566c52188a1
+
 
 # Tests
 
