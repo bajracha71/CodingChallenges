@@ -10,3 +10,4 @@
 9. [Binary Search Tree Checker](https://leetcode.com/problems/validate-binary-search-tree/)
 10. [Second Largest Item in BST](https://www.interviewcake.com/question/python3/second-largest-item-in-bst)
     - https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+11. [MillionGazillion](https://www.interviewcake.com/question/python3/compress-url-list)
