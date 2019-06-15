@@ -21,3 +21,4 @@
 19. [Implement a Queue with two stack](https://www.interviewcake.com/question/python/queue-two-stacks)
 20. [Largest stack](https://www.interviewcake.com/question/python/largest-stack)
 21. [Stolen Breakfast Drone](https://www.interviewcake.com/question/python/find-unique-int-among-duplicates)
+22. [Delete Node](https://www.interviewcake.com/question/python/delete-node)
