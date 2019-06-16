@@ -30,3 +30,4 @@
 21. [Stolen Breakfast Drone](https://www.interviewcake.com/question/python/find-unique-int-among-duplicates)
 22. [Delete Node](https://www.interviewcake.com/question/python/delete-node)
 23. [Does linked list have cycle](https://www.interviewcake.com/question/python/linked-list-cycles)
+24. [Reverse Linked List](https://www.interviewcake.com/question/python/reverse-linked-list)
