@@ -23,9 +23,10 @@
 15. [Compute nth Fibonacci Number](https://www.interviewcake.com/question/python3/nth-fibonacci)
 16. [Cake Thief](https://www.interviewcake.com/question/python3/cake-thief)
 17. [Java Script Scope](https://www.interviewcake.com/question/python/js-scope)
-18. [What's wrong with this Javascrip](https://www.interviewcake.com/question/python/js-whats-wrong)
+18. [What's wrong with this Javascript](https://www.interviewcake.com/question/python/js-whats-wrong)
 19. [Implement a Queue with two stack](https://www.interviewcake.com/question/python/queue-two-stacks)
     - https://leetcode.com/problems/implement-queue-using-stacks/description/
 20. [Largest stack](https://www.interviewcake.com/question/python/largest-stack)
 21. [Stolen Breakfast Drone](https://www.interviewcake.com/question/python/find-unique-int-among-duplicates)
 22. [Delete Node](https://www.interviewcake.com/question/python/delete-node)
+23. [Does linked list have cycle](https://www.interviewcake.com/question/python/linked-list-cycles)
