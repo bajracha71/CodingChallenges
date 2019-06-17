@@ -36,3 +36,7 @@
 
 
 30. [Permulation Palindrome](https://www.interviewcake.com/question/python/permutation-palindrome)
+
+
+33. [Which Appears Twice]](https://www.interviewcake.com/question/python/which-appears-twice)
+    - [Similar Problem In Leetcode: Find Duplicates](https://leetcode.com/problems/find-the-duplicate-number/)
