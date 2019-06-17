@@ -1,7 +1,7 @@
 # Programming Problems:
 1. [Apple Stock: Best time to buy and sell stocks (Easy)](https://www.interviewcake.com/question/python/stock-price)
     - [Best Time to buy and sell stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/#)
-2. [Product of All Other numbers (Medium)](https://www.interviewcake.com/question/python/product-of-other-numbers)
+2. [Product of All Other numbers (Medium) **](https://www.interviewcake.com/question/python/product-of-other-numbers)
     - https://leetcode.com/problems/product-of-array-except-self/description/
 3. [Highest Product of three numbers (Easy) ](https://www.interviewcake.com/question/python/highest-product-of-3)
     - https://leetcode.com/problems/maximum-product-of-three-numbers/description/
@@ -35,6 +35,7 @@
 26. [Reverse String In Place](https://www.interviewcake.com/question/python/reverse-string-in-place)
 27. [Reverse Words **](https://www.interviewcake.com/question/python/reverse-words)
 28. [Parenthesis Matching **](https://www.interviewcake.com/question/python/matching-parens)
+29. [Bracket Validator **](https://www.interviewcake.com/question/python/bracket-validator)
 30. [Permulation Palindrome](https://www.interviewcake.com/question/python/permutation-palindrome)
 
 32. [Top Scores](https://www.interviewcake.com/question/python/top-scores)
