@@ -27,10 +27,12 @@ def get_permutations(string):
         if startIndex > endIndex:
             result.add("".join(items))
         
-        for j in range(startIndex, endIndex + 1):
+        j = startIndex
+        while j <= endIndex:
             items[j], items[startIndex] = items[startIndex], items[j]
             permute(items, startIndex + 1, endIndex)
             items[j], items[startIndex] = items[startIndex], items[j]
+            j += 1
     
     permute(mystring, startIndex, endIndex)
     
