@@ -37,7 +37,7 @@
 28. [Parenthesis Matching **](https://www.interviewcake.com/question/python/matching-parens)
 29. [Bracket Validator **](https://www.interviewcake.com/question/python/bracket-validator)
 30. [Permulation Palindrome](https://www.interviewcake.com/question/python/permutation-palindrome)
-
+31. [Recursive String Permutation ***** ](https://www.interviewcake.com/question/python/recursive-string-permutations)
 32. [Top Scores](https://www.interviewcake.com/question/python/top-scores)
 33. [Which Appears Twice](https://www.interviewcake.com/question/python/which-appears-twice)
     - [Similar Problem In Leetcode: Find Duplicates](https://leetcode.com/problems/find-the-duplicate-number/)
