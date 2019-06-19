@@ -47,3 +47,5 @@
 37. [Simulate 5-sided Die](https://www.interviewcake.com/question/python3/simulate-5-sided-die)
 38. [Simulate 7-sided Die](https://www.interviewcake.com/question/python3/simulate-7-sided-die)
 39. [Two Egg Problem **** tricky problem](https://www.interviewcake.com/question/python3/two-egg-problem)
+40. [Find Duplicate Space Edition]
+41. [Find Duplicate Beast Mode](https://www.interviewcake.com/question/python3/find-duplicate-optimize-for-space-beast-mode)
