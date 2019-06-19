@@ -16,7 +16,7 @@ def inplaceShuffle(intList):
     length = len(intList)
     lastIndex = length - 1
 
-    for index in range(length):
+    for index in range(0, length-1 ):
 
         index2 = random.randint(index, lastIndex)
 
