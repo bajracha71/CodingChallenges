@@ -43,3 +43,6 @@
     - [Similar Problem In Leetcode: Find Duplicates](https://leetcode.com/problems/find-the-duplicate-number/)
 34. [Word Cloud Data (TODO) ***** This is hard problem ](https://www.interviewcake.com/question/python3/word-cloud)
 35. [In-place shuffle](https://www.interviewcake.com/question/python3/shuffle)
+36. [Single Riffle Shuffle (TODO)](https://www.interviewcake.com/question/python3/single-riffle-check)
+37. [Simulate 5-sided Die](https://www.interviewcake.com/question/python3/simulate-5-sided-die)
+38. [Simulate 7-sided Die](https://www.interviewcake.com/question/python3/simulate-7-sided-die)
