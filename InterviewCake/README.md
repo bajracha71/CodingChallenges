@@ -5,18 +5,18 @@
     - https://leetcode.com/problems/product-of-array-except-self/description/
 3. [Highest Product of three numbers (Easy) ](https://www.interviewcake.com/question/python/highest-product-of-3)
     - https://leetcode.com/problems/maximum-product-of-three-numbers/description/
-4. [Merge meeting times or Merge Interval (Medium)](https://www.interviewcake.com/question/python/merging-ranges)
+4. [Merge meeting times or Merge Interval (Medium) ****](https://www.interviewcake.com/question/python/merging-ranges)
     - https://leetcode.com/problems/merge-intervals/description/
 5. [Making Change (Medium)](https://www.interviewcake.com/question/python/coin)
     - https://leetcode.com/problems/coin-change-2/description/
 6. [Rectangular Love](https://www.interviewcake.com/question/python3/rectangular-love)
 7. [Temperature Tracker](https://www.interviewcake.com/question/python3/temperature-tracker)
-8. [Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/)
-9. [Binary Search Tree Checker](https://www.interviewcake.com/question/python/coin)
+8. [Balanced Binary Tree ***](https://leetcode.com/problems/balanced-binary-tree/)
+9. [Binary Search Tree Checker ***](https://www.interviewcake.com/question/python/coin)
     - https://leetcode.com/problems/validate-binary-search-tree/
-10. [Second Largest Item in BST](https://www.interviewcake.com/question/python3/second-largest-item-in-bst)
+10. [Second Largest Item in BST ***](https://www.interviewcake.com/question/python3/second-largest-item-in-bst)
     - https://leetcode.com/problems/kth-smallest-element-in-a-bst/
-11. [MillionGazillion](https://www.interviewcake.com/question/python3/compress-url-list)
+11. [MillionGazillion ***](https://www.interviewcake.com/question/python3/compress-url-list)
 12. [Find in ordered set](https://www.interviewcake.com/question/python3/find-in-ordered-set)
 13. [Find Rotation Point](https://www.interviewcake.com/question/python3/find-rotation-point)
 14. [Inflight Entertainment](https://www.interviewcake.com/question/python3/inflight-entertainment)
@@ -41,3 +41,5 @@
 32. [Top Scores](https://www.interviewcake.com/question/python/top-scores)
 33. [Which Appears Twice](https://www.interviewcake.com/question/python/which-appears-twice)
     - [Similar Problem In Leetcode: Find Duplicates](https://leetcode.com/problems/find-the-duplicate-number/)
+34. [Word Cloud Data (TODO) ***** This is hard problem ](https://www.interviewcake.com/question/python3/word-cloud)
+35. [In-place shuffle](https://www.interviewcake.com/question/python3/shuffle)
