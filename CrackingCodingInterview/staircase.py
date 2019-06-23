@@ -17,29 +17,31 @@
 # For every option 1, 2 or 3 step we have
 # countWays( n , stepsList, i ) = countWays( n - stepList[i] , stepList, i + 1)
 
+import unittest
 
-def countWays(n):
-	if ( n == 0 ):
+
+def count_ways(n):
+	if n == 0:
 		return 1
-	if ( n < 0 ):
+	if n < 0:
 		return 0
-	
-	stepList = [1,2,3]
+
+	step_list = [1, 2, 3]
 	ways = 0
 	
-	for step in stepList:
-		ways += countWays(n - step)
+	for step in step_list:
+		ways += count_ways(n - step)
 	
 	return ways
 
-def countWaysOptimized(n):
-	
-	if ( n < 0 ):
-		 return 0
-	if ( n == 0 ):
-		 return 1
-	if ( n <= 2 ):
-		 return n
+
+def count_ways_optimized(n):
+	if n < 0:
+		return 0
+	if n == 0:
+		return 1
+	if n <= 2:
+		return n
 	
 	n0 = 1
 	n1 = 1
@@ -49,35 +51,36 @@ def countWaysOptimized(n):
 		res = n0 + n1 + n2
 		n0, n1, n2 = n1, n2, res
 	return res
- 
+
 
 def solution(n):
-	if (n == 0):
+	if n == 0:
 		return 1
-	if (n < 0):
+	if n < 0:
 		return 0
 	return solution(n-1) + solution(n - 2) + solution(n - 3)
 
 # Test
 # ***** #
 
-import unittest
 
 class Tests(unittest.TestCase):
+
 	def test1(self):
-		actual = countWaysOptimized(3)
+		actual = count_ways_optimized(3)
 		expected = solution(3)
 		self.assertTrue(actual, expected)
 	
 	def test2(self):
-		actual = countWaysOptimized(10)
+		actual = count_ways_optimized(10)
 		expected = solution(10)
 		self.assertTrue(actual, expected)
 
 	def test3(self):
 		n = 20
-		acutal = countWaysOptimized(n)
+		acutal = count_ways_optimized(n)
 		expected = solution(n)
 		self.assertTrue(acutal, expected)
 
-unittest.main(verbosity = 2)
+
+unittest.main(verbosity=2)
