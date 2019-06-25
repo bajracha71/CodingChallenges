@@ -24,7 +24,6 @@ def check_string_permutation(string1, string2):
         else:
             return False
 
-
     for c in char_table:
         if char_table[c] != 0:
             return False
