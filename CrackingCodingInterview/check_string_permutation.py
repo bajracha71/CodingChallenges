@@ -21,12 +21,14 @@ def check_string_permutation(string1, string2):
     for y in string2:
         if y in char_table:
             char_table[y] -= 1
+            if char_table[y] < 0:
+                return False
         else:
             return False
 
-    for c in char_table:
-        if char_table[c] != 0:
-            return False
+    # for c in char_table:
+    #     if char_table[c] != 0:
+    #         return False
 
     return True
 
