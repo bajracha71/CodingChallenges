@@ -45,8 +45,5 @@ class Test(unittest.TestCase):
         self.assertFalse(check_string_permutation("hello", "plleh"))
 
 
-
-
-
 unittest.main(verbosity=2)
 
