@@ -13,3 +13,5 @@
 1.6 Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate image by 90 ( write a program for both clockwise and anticlockwise rotation). Can you do this in place?
 
 1.7 Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0
+
+1.8 Assume you have a method `isSubstring` which checks if one word is a substring of another. Given two strings, `s1` and `s2`, write code to check if `s2` is a roation of `s1` using only one call to `isSubstring` (eg. `waterbottle` is a rotation of `erbottlewat`)
