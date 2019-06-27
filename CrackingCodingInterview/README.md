@@ -7,3 +7,5 @@
 1.3. Given two strings, write a method to decide if one is a permutation of the other
 
 1.4. Write a method to replace all spaces in a string with '%20'. You may assume that the string has sufficient space at the end of the string to hold the additional characters, and that you are given the "true" length of the string. (Note: if implementing in java or python please use a charcter array so that you can perform this operation in place.)
+
+1.5. Implement a method to perform basic string compression using the counts of repeated characters. For example, the string aabcccccaaa would become a2b1c5a3. If the "compressed" string would not become smaller than the original string, your method should return the original string.
