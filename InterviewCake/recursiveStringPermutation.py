@@ -1,4 +1,4 @@
-# Recursive String Permutation 
+# Recursive String Permutation
 # **************************** #
 
 # Write a recursive function for generating all permutations of an input string. Return them as a set.
@@ -17,33 +17,32 @@ def get_permutations(string):
 
     # Generate all permutations of the input string
     result = set()
-    
+
     l = len(string)
     mystring = list(string)
-    
+
     startIndex = 0
     endIndex = l - 1
+
     def permute(items, startIndex, endIndex):
         if startIndex > endIndex:
             result.add("".join(items))
-        
+
         j = startIndex
         while j <= endIndex:
             items[j], items[startIndex] = items[startIndex], items[j]
             permute(items, startIndex + 1, endIndex)
             items[j], items[startIndex] = items[startIndex], items[j]
             j += 1
-    
+
     permute(mystring, startIndex, endIndex)
-    
+
     return result
-            
 
 
 # Time Complexity ; O(n * n!)
-
-
 # Tests
+
 class Test(unittest.TestCase):
 
     def test_empty_string(self):
@@ -67,4 +66,6 @@ class Test(unittest.TestCase):
         self.assertEqual(actual, expected)
 
 
-unittest.main(verbosity=2)
+if __name__ == "__main__":
+
+    unittest.main(verbosity=2)
