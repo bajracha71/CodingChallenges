@@ -25,3 +25,5 @@
 - Follow up: How would you solve this problem if a temporary buffere is not allowed? With no extra space, it will take time $O(n^2)$ and $O(1)$ space.
 
 2.2 Implement an algorithm to find the kth to last element of a singly linked list
+
+2.3 Implement an algorithm to delete a node in the middle of a singly linked list, given only access to that node.
