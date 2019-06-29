@@ -21,11 +21,9 @@ def partition(head, value):
         nextnode = curr.next
         if curr.value > value:
             prev = curr
-            curr = nextnode
-        elif curr == value:
+        elif curr.value == value:
             curr.next = head.next
             head = curr
-            curr = nextnode
         else:
             if prev:
                 prev.next = nextnode
@@ -36,7 +34,7 @@ def partition(head, value):
                 head = nextnode
                 curr.next = None
                 newhead.value = curr.value
-            curr = nextnode
+        curr = nextnode
 
     newtail.next = head
     return newhead
@@ -62,11 +60,11 @@ def printList(head):
 
 
 def main():
-    head = createList([1, 2, 100, 20, 2, 4, 5, 6, 7])
+    head = createList([1, 2, 100, 20, 2, 4, 5, 6, 8, 7, 11, 10])
     print("Before partition:")
     printList(head)
     print("After partition:")
-    par = partition(head, 5)
+    par = partition(head, 8)
     printList(par)
 
 if __name__ == "__main__":
