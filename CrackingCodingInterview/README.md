@@ -27,3 +27,5 @@
 2.2 Implement an algorithm to find the kth to last element of a singly linked list
 
 2.3 Implement an algorithm to delete a node in the middle of a singly linked list, given only access to that node.
+
+2.4 Write a code to partition a linked list around a value x, such that all nodes less than x comes before all nodes greater than or equal to x
