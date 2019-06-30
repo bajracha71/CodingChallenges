@@ -33,16 +33,23 @@
 2.5. You have two numbers represented by a linked list, where each node contains a single digit. The digits are stored in reverse order, such that the Ts digit is at the head of the list. Write a function that adds the two numbers and returns the sum
 as a linked list.
 
-EXAMPLE
+- EXAMPLE
+    - Input: (7-> 1 -> 6) + (5 -> 9 -> 2).That is, 617 + 295.
+    - Output: 2 -> 1 -> 9.That is, 912.
 
-- Input: (7-> 1 -> 6) + (5 -> 9 -> 2).That is, 617 + 295.
-- Output: 2 -> 1 -> 9.That is, 912.
+- FOLLOW UP
+    - Suppose the digits are stored in forward order. Repeat the above problem.
 
-FOLLOW UP
+    - EXAMPLE
+        - Input: (6 -> 1 -> 7) + (2 -> 9 -> 5).That is, 617 + 295.
+        - Output: 9 -> 1 -> 2.That is, 912.
 
-Suppose the digits are stored in forward order. Repeat the above problem.
+2.6 Given a circular linked list, implement an algorith which returns the node at the beginning of the loop.
 
-EXAMPLE
+- Definition
 
-- Input: (6 -> 1 -> 7) + (2 -> 9 -> 5).That is, 617 + 295.
-- Output: 9 -> 1 -> 2.That is, 912.
+    - Circular linked list: A (corrupt) linked list in which a node's next pointer points to an earlier node, so as to make a loop in the linked list.
+
+- Example
+    - Input: A -> B -> C -> D -> E -> C [the same C as earlier]
+    - output: C
