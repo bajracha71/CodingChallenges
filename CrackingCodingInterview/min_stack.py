@@ -4,12 +4,15 @@
 
 # Note: Try to implement this problem using Inheritence ( I will do it later )
 
+
+import unittest
+
+
 class Stack(object):
 
     def __init__(self):
         self.items = []
         self.size = 0
-
 
     def push(self, data):
         self.items.append(data)
@@ -25,7 +28,6 @@ class Stack(object):
 
     def isEmpty(self):
         return self.size == 0
-
 
     def peek(self):
         if self.size > 0:
@@ -56,7 +58,6 @@ class MinStack(object):
         top = self.items.peek()
         return top
 
-
     def pop(self):
         poppeditem = self.items.pop()
         peekeditem = self.minsofar.peek()
@@ -71,6 +72,62 @@ class MinStack(object):
         else:
             return self.minsofar.peek()
 
+
+# Tests
+class Test(unittest.TestCase):
+
+    def test_stack_usage(self):
+        min_stack = MinStack()
+
+        min_stack.push(5)
+
+        actual = min_stack.minimum()
+        expected = 5
+        self.assertEqual(actual, expected)
+
+        min_stack.push(4)
+        min_stack.push(7)
+        min_stack.push(7)
+        min_stack.push(8)
+
+        actual = min_stack.minimum()
+        expected = 5
+        self.assertEqual(actual, expected)
+
+        actual = min_stack.pop()
+        expected = 8
+        self.assertEqual(actual, expected)
+
+        actual = min_stack.minimum()
+        expected = 5
+        self.assertEqual(actual, expected)
+
+        actual = min_stack.pop()
+        expected = 7
+        self.assertEqual(actual, expected)
+
+        actual = min_stack.minimum()
+        expected = 5
+        self.assertEqual(actual, expected)
+
+        actual = min_stack.pop()
+        expected = 7
+        self.assertEqual(actual, expected)
+
+        actual = min_stack.minimum()
+        expected = 5
+        self.assertEqual(actual, expected)
+
+        actual = min_stack.pop()
+        expected = 4
+        self.assertEqual(actual, expected)
+
+        actual = min_stack.minimum()
+        expected = 5
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)
 
 
 
