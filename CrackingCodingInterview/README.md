@@ -36,3 +36,9 @@ as a linked list.
 2.6 Given a circular linked list, implement an algorith which returns the node at the beginning of the loop.
 
 2.7 Implement a function to check if a linked list is a palindrome
+
+## Stacks and Queues
+
+3.1 Describe how you could use a single array to implement three stacks (TODO)
+
+3.2 How would you design a stack which, in addition to push and pop, also has a function min which returns the minimum element? Push, pop and min should all operate in O(1) time.
