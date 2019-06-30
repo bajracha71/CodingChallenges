@@ -15,7 +15,6 @@ def isLinkedListPalindrome(head):
         slow = slow.next
         fast = fast.next.next
 
-
     # if fast is not None then it has odd number of node
     if fast is not None:
         slow = slow.next
@@ -33,11 +32,11 @@ def isLinkedListPalindrome(head):
 class Test(unittest.TestCase):
 
     def test1(self):
-        head = ll.create_linkedlist(1,2,3,2,1)
+        head = ll.create_linkedlist(1, 2, 3, 2, 1)
         self.assertTrue(isLinkedListPalindrome(head), True)
 
     def test2(self):
-        head = ll.create_linkedlist(1,2,2,1)
+        head = ll.create_linkedlist(1, 2, 2, 1)
         self.assertTrue(isLinkedListPalindrome(head), True)
 
 
