@@ -42,3 +42,11 @@ as a linked list.
 3.1 Describe how you could use a single array to implement three stacks (TODO)
 
 3.2 How would you design a stack which, in addition to push and pop, also has a function min which returns the minimum element? Push, pop and min should all operate in O(1) time.
+
+3.3 SetOfStacks ( TODO )
+
+3.4 Tower of Hanoi: Write a program to move the disks from the first tower to the last using Stacks. (TODO)
+
+3.5 Implement a MyQueue class which implements a queue using two stacks.
+
+3.6 Write a program to sort a stack in ascending order (with biggest item on top). You may use at most one additional stack to hold items, but you may not copy the elements into any other data structure (such as an array). The stack supports push, pop, peek and isEmtpy operations.
