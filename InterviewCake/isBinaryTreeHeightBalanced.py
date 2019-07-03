@@ -8,9 +8,12 @@
 
 # Definition for a binary tree node.
 
+import unittest
+
+
 class BinaryTreeNode(object):
-    def __init__(self, data = None, left = None, right = None):
-        self.data = data 
+    def __init__(self, data=None, left=None, right=None):
+        self.data = data
         self.left = left
         self.right = right
 
@@ -25,30 +28,38 @@ class BinaryTreeNode(object):
         return right_subTree
 
 
-def isBalanced_BF(root):
-    
-    if root is None:
-        return True
-    
-    def getHeight(root):
+def isBalanced( root):
+
+    def isBalancedHelper(root):
         if root is None:
             return -1
-        
-        lh = getHeight(root.left)
-        rh = getHeight(root.right)
 
-        return 1 + max(lh, rh)
+        left_height = isBalancedHelper(root.left)
 
-    
-    height_diff = abs( getHeight(root.left) - getHeight(root.right)) 
-
-    if height_diff < 1 and isBalanced_BF(root.left) and isBalanced_BF(root.right):
-        return True
-    
-    return False
+         # if the left subtree is not balanced, then left_height > 1
+        # then this tree is not balanced
 
 
-import unittest
+        right_height = isBalancedHelper(root.right)
+
+
+        # if the difference in height is greater than 1, then
+        # the tree is not balanced
+
+        h_diff = abs(left_height - right_height)
+        if h_diff > 1:
+            raise Exception("unbalanced tree")
+
+        # otherwise tree is balanced. So when tree is balanced return its height
+
+        return 1 + max(left_height, right_height)
+
+    try:
+        return isBalancedHelper(root) >= -1
+
+    except Exception:
+        return False
+
 
 class Test(unittest.TestCase):
 
@@ -59,15 +70,15 @@ class Test(unittest.TestCase):
         left = root.insert_left(2)
         right = root.insert_right(3)
 
-        self.assertTrue(isBalanced_BF(root))
+        self.assertTrue(isBalanced(root))
 
     def test_tree_with_one_root(self):
         root = BinaryTreeNode(1)
-        self.assertTrue(isBalanced_BF(root))
+        self.assertTrue(isBalanced(root))
 
     def test_null_tree(self):
         root = None
-        self.assertTrue(isBalanced_BF(root))
+        self.assertTrue(isBalanced(root))
 
     def test_unbalanced_tree(self):
 
@@ -79,14 +90,14 @@ class Test(unittest.TestCase):
         left_left_left = left_left.insert_left(10)
         left_left_left.insert_left(20)
 
-        self.assertEqual(isBalanced_BF(root), False)
+        self.assertEqual(isBalanced(root), False)
 
-    
+
 unittest.main(verbosity=2)
 
 
 # Complexity:
 # Time: O(n^2) where n is the number of nodes
-    
 
-    
+
+
