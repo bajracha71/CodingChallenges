@@ -97,7 +97,8 @@ unittest.main(verbosity=2)
 
 
 # Complexity:
-# Time: O(n^2) where n is the number of nodes
+# Time: O(n) where n is the number of nodes
+# Space: O(h)
 
 
 

@@ -50,3 +50,9 @@ as a linked list.
 3.5 Implement a MyQueue class which implements a queue using two stacks.
 
 3.6 Write a program to sort a stack in ascending order (with biggest item on top). You may use at most one additional stack to hold items, but you may not copy the elements into any other data structure (such as an array). The stack supports push, pop, peek and isEmtpy operations.
+
+## Trees and Graphs
+
+4.1 Implement a function to check if a binary tree is balanced. For the purposes of
+this question, a balanced tree is defined to be a tree such that the heights of the
+two subtrees of any node never differ by more than one.
