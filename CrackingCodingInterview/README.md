@@ -53,6 +53,8 @@ as a linked list.
 
 ## Trees and Graphs
 
-4.1 Implement a function to check if a binary tree is balanced. For the purposes of
+4.1 [Implement a function to check if a binary tree is balanced. For the purposes of
 this question, a balanced tree is defined to be a tree such that the heights of the
-two subtrees of any node never differ by more than one.
+two subtrees of any node never differ by more than one.](https://leetcode.com/problems/balanced-binary-tree/)
+
+4.3 [Given a sorted (increasing array) with unique integer elements, write an algorithm to create a binary search tree with minimal height.](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
