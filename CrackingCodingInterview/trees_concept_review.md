@@ -1,6 +1,6 @@
 # Trees and Graphs
 
-## Binary Tress
+## Binary Tree
 
 ### Binary Tree Node
 
@@ -11,6 +11,33 @@ class BinaryTreeNode():
         self.data = data
         self.left = left
         self.right = right
+
+    def insertLeftSubTree(self, data):
+        leftsubtree = BinaryTreeNode(data=data)
+        self.left = leftsubtree
+        return leftsubtree
+
+    def insertRightSubTree(self,data):
+        rightSubTree = BinaryTreeNode(data=data)
+        self.right = rightSubTree
+        return rightSubTree
+```
+
+### Height of Binary Tree
+
+- Height of Binary Tree is the number of edges from root to the deepest leaf.
+- If root is None, height = -1
+- If root does not have any children, height = 1
+- Computing height using recursive methods, heigt(root) = 1 + max(height(root.left), height(root.right))
+
+```python
+def treeHeight(root):
+    if root is None:
+        return -1
+
+    leftSubTreeHeight = treeHeight(root.left)
+    rightSubTreeHeight = treeHeight(root.right)
+    return 1 + max(leftSubTreeHeight, rightSubTreeHeight)
 ```
 
 ### Check if a given Binary Tree is height balanced
