@@ -42,6 +42,10 @@ def treeHeight(root):
 
 ### Check if a given Binary Tree is height balanced
 
+- Binary Tree is height balanced if for every node the difference between the height of its left sub tree and the height of its right subtree is less than or equal to 1
+- Also note that if one of the subtree is not height balanced then the tree is not height balanced.
+- So if left subtree is not height balanced then we do not need to check right subtree and compute the height of right sub tree.
+
 ```python
 # Definition for a binary tree node.
 # class TreeNode:
