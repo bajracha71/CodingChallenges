@@ -58,3 +58,5 @@ this question, a balanced tree is defined to be a tree such that the heights of 
 two subtrees of any node never differ by more than one.](https://leetcode.com/problems/balanced-binary-tree/)
 
 4.3 [Given a sorted (increasing array) with unique integer elements, write an algorithm to create a binary search tree with minimal height.](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
+
+4.4. [Given a binary tree, design an algorithm which creates a linked list of all nodes at each depth ( eg. if you have a tree of depth D, you will have D linked list )](https://leetcode.com/problems/binary-tree-level-order-traversal/)
