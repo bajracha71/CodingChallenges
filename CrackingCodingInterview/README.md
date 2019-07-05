@@ -3,20 +3,24 @@
 ## Arrays
 
 1.1. Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structure?
+    - Similar question in leetcode: https://leetcode.com/problems/first-unique-character-in-a-string/
 
 1.2. Implement a function void reverse(char* str) in C or C++ which reverses a null-terminated string.
 
 1.3. Given two strings, write a method to decide if one is a permutation of the other
+  - [Valid Anagram](https://leetcode.com/problems/valid-anagram/)
 
 1.4. Write a method to replace all spaces in a string with '%20'. You may assume that the string has sufficient space at the end of the string to hold the additional characters, and that you are given the "true" length of the string. (Note: if implementing in java or python please use a charcter array so that you can perform this operation in place.)
 
 1.5. Implement a method to perform basic string compression using the counts of repeated characters. For example, the string aabcccccaaa would become a2b1c5a3. If the "compressed" string would not become smaller than the original string, your method should return the original string.
+  - https://leetcode.com/problems/string-compression/
 
-1.6 Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate image by 90 ( write a program for both clockwise and anticlockwise rotation). Can you do this in place? (This is difficult)
+1.6 [Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate image by 90 ( write a program for both clockwise and anticlockwise rotation). Can you do this in place? (This is difficult)](https://leetcode.com/problems/rotate-image/)
 
 1.7 Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0 (This is tricky)
 
 1.8 Assume you have a method `isSubstring` which checks if one word is a substring of another. Given two strings, `s1` and `s2`, write code to check if `s2` is a roation of `s1` using only one call to `isSubstring` (eg. `waterbottle` is a rotation of `erbottlewat`)
+  - https://leetcode.com/problems/rotate-string/
 
 ## Linked Lists
 
@@ -62,3 +66,6 @@ two subtrees of any node never differ by more than one.](https://leetcode.com/pr
 4.4 [Given a binary tree, design an algorithm which creates a linked list of all nodes at each depth ( eg. if you have a tree of depth D, you will have D linked list )](https://leetcode.com/problems/binary-tree-level-order-traversal/)
 
 4.5 [Implement a function to check if a binary tree is a binary search tree](https://leetcode.com/problems/validate-binary-search-tree/)
+
+4.6 Write an algorithm to find the next node (i.e in-order successor) of a given node in a binary search tree. You may assume that each node has a link to its parents.
+
