@@ -3,7 +3,7 @@
 ## Arrays
 
 1.1. Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structure?
-    - Similar question in leetcode: https://leetcode.com/problems/first-unique-character-in-a-string/
+  - Similar question in leetcode: https://leetcode.com/problems/first-unique-character-in-a-string/
 
 1.2. Implement a function void reverse(char* str) in C or C++ which reverses a null-terminated string.
 
