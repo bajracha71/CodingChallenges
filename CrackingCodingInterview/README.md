@@ -67,7 +67,7 @@ two subtrees of any node never differ by more than one.](https://leetcode.com/pr
 
 4.5 [Implement a function to check if a binary tree is a binary search tree](https://leetcode.com/problems/validate-binary-search-tree/)
 
-4.6 Write an algorithm to find the next node (i.e in-order successor) of a given node in a binary search tree. You may assume that each node has a link to its parents.
+4.6 [Write an algorithm to find the next node (i.e in-order successor) of a given node in a binary search tree. You may assume that each node has a link to its parents.](https://leetcode.com/problems/inorder-successor-in-bst-ii/solution/)
 - Follow up:[ without pareent link](https://leetcode.com/problems/inorder-successor-in-bst/)
 
 4.7 [Design an algorithm and write code to find the first common ancestor of two nodes
