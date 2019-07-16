@@ -11,7 +11,8 @@
     - https://leetcode.com/problems/coin-change-2/description/
 6. [Rectangular Love](https://www.interviewcake.com/question/python3/rectangular-love)
 7. [Temperature Tracker](https://www.interviewcake.com/question/python3/temperature-tracker)
-8. [Balanced Binary Tree ***](https://leetcode.com/problems/balanced-binary-tree/)
+8. [SuperBalancedTree](https://www.interviewcake.com/question/python3/balanced-binary-tree)
+     - [Balanced Binary Tree ***](https://leetcode.com/problems/balanced-binary-tree/)
 9. [Binary Search Tree Checker ***](https://www.interviewcake.com/question/python/coin)
     - https://leetcode.com/problems/validate-binary-search-tree/
 10. [Second Largest Item in BST ***](https://www.interviewcake.com/question/python3/second-largest-item-in-bst)
