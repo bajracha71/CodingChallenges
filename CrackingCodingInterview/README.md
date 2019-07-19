@@ -2,25 +2,24 @@
 
 ## Arrays
 
-1.1. Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structure?
+1.1. [Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structure?](https://leetcode.com/problems/contains-duplicate/)
   - Similar question in leetcode: https://leetcode.com/problems/first-unique-character-in-a-string/
 
-1.2. Implement a function void reverse(char* str) in C or C++ which reverses a null-terminated string.
+1.2. [Implement a function void reverse(char* str) in C or C++ which reverses a null-terminated string.](https://leetcode.com/problems/reverse-string/)
 
-1.3. Given two strings, write a method to decide if one is a permutation of the other
-  - [Valid Anagram](https://leetcode.com/problems/valid-anagram/)
+1.3. [Anagram: Given two strings, write a method to decide if one is a permutation of the other
+](https://leetcode.com/problems/valid-anagram/)
 
 1.4. Write a method to replace all spaces in a string with '%20'. You may assume that the string has sufficient space at the end of the string to hold the additional characters, and that you are given the "true" length of the string. (Note: if implementing in java or python please use a charcter array so that you can perform this operation in place.)
 
 1.5. Implement a method to perform basic string compression using the counts of repeated characters. For example, the string aabcccccaaa would become a2b1c5a3. If the "compressed" string would not become smaller than the original string, your method should return the original string.
-  - https://leetcode.com/problems/string-compression/
+  - Variation: https://leetcode.com/problems/string-compression/
 
 1.6 [Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate image by 90 ( write a program for both clockwise and anticlockwise rotation). Can you do this in place? (This is difficult)](https://leetcode.com/problems/rotate-image/)
 
-1.7 Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0 (This is tricky)
+1.7 [Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0 (This is tricky)](https://leetcode.com/problems/set-matrix-zeroes/)
 
-1.8 Assume you have a method `isSubstring` which checks if one word is a substring of another. Given two strings, `s1` and `s2`, write code to check if `s2` is a roation of `s1` using only one call to `isSubstring` (eg. `waterbottle` is a rotation of `erbottlewat`)
-  - https://leetcode.com/problems/rotate-string/
+1.8 [Assume you have a method `isSubstring` which checks if one word is a substring of another. Given two strings, `s1` and `s2`, write code to check if `s2` is a roation of `s1` using only one call to `isSubstring` (eg. `waterbottle` is a rotation of `erbottlewat`)](https://leetcode.com/problems/rotate-string/)
 
 ## Linked Lists
 
