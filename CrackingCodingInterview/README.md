@@ -26,7 +26,7 @@
 2.1 Write code to remove duplicates from an unsorted linked list.
 
 - Follow up: How would you solve this problem if a temporary buffere is not allowed? With no extra space, it will take time O(n^2) and O(1) space.
--[ Variation: Remove duplicates from sorted linkedlist]( https://leetcode.com/problems/remove-duplicates-from-sorted-list/)
+- [ Variation: Remove duplicates from sorted linkedlist]( https://leetcode.com/problems/remove-duplicates-from-sorted-list/)
 
 2.2 Implement an algorithm to find the kth to last element of a singly linked list
 
