@@ -24,7 +24,7 @@ def createBST(nums):
         node.right = createBST_helper(mid+1, end)
         return node
 
-    root = creatBST_helper(start, end)
+    root = createBST_helper(start, end)
     return root
 
 # Time: O(n) , Space = O(h)
