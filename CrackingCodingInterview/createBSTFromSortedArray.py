@@ -13,18 +13,19 @@ def createBST(nums):
     start = 0
     end = len(nums) - 1
 
-    def helper(start, end):
+    def createBST_helper(start, end):
         if start > end:
             return None
 
         mid = start + (end - start)//2
         mid_value = nums[mid]
         node = BinaryTreeNode(data=mid_value)
-        node.left = helper(start, mid-1)
-        node.right = helper(mid+1, end)
+        node.left = createBST_helper(start, mid-1)
+        node.right = createBST_helper(mid+1, end)
         return node
 
-    return helper(start, end)
+    root = creatBST_helper(start, end)
+    return root
 
 # Time: O(n) , Space = O(h)
 # Tested this solution in leetcode:
