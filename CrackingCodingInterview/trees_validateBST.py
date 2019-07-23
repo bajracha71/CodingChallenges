@@ -5,6 +5,7 @@
 # current node
 
 # Use recursion and pre-order traversal techniques (DLR)
+# Min/Max trick
 
 
 class TreeNode:
@@ -15,21 +16,23 @@ class TreeNode:
 
 
 def isValidBST(root):
-    def helper(node, lower, upper):
+    def isBST(node, lower, upper):
         if node is None:
             return True
 
+        # Get node value
         val = node.data
+
+        # Check condition to be binary search tree
         if val <= lower or val >= upper:
             return False
 
-        checkleft = helper(node.left, lower, val)
-        checkright = helper(node.right, val, upper)
+        # Check left and right subtree
+        checkleft = isBST(node.left, lower, val)
+        checkright = isBST(node.right, val, upper)
 
-        if checkleft and checkright:
-            return True
+        return (checkleft and checkright)
 
-        return False
-
-    result = helper(root, float("-inf"), float("inf"))
-    return result
+    lower = float("-inf")
+    upper = float("inf")
+    return isBST(root, lower, upper)
