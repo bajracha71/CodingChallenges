@@ -26,7 +26,7 @@ class Solution:
                 return True
 
             if s and t and s.val == t.val:
-                return identicalTree(s.left, t.left) and identicalTree(s.right,t.right)
+                return identicalTree(s.left, t.left) and identicalTree(s.right, t.right)
 
             return False
 
@@ -34,7 +34,7 @@ class Solution:
             return False
 
         # Pre-order traversal
-        if not t or identicalTree(s, t):
+        if t is None or identicalTree(s, t):
             return True
 
         return self.isSubtree(s.left, t) or self.isSubtree(s.right, t)
