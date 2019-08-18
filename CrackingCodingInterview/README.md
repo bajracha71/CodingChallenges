@@ -74,6 +74,6 @@ two subtrees of any node never differ by more than one.](https://leetcode.com/pr
 in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not
 necessarily a binary search tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
 
-4.8 [You have two very large binary trees: T1, with millions of nodes and T2, with hundres of nodes. Create an algorithm to decide if T2 is a subtree of T1](https://leetcode.com/problems/subtree-of-another-tree/)
+4.8 [You have two very large binary trees: T1, with millions of nodes and T2, with hundreds of nodes. Create an algorithm to decide if T2 is a subtree of T1](https://leetcode.com/problems/subtree-of-another-tree/)
 
 - A tree T2 is a subtree of T1 if there exists a node n in T1 such that the subtree of n is identical to T2. That is, if you cut off the tree at node n, the two trees would be identical.
