@@ -10,33 +10,29 @@ import unittest
 def contains(ordered_list, number):
 
     # Check if an integer is present in the list
-    
-    def helper(start, end):
+    def bsearch(start, end):
         mid = start + (end - start) // 2
-        
-        potential_value = ordered_list[mid]
-        
-        if end < start or mid < 0 or mid > len(ordered_list):
+
+        if end < start or mid < start or mid > end:
             return False
-    
-            
+
+        potential_value = ordered_list[mid]
+
         if potential_value == number:
             return True
             
         elif potential_value < number :
             # check right half
-            return helper(mid+1 , end )
+            return bsearch(mid+1 , end )
             
         else:
             # check left half
-            return helper(start, mid-1)
+            return bsearch(start, mid-1)
             
-    length = len(ordered_list)
-    
-    if length == 0:
-        return False
-        
-    return helper(0, length - 1)
+    n = len(ordered_list)
+    first_idx = 0
+    last_idx = n - 1
+    return bsearch(first_idx, last_idx)
 
 # Complexity
 # Time: O(nlogn)
