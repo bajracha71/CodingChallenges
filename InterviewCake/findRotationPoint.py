@@ -31,47 +31,25 @@
 
 import unittest
 
-def find_rotation_point(words):
 
-    # Find the rotation point in the list
-    
-    def helper( start, end ):
-        
-        if start < end:
-            mid = start + ( end - start) // 2
-        
-            potential_RWord = words[mid]
-        
-            left_word = words[mid - 1]
-            right_word = words[mid + 1]
-    
-            if potential_RWord < right_word and potential_RWord < left_word:
-            # we found rotation point
-                return mid
-        
-        # if potential_RWord is in left side i.e 
-        # side from where we started 
-        
-            if words[0] <=  potential_RWord :
-                return helper(mid + 1, end )
-        
-            if potential_RWord <= words[-1]:
-                return helper(start, mid - 1)
-                
-        if start == end and end == len(words) - 1:
-            return end
-    
-    start = 0
-    end = len(words) - 1 
-    
-    
-    if end == start: # list has only one element
-        return 0
-    
-    if end == 1 and words[end] < words[start]: # list has two element
-        return 1       
-    
-    return helper(0, len(words)  - 1)
+def find_rotation_point(words):
+    n = len(words)
+    return bsearch(words, 0, n - 1)
+
+
+def bsearch(words, first_ptr, last_ptr):
+    mid = first_ptr + (last_ptr - first_ptr) // 2
+    if words[mid] >= words[0]: # words[mid] in first interval
+        return bsearch(words, mid + 1, last_ptr)
+    if words[mid] <= words[-1]: # words[mid] is in the second interval where solution exits
+        if mid == len(words) - 1:
+            return mid
+        elif words[mid] < words[mid + 1] and words[mid] < words[mid - 1]:
+            return mid
+        else:
+            return bsearch(words, first_ptr, mid - 1)
+
+
 
 # Complexity:
 # Time :O(nlogn)
