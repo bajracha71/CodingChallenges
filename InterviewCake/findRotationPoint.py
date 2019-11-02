@@ -38,17 +38,17 @@ def find_rotation_point(words):
 
 
 def bsearch(words, first_ptr, last_ptr):
+    if first_ptr > last_ptr:
+        return -1
+
     mid = first_ptr + (last_ptr - first_ptr) // 2
-    if words[mid] >= words[0]: # words[mid] in first interval
+    if words[mid] >= words[0]:  # words[mid] in first interval
         return bsearch(words, mid + 1, last_ptr)
-    if words[mid] <= words[-1]: # words[mid] is in the second interval where solution exits
-        if mid == len(words) - 1:
-            return mid
-        elif words[mid] < words[mid + 1] and words[mid] < words[mid - 1]:
+    else:  # words[mid] is in the second interval where solution exits
+        if mid == len(words) - 1 or (words[mid] < words[mid + 1] and words[mid] < words[mid - 1]):
             return mid
         else:
             return bsearch(words, first_ptr, mid - 1)
-
 
 
 # Complexity:
