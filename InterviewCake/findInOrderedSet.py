@@ -11,11 +11,12 @@ def contains(ordered_list, number):
 
     # Check if an integer is present in the list
     def bsearch(start, end):
-        mid = start + (end - start) // 2
-
-        if end < start or mid < start or mid > end:
+        if start > end:
             return False
+        if number == ordered_list[start] or number == ordered_list[end]:
+            return True
 
+        mid = start + (end - start) // 2
         potential_value = ordered_list[mid]
 
         if potential_value == number:
@@ -28,11 +29,8 @@ def contains(ordered_list, number):
         else:
             # check left half
             return bsearch(start, mid-1)
-            
-    n = len(ordered_list)
-    first_idx = 0
-    last_idx = n - 1
-    return bsearch(first_idx, last_idx)
+
+    return bsearch(0, len(ordered_list) - 1)
 
 # Complexity
 # Time: O(nlogn)
