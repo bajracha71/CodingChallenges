@@ -20,24 +20,22 @@ class QueueWithTwoStacks(object):
         self.size = 0
 
     def enqueue(self, elem):
-        self.size += 1 
+        self.size += 1
         self.insert_stack.append(elem)
 
     def dequeue(self):
         if self.size <= 0:
             raise Exception("Queue is empty")
 
-        # When remove_stack is not empty
-        if len(self.remove_stack) > 0:
-            self.size -=1 
-            return self.remove_stack.pop()
-        
-        else:
-            # Move all element from inset_stack to remove_stack in reverse order
-            self.remove_stack = list(reversed(self.insert_stack))
-            self.insert_stack = list()
-            self.size -= 1
-            return self.remove_stack.pop()
+        if not self.remove_stack:  # self.remove_stack == []
+            # move all element in insert_stack to remove_stack by popping its element
+            while self.insert_stack:
+                popped = self.insert_stack.pop()
+                self.remove_stack.append(popped)
+
+        self.size -= 1
+        return self.remove_stack.pop()
+
 
 # Complexity
 # Time : O(n)
@@ -45,6 +43,7 @@ class QueueWithTwoStacks(object):
 # Tests
 # ------ # 
 import unittest
+
 
 class Tests(unittest.TestCase):
 
@@ -93,4 +92,4 @@ class Tests(unittest.TestCase):
             queue.dequeue()
 
 
-unittest.main(verbosity= 2)
+unittest.main(verbosity=2)
