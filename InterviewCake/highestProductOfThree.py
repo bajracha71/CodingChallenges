@@ -7,15 +7,44 @@
 
 import unittest
 
-def highestProductOfThree(intList):
+def highest_product_of_3(list_of_ints):
 
-    sortedList = sorted(intList)
-    h1, h2, h3 = sortedList[-3:]
-    l1, l2 = sortedList[:2]
+    # Calculate the highest product of three numbers
+    n = len(list_of_ints)
+    if n < 3:
+        raise Exception("error")
 
-    highest_prod = max( h1 * h2 * h3, h3 * l1 * l2)
+    h1, h2, h3 = get_highest_3(list_of_ints)
+    l1, l2 = get_lowest_2(list_of_ints)
 
-    return highest_prod
+    return max(h1 * h2 * h3, h1 * l1 * l2)
+
+
+
+def get_highest_3(nums):
+    h1, h2, h3 = float("-inf"), float("-inf"), float("-inf")
+    for x in nums:
+        if x >= h1:
+            h1, h2, h3 = x, h1, h2
+        elif x >= h2:
+            h2, h3 = x, h2
+        elif x > h3:
+            h3 = x
+
+    return h1, h2, h3
+
+
+
+def get_lowest_2(nums):
+    l1, l2 = float("inf"), float("inf")
+    for x in nums:
+        if x <= l1:
+            l1, l2 = x, l1
+        elif x < l2:
+            l2 = x
+
+    return l1, l2
+
 
 # Complexity
 # Time = O(n log n )
