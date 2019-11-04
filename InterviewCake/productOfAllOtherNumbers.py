@@ -23,13 +23,13 @@ def get_products_of_all_ints_except_at_index(int_list):
     if len(int_list) <= 1:
         raise Exception("error")
     # Make a list with the products
-    lprod = leftProduct(int_list)
-    rprod = rightProduct(int_list)
+    lprod = left_product(int_list)
+    rprod = right_product(int_list)
 
     return list(map(lambda x, y: x * y, lprod, rprod))
 
 
-def leftProduct(nums):
+def left_product(nums):
     n = len(nums)
     res = [1] * n
 
@@ -39,7 +39,7 @@ def leftProduct(nums):
     return res
 
 
-def rightProduct(nums):
+def right_product(nums):
     n = len(nums)
     res = [1] * n
 
