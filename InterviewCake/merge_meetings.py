@@ -1,7 +1,6 @@
 # Merge Meeting times
 import unittest
 
-
 def merge_ranges(meetings):
 
     # Merge meeting ranges
@@ -31,8 +30,8 @@ def merge_two(interval1, interval2 ):
 
     return res
 
-# Tests
 
+# Tests
 class Test(unittest.TestCase):
 
     def test_meetings_overlap(self):
