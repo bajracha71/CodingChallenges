@@ -24,14 +24,19 @@ def reverse(head_of_list):
         prev = curr
         curr = nextNode
 
-
     return prev
 
 
-
+def reverse_recur(head):
+    if head.next is None:
+        return head
+    next_node = head.next
+    head.next = None
+    rev_list = reverse_recur(next_node)
+    next_node.next = head
+    return rev_list
 
 # Tests
-
 class Test(unittest.TestCase):
 
     class LinkedListNode(object):
