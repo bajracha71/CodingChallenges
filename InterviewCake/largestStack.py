@@ -42,8 +42,6 @@ class Stack(object):
 class MaxStack(object):
 
     # Implement the push, pop, and get_max methods
-
-
     def __init__(self):
         
         self.items = Stack()
@@ -51,29 +49,23 @@ class MaxStack(object):
 
     def push(self, item):
         
-        lastmax = self.maxlist.peek()
-        
-        if not lastmax or item >= lastmax:
+        last_max = self.maxlist.peek()
+        if last_max is None or item >= last_max:
             self.maxlist.push(item)
         
         self.items.push(item)
 
     def pop(self):
         
-        poped = self.items.pop()
-        
-        if not poped:
-            return None
-        
-        if poped == self.maxlist.peek():
-            self.maxlist.pop()
-        
-        return poped
+        if self.items.peek():
+            if self.items.peek() == self.maxlist.peek():
+                self.maxlist.pop()
+            return self.items.pop()
+
+        return None
 
     def get_max(self):
         return self.maxlist.peek()
-
-
 
 
 # Tests
