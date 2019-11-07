@@ -20,63 +20,58 @@
 # "{ [ }" should return False
 
 
-def validateBrackets(bracketList):
-    bracket = {"[":"]", "{":"}", "(": ")"}
-    openStack = []
-    bracketQ = False
-
-    for b in bracketList:
-        if b in bracket:
-            openStack.append(b)
-            bracketQ = True
-        if b in bracket.values():
-            bracketQ = True
-            if len(openStack) != 0:
-                openBracket = openStack.pop()
-                # check if close bracket b match with corresponding open
-                closeBracket = bracket[openBracket]
-                if closeBracket != b:
-                    return False
-            else:
-                return False
-
-    return bracketQ and len(openStack) == 0
-
-# Time Complexity : O(n)
-# Space Complexity: O(1)
-
-
 import unittest
 
+
+def is_valid(code):
+
+    # Determine if the input code is valid
+    open_brackets = [ "[", "{", "(" ]
+    close_brackets = [ "]", "}", ")" ]
+    bracket_table = dict(zip(open_brackets, close_brackets))
+    open_paren = list()
+    for x in code:
+        if x in open_brackets:
+            open_paren.append(x)
+        if x in close_brackets:
+            if len(open_paren) == 0:
+                return False
+            pop_open = open_paren.pop()
+            if bracket_table[pop_open] != x:
+                return False
+    return len(open_paren) == 0
+
+
+# Tests
 class Test(unittest.TestCase):
 
-    def test1(self):
-        actual = validateBrackets("((()))")
-        expected = True
-        self.assertEqual(actual, expected)
-    
-    def test2(self):
-        actual = validateBrackets("()[")
-        self.assertFalse(actual)
+    def test_valid_short_code(self):
+        result = is_valid('()')
+        self.assertTrue(result)
 
-    def test3(self):
-        actual = validateBrackets("([({})])")
-        self.assertTrue(actual)
-    
-    def test4(self):
-        self.assertFalse(validateBrackets("("))
-    
-    def test5(self):
-        self.assertFalse(validateBrackets(")"))
-    
-    def test6(self):
-        self.assertFalse(validateBrackets("hello"))
+    def test_valid_longer_code(self):
+        result = is_valid('([]{[]})[]{{}()}')
+        self.assertTrue(result)
 
-    def test7(self):
-        self.assertFalse(validateBrackets(""))
+    def test_interleaved_openers_and_closers(self):
+        result = is_valid('([)]')
+        self.assertFalse(result)
+
+    def test_mismatched_opener_and_closer(self):
+        result = is_valid('([][]}')
+        self.assertFalse(result)
+
+    def test_missing_closer(self):
+        result = is_valid('[[]()')
+        self.assertFalse(result)
+
+    def test_extra_closer(self):
+        result = is_valid('[[]]())')
+        self.assertFalse(result)
+
+    def test_empty_string(self):
+        result = is_valid('')
+        self.assertTrue(result)
 
 
-unittest.main(verbosity= 2)
-    
-
-
+unittest.main(verbosity=2)
