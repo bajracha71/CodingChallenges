@@ -14,6 +14,7 @@
 
 import unittest
 
+
 def get_closing_paren(sentence, opening_paren_index):
 
     # Find the position of the matching closing parenthesis
