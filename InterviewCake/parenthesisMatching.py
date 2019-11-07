@@ -14,62 +14,31 @@
 
 import unittest
 
-
-
-class Stack():
-    def __init__(self):
-        self.items = []
-        self.size = 0
-        
-    def push(self, elem):
-        self.items.append(elem)
-        self.size += 1
-        
-        
-    def pop(self):
-        
-        if self.size == 0:
-            return None
-       
-        self.size -= 1
-        return self.items.pop()
-        
-    def peek(self):
-        if self.size == 0:
-            return None
-        
-        return self.items[-1]
-        
-    def emptyQ(self):
-        return self.size == 0
-        
 def get_closing_paren(sentence, opening_paren_index):
 
     # Find the position of the matching closing parenthesis
-    
-    # stack1 is the container for open brackets
-    stack1 = Stack()
-    resultDict = dict()
-    
+    bracket_table = create_bracket_table(sentence)
+    return bracket_table[opening_paren_index]
+
+
+def create_bracket_table(sentence):
+    s = list() # stack
+    bracket_table = dict()  # key => open paren index, value => close paren index
     for i, x in enumerate(sentence):
-        # when we encounter new "(" push its index into stack
         if x == "(":
-            stack1.push(i)
-        # When we encounter new ")" remove elem from stack1
-        if x == ")" :
-            if not stack1.emptyQ():
-                index = stack1.pop()
-                resultDict[index] = i
+            s.append(i)
+        if x == ")":
+            if s:
+                open_paren_index = s.pop()
+                bracket_table[open_paren_index] = i
             else:
-                raise Exception("sentence do not have valid parenthesis")
+                raise Exception("invalid brackets")
 
-
-    return resultDict[opening_paren_index]
-
+    return bracket_table
 # Time and space Complexity : O(n)
 
-# Tests
 
+# Tests
 class Test(unittest.TestCase):
 
     def test_all_openers_then_closers(self):
