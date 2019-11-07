@@ -16,28 +16,22 @@ import unittest
 def get_permutations(string):
 
     # Generate all permutations of the input string
-    result = set()
 
-    l = len(string)
-    mystring = list(string)
+    res = set()
+    permute(list(string), 0, res)
+    return res
 
-    startIndex = 0
-    endIndex = l - 1
 
-    def permute(items, startIndex, endIndex):
-        if startIndex > endIndex:
-            result.add("".join(items))
+def permute(nums, i, res):
+    if i == len(nums):
+        temp = "".join(nums)
+        res.add(temp)
+        return
 
-        j = startIndex
-        while j <= endIndex:
-            items[j], items[startIndex] = items[startIndex], items[j]
-            permute(items, startIndex + 1, endIndex)
-            items[j], items[startIndex] = items[startIndex], items[j]
-            j += 1
-
-    permute(mystring, startIndex, endIndex)
-
-    return result
+    for j in range(i, len(nums)):
+        nums[i], nums[j] = nums[j], nums[i]
+        permute(nums, i + 1, res)
+        nums[i], nums[j] = nums[j], nums[i]
 
 
 # Time Complexity ; O(n * n!)
