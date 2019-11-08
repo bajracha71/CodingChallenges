@@ -37,19 +37,15 @@ def sort_scores(unsorted_scores, highest_possible_score):
     # Sort the scores in O(n) time
     
     score_table = [0] * (highest_possible_score + 1)
-    
     for s in unsorted_scores:
-        
         score_table[s] += 1
-    
-    res = []
-    
-    
+
+    res = list()
     for x in range(highest_possible_score, 0, -1):
-        numberOfScores = score_table[x]
-        for i in range(numberOfScores):
-            res.append(x)
-    
+        count = score_table[x]
+        if count > 0:
+            for i in range(count):
+                res.append(x)
     return res
 
 
