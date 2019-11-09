@@ -1,0 +1,4603 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    165597,       4595]
+NotebookOptionsPosition[    143211,       4246]
+NotebookOutlinePosition[    143736,       4266]
+CellTagsIndexPosition[    143693,       4263]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[ButtonBox["InterviewCake:",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/all-questions/python3"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/all-questions/python3"]], "Chapter",
+ CellChangeTimes->{{3.781897235337377*^9, 3.781897254458201*^9}, {
+  3.7821319288278027`*^9, 
+  3.782131940989368*^9}},ExpressionUUID->"4c3b9cdd-2892-4202-b4cd-\
+b0875f52cc24"],
+
+Cell["\<\
+Total problems: 46
+Unsolved problem: 10
+Irrelevant for me: 2
+Solved problems: 34\
+\>", "Text",
+ CellChangeTimes->{{3.7819537934540167`*^9, 3.781953818013443*^9}, {
+   3.78195599614918*^9, 3.7819560002918787`*^9}, 3.782210364065713*^9, {
+   3.7822401640231123`*^9, 3.782240169118066*^9}, {3.7822408568246593`*^9, 
+   3.78224090057581*^9}},ExpressionUUID->"7d39e3bc-5e16-4d14-9292-\
+3f4a5c4db69a"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["1. Apple Stocks",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/stock-price"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/stock-price"]], "Subsection",\
+
+ CellChangeTimes->{{3.781892495920382*^9, 3.7818924989276533`*^9}, {
+  3.781892535397254*^9, 
+  3.781892535397665*^9}},ExpressionUUID->"f881c6e8-2cae-4626-b807-\
+2993a702b7a2"],
+
+Cell["\<\
+Writing programming interview questions hasn\[CloseCurlyQuote]t made me rich \
+yet ... so I might give up and start trading Apple stocks all day instead.
+
+First, I wanna know how much money I could have made yesterday if I\
+\[CloseCurlyQuote]d been trading Apple stocks all day.
+
+So I grabbed Apple\[CloseCurlyQuote]s stock prices from yesterday and put \
+them in a list called stock_prices, where:
+
+The indices are the time (in minutes) past trade opening time, which was \
+9:30am local time.
+The values are the price (in US dollars) of one share of Apple stock at that \
+time.
+So if the stock cost $500 at 10:30am, that means stock_prices[60] = 500.
+
+Write an efficient function that takes stock_prices and returns the best \
+profit I could have made from one purchase and one sale of one share of Apple \
+stock yesterday.
+
+For example:
+
+ stock_prices = [10, 7, 5, 8, 11, 9]
+
+get_max_profit(stock_prices)
+# Returns 6 (buying for $5 and selling for $11)
+
+No \[OpenCurlyDoubleQuote]shorting\[CloseCurlyDoubleQuote]\[LongDash]you need \
+to buy before you can sell. Also, you can\[CloseCurlyQuote]t buy and sell in \
+the same time step\[LongDash]at least 1 minute has to pass.\
+\>", "Text",
+ CellChangeTimes->{{3.781438984859832*^9, 3.781439053626918*^9}, {
+   3.781439111491181*^9, 3.781439112923135*^9}, {3.7814394816515923`*^9, 
+   3.781439483027308*^9}, 3.7818925196051483`*^9, 
+   3.781892840739777*^9},ExpressionUUID->"f8604fac-0806-48f1-a13f-\
+9cae05da0efc"],
+
+Cell["\<\
+def get_max_profit(stock_prices):
+
+    # Calculate the max profit
+
+    n = len(stock_prices)
+    if 0<= n <= 1:
+        raise Excepton(\"stock_prices must have atleast 2 prices\") # No \
+transaction 
+    
+    buyingPrice = stock_prices[0]
+    maxProfit = stock_prices[1] - buyingPrice
+    for sellingPrice in stock_prices[1:]:
+        currProfit = sellingPrice - buyingPrice
+        if currProfit > maxProfit:
+            maxProfit = currProfit
+        if sellingPrice < buyingPrice:
+            buyingPrice = sellingPrice
+        
+    return maxProfit
+\
+\>", "Program",
+ CellChangeTimes->{{3.781892802404426*^9, 3.781892811210734*^9}, 
+   3.781895179553849*^9},ExpressionUUID->"d8a3ae70-a400-4a03-8bdd-\
+a42876a7e070"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"5ce9b017-b559-49a5-a4d9-d8415e8ed3ec"],
+
+Cell["\<\
+
+# Tests
+import unittest
+
+class Test(unittest.TestCase):
+
+    def test_price_goes_up_then_down(self):
+        actual = get_max_profit([1, 5, 3, 2])
+        expected = 4
+        self.assertEqual(actual, expected)
+
+    def test_price_goes_down_then_up(self):
+        actual = get_max_profit([7, 2, 8, 9])
+        expected = 7
+        self.assertEqual(actual, expected)
+
+    def test_price_goes_up_all_day(self):
+        actual = get_max_profit([1, 6, 7, 9])
+        expected = 8
+        self.assertEqual(actual, expected)
+
+    def test_price_goes_down_all_day(self):
+        actual = get_max_profit([9, 7, 4, 1])
+        expected = -2
+        self.assertEqual(actual, expected)
+
+    def test_price_stays_the_same_all_day(self):
+        actual = get_max_profit([1, 1, 1, 1])
+        expected = 0
+        self.assertEqual(actual, expected)
+
+    def test_error_with_empty_prices(self):
+        with self.assertRaises(Exception):
+            get_max_profit([])
+
+    def test_error_with_one_price(self):
+        with self.assertRaises(Exception):
+            get_max_profit([1])
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.781892802404426*^9, 
+  3.781892811210734*^9}},ExpressionUUID->"d22ccf21-7881-4305-95ac-\
+a6ba842df4a9"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"c2c43042-8229-44a2-ad0a-1db2ccd8020f"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["2.\.08 Product of All Other Numbers",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/product-of-other-\
+numbers"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/product-of-other-numbers"]],\
+ "Subsection",
+ CellChangeTimes->{{3.781892856584792*^9, 
+  3.7818928877751837`*^9}},ExpressionUUID->"85a70092-0235-486a-b5f2-\
+63c048fada23"],
+
+Cell["\<\
+You have a list of integers, and for each index you want to find the product \
+of every integer except the integer at that index.
+Write a function get_products_of_all_ints_except_at_index() that takes a list \
+of integers and returns a list of the products.
+
+For example, given: [1, 7, 3, 4]
+your function would return: [84, 12, 28, 21]
+by calculating: [7 * 3 * 4,  1 * 3 * 4,  1 * 7 * 4,  1 * 7 * 3]
+
+Here\[CloseCurlyQuote]s the catch: You can\[CloseCurlyQuote]t use division in \
+your solution!\
+\>", "Text",
+ CellChangeTimes->{
+  3.781439162831808*^9, 3.781892912882761*^9, {3.781894404176488*^9, 
+   3.781894439291904*^9}},ExpressionUUID->"0ee30d51-357b-4537-820c-\
+a281b0642270"],
+
+Cell["\<\
+import unittest
+
+def get_products_of_all_ints_except_at_index(int_list):
+    if len(int_list) <= 1:
+        raise Exception(\"error\")
+    # Make a list with the products
+    lprod = leftProduct(int_list)
+    rprod = rightProduct(int_list)
+
+    return list(map(lambda x, y: x * y, lprod, rprod))
+
+
+def leftProduct(nums):
+    n = len(nums)
+    res = [1] * n
+
+    for i in range(0, n - 1):
+        res[i + 1] = res[i] * nums[i]
+
+    return res
+
+
+def rightProduct(nums):
+    n = len(nums)
+    res = [1] * n
+
+    for i in range(n - 1, 0, -1):
+        res[i - 1] = res[i] * nums[i]
+
+    return res
+\
+\>", "Program",
+ CellChangeTimes->{{3.7818951536534853`*^9, 
+  3.781895169185451*^9}},ExpressionUUID->"9a09c825-da78-4013-bf54-\
+dd4c5e62e293"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"7c22516c-62c0-4129-a39f-d2cd3c41bd95"],
+
+Cell["\<\
+
+# Tests
+class Test(unittest.TestCase):
+
+    def test_small_list(self):
+        actual = get_products_of_all_ints_except_at_index([1, 2, 3])
+        expected = [6, 3, 2]
+        self.assertEqual(actual, expected)
+
+    def test_longer_list(self):
+        actual = get_products_of_all_ints_except_at_index([8, 2, 4, 3, 1, 5])
+        expected = [120, 480, 240, 320, 960, 192]
+        self.assertEqual(actual, expected)
+
+    def test_list_has_one_zero(self):
+        actual = get_products_of_all_ints_except_at_index([6, 2, 0, 3])
+        expected = [0, 0, 36, 0]
+        self.assertEqual(actual, expected)
+
+    def test_list_has_two_zeros(self):
+        actual = get_products_of_all_ints_except_at_index([4, 0, 9, 1, 0])
+        expected = [0, 0, 0, 0, 0]
+        self.assertEqual(actual, expected)
+
+    def test_one_negative_number(self):
+        actual = get_products_of_all_ints_except_at_index([-3, 8, 4])
+        expected = [32, -12, -24]
+        self.assertEqual(actual, expected)
+
+    def test_all_negative_numbers(self):
+        actual = get_products_of_all_ints_except_at_index([-7, -1, -4, -2])
+        expected = [-8, -56, -14, -28]
+        self.assertEqual(actual, expected)
+
+    def test_error_with_empty_list(self):
+        with self.assertRaises(Exception):
+            get_products_of_all_ints_except_at_index([])
+
+    def test_error_with_one_number(self):
+        with self.assertRaises(Exception):
+            get_products_of_all_ints_except_at_index([1])
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.7818951536534853`*^9, 
+  3.781895160195641*^9}},ExpressionUUID->"66346af3-1ff9-4adc-b9fd-\
+a6e6bfe1a317"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"310e6c3b-d0c9-43fa-bdb2-b81a534bf55c"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["3. Highest Product of Three",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/highest-product-of-3"],
+    None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/highest-product-of-3"]], \
+"Subsection",
+ CellChangeTimes->{{3.781895285909807*^9, 
+  3.7818953017686987`*^9}},ExpressionUUID->"c9b0b6c2-64c4-425e-a62a-\
+df49908afd0a"],
+
+Cell["\<\
+Given a list of integers, find the highest product you can get from three of \
+the integers. The input list_of_ints will always have at least three integers.\
+\>", "Text",
+ CellChangeTimes->{{3.781439243841214*^9, 3.781439267873396*^9}, {
+  3.781895321368967*^9, 
+  3.781895328435855*^9}},ExpressionUUID->"c2435950-0ac5-4aff-954a-\
+c68718f11c8e"],
+
+Cell["\<\
+import unittest
+
+def highest_product_of_3(list_of_ints):
+
+    # Calculate the highest product of three numbers
+    n = len(list_of_ints)
+    if n < 3:
+        raise Exception(\"error\")
+    
+    h1, h2, h3 = get_highest_3(list_of_ints)
+    l1, l2 = get_lowest_2(list_of_ints)
+
+    return max(h1 * h2 * h3, h1 * l1 * l2)
+
+
+
+def get_highest_3(nums):
+    h1, h2, h3 = float(\"-inf\"), float(\"-inf\"), float(\"-inf\")
+    for x in nums:
+        if x >= h1:
+            h1, h2, h3 = x, h1, h2
+        elif x >= h2:
+            h2, h3 = x, h2
+        elif x > h3:
+            h3 = x
+    
+    return h1, h2, h3
+    
+    
+
+def get_lowest_2(nums):
+    l1, l2 = float(\"inf\"), float(\"inf\")
+    for x in nums:
+        if x <= l1:
+            l1, l2 = x, l1
+        elif x < l2:
+            l2 = x
+    
+    return l1, l2
+    \
+\>", "Program",
+ CellChangeTimes->{{3.78189693319619*^9, 
+  3.781896952090547*^9}},ExpressionUUID->"6e193280-6717-43ae-8418-\
+9201905f3ab3"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"753f97c1-67fe-402d-95cf-92958160e93f"],
+
+Cell["\<\
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_short_list(self):
+        actual = highest_product_of_3([1, 2, 3, 4])
+        expected = 24
+        self.assertEqual(actual, expected)
+
+    def test_longer_list(self):
+        actual = highest_product_of_3([6, 1, 3, 5, 7, 8, 2])
+        expected = 336
+        self.assertEqual(actual, expected)
+
+    def test_list_has_one_negative(self):
+        actual = highest_product_of_3([-5, 4, 8, 2, 3])
+        expected = 96
+        self.assertEqual(actual, expected)
+
+    def test_list_has_two_negatives(self):
+        actual = highest_product_of_3([-10, 1, 3, 2, -10])
+        expected = 300
+        self.assertEqual(actual, expected)
+
+    def test_list_is_all_negatives(self):
+        actual = highest_product_of_3([-5, -1, -3, -2])
+        expected = -6
+        self.assertEqual(actual, expected)
+
+    def test_error_with_empty_list(self):
+        with self.assertRaises(Exception):
+            highest_product_of_3([])
+
+    def test_error_with_one_number(self):
+        with self.assertRaises(Exception):
+            highest_product_of_3([1])
+
+    def test_error_with_two_numbers(self):
+        with self.assertRaises(Exception):
+            highest_product_of_3([1, 1])
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.78189693319619*^9, 
+  3.781896944328038*^9}},ExpressionUUID->"e0d9d31f-de10-413a-bc93-\
+e2775006c2e4"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"fedb2636-54f4-42fe-b1c1-e3cec7b986c1"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["4. Merge Meeting times",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/merging-ranges"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/merging-ranges"]], \
+"Subsection",
+ CellChangeTimes->{{3.781891205329529*^9, 3.7818912096966267`*^9}, {
+  3.781892065300293*^9, 
+  3.781892065300675*^9}},ExpressionUUID->"ef5ebbff-50ce-4c17-81e7-\
+53194fe4101a"],
+
+Cell["\<\
+Your company built an in-house calendar tool called HiCal. You want to add a \
+feature to see the times in a day when everyone is available.
+To do this, you\[CloseCurlyQuote]ll need to know when any team is having a \
+meeting. In HiCal, a meeting is stored as a tuple \:21b4 of integers \
+(start_time, end_time). These integers represent the number of 30-minute \
+blocks past 9:00am.
+For example:
+(2, 3)  # Meeting from 10:00 \[Dash] 10:30 am
+(6, 9)  # Meeting from 12:00 \[Dash] 1:30 pm
+Write a function merge_ranges() that takes a list of multiple meeting time \
+ranges and returns a list of condensed ranges.
+For example, given: [(0, 1), (3, 5), (4, 8), (10, 12), (9, 10)]
+your function would return: [(0, 1), (3, 8), (9, 12)]
+Do not assume the meetings are in order. The meeting times are coming from \
+multiple teams.
+
+Write a solution that\[CloseCurlyQuote]s efficient even when we can\
+\[CloseCurlyQuote]t put a nice upper bound on the numbers representing our \
+time ranges. Here we\[CloseCurlyQuote]ve simplified our times down to the \
+number of 30-minute slots past 9:00 am. But we want the function to work even \
+for very large numbers, like Unix timestamps. In any case, the spirit of the \
+challenge is to merge meetings where start_time and end_time don\
+\[CloseCurlyQuote]t have an upper bound.\
+\>", "Text",
+ CellChangeTimes->{{3.7814471356401367`*^9, 3.781447162787629*^9}, {
+   3.781891227357698*^9, 3.7818912328602247`*^9}, 3.7818920493269577`*^9, {
+   3.781897049408485*^9, 
+   3.781897091103036*^9}},ExpressionUUID->"a761efa8-a271-48e9-8698-\
+9dfdd666c2d3"],
+
+Cell["\<\
+import unittest
+
+def merge_ranges(meetings):
+
+    # Merge meeting ranges
+    n = len(meetings)
+    if n <= 1:
+        return meetings
+    
+    meetings.sort(key = lambda x: x[0]) 
+    result = [meetings[0]]
+    
+    for x in meetings:
+        first = result.pop()
+        merge = merge_two(first, x)
+        result.extend(merge)
+
+    return result
+    
+
+def merge_two(interval1, interval2 ):
+    s1, e1 = interval1
+    s2, e2 = interval2
+    
+    if e1 <= e2:
+        res = [interval1, interval2] if e1 < s2 else [(s1, e2)]
+    else:
+        res = [interval1]
+    
+    return res\
+\>", "Program",
+ CellChangeTimes->{{3.78189202214509*^9, 3.781892034212739*^9}, 
+   3.781897040181793*^9},ExpressionUUID->"8931f2d7-053b-42a4-94d7-\
+d29ade17f62a"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"e0d37e48-875f-41cf-ab94-6305e3d10e23"],
+
+Cell["\<\
+
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_meetings_overlap(self):
+        actual = merge_ranges([(1, 3), (2, 4)])
+        expected = [(1, 4)]
+        self.assertEqual(actual, expected)
+
+    def test_meetings_touch(self):
+        actual = merge_ranges([(5, 6), (6, 8)])
+        expected = [(5, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_meeting_contains_other_meeting(self):
+        actual = merge_ranges([(1, 8), (2, 5)])
+        expected = [(1, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_meetings_stay_separate(self):
+        actual = merge_ranges([(1, 3), (4, 8)])
+        expected = [(1, 3), (4, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_multiple_merged_meetings(self):
+        actual = merge_ranges([(1, 4), (2, 5), (5, 8)])
+        expected = [(1, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_meetings_not_sorted(self):
+        actual = merge_ranges([(5, 8), (1, 4), (6, 8)])
+        expected = [(1, 4), (5, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_one_long_meeting_contains_smaller_meetings(self):
+        actual = merge_ranges([(1, 10), (2, 5), (6, 8), (9, 10), (10, 12)])
+        expected = [(1, 12)]
+        self.assertEqual(actual, expected)
+
+    def test_sample_input(self):
+        actual = merge_ranges([(0, 1), (3, 5), (4, 8), (10, 12), (9, 10)])
+        expected = [(0, 1), (3, 8), (9, 12)]
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.78189202214509*^9, 
+  3.781892034212739*^9}},ExpressionUUID->"e977b0d2-1331-4d95-862d-\
+cdd22a2f4076"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"07a79a38-bfac-41bc-ab43-c89e43958ece"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  ButtonBox[
+   RowBox[{"5.", " ", "Make", " ", "Change"}],
+   BaseStyle->"Hyperlink",
+   ButtonData->{
+     URL["https://www.interviewcake.com/question/python3/coin"], None},
+   ButtonNote->"https://www.interviewcake.com/question/python3/coin"], 
+  TraditionalForm]],
+ FormatType->
+  "TraditionalForm",ExpressionUUID->"b0d7f233-4543-417f-b6bc-e4f782335fca"]], \
+"Subsection",
+ CellChangeTimes->{{3.7814472009878674`*^9, 3.781447213769679*^9}, {
+  3.782241370884808*^9, 
+  3.7822413864836817`*^9}},ExpressionUUID->"f724a3ea-bd67-4b91-90db-\
+edfd079c0906"],
+
+Cell["\<\
+Your quirky boss collects rare, old coins...
+
+They found out you\[CloseCurlyQuote]re a programmer and asked you to solve \
+something they\[CloseCurlyQuote]ve been wondering for a long time.
+
+Write a function that, given:
+
+an amount of money
+a list of coin denominations
+computes the number of ways to make the amount of money with coins of the \
+available denominations.
+
+Example: for amount=44 (44\[Cent]) and denominations=[1,2,3][1,2,3] \
+(11\[Cent], 22\[Cent] and 33\[Cent]), your program would output \
+44\[LongDash]the number of ways to make 44\[Cent] with those denominations:
+
+1\[Cent], 1\[Cent], 1\[Cent], 1\[Cent]
+1\[Cent], 1\[Cent], 2\[Cent]
+1\[Cent], 3\[Cent]
+2\[Cent], 2\[Cent]\
+\>", "Text",
+ CellChangeTimes->{{3.781447223166554*^9, 3.781447248336452*^9}, {
+  3.782241405707746*^9, 
+  3.78224141301954*^9}},ExpressionUUID->"e9f83d68-acdb-482b-a97c-\
+1aa278aa1e71"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"f1bda67a-0c8a-4ae6-9bdb-97d57585168d"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["6. Rectangular Love (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/rectangular-love"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/rectangular-love"]], \
+"Subsection",
+ CellChangeTimes->{{3.781531004001178*^9, 3.7815310249907017`*^9}, {
+  3.781955894499358*^9, 3.781955894714191*^9}, {3.782240093010035*^9, 
+  3.782240119239029*^9}},ExpressionUUID->"2db39349-4671-4362-b846-\
+9b3bca895a98"],
+
+Cell[TextData[{
+ "A crack team of love scientists from OkEros (a hot new dating site) have \
+devised a way to represent dating profiles as rectangles on a two-dimensional \
+plane.\nThey need help writing an algorithm to find the intersection of two \
+users\[CloseCurlyQuote] love rectangles. They suspect finding that \
+intersection is the key to a matching algorithm so powerful it will cause an \
+immediate acquisition by Google or Facebook or Obama or something.\n\n",
+ Cell[BoxData[
+  GraphicsBox[
+   TagBox[RasterBox[CompressedData["
+1:eJzt3Qt0lOWdx3Faa9vd7andbc+229OeXs/27NlLW9PudtuzZ2m7a8taICQZ
+UGtBVBSsRgU1gq0LqCCiTUKCFBSRbWuxKLeAYACb0iRWxIAodyWAclMxd3Kf
+d/8PvtMOQwIZeOb3nprv95y/yUxm5slr8n5830nMfO7KG3Ouee+AAQMmfND+
+kTO64Nvjx4+emPsRuxDLnzDu2vwxVw/Kv2XMtWPGf+PK8+zKL79nwICv2Lxv
+QDQ1NATbbRao121pCb5aXx90qdd12fbuiGibL6yri26bbe1H1OvaNmdFuM07
+I9rmC6P83rZtjuJ7+5PqNV34pQu/tOGXLvzShV+68EsbfmnCL234pQu/dOGX
+LvzShl+68EsXfunCL234pQm/tOGXLvzShV+68EsbfunCL134pQu/tOGXJvzS
+hl+68EsXfunCL234pQu/dOGXLvzShl+a8EsbfunCL134pQu/tOGXrqj82rJl
+96v79r39K/W6+KUNv3Thl66CgkktRUWzN6vXxS9t+KULvzTl5uZmx2KxwE12
+dvZnlWvjlzb80oVfmvLy8vYl/LJZqlwbv7Thly78ynxm1+Qku06MXTdQtT5+
+acMvXfiV2dy5ollVl+qXjex5MPzShl+68CuzmV2P9mBX4hjsJsXngF/a8EsX
+fmUud47Ym12hX3V2fPaRTH8e+KUNv3ThV+YyoypO51c4RZn+PPBLG37pwi9d
+Dzwwq27hwscr1evilzb80oVfuvBLF35pwy9d+KULv3Thlzb80oRf2vBLF37p
+wi9d+KUNv3Thly780oVf2qL0y7a5XT0lJXODsrL1cfW69u+5w94GUWyzfX3d
+ut1ss2abFyz4VXD77ZPi6pk4cVLgJqq1o1n3jqCyskb+dbZx39vfVU9hYWnz
+okXLtqvXbWoKxoX7k3ybbV63Wade1/bl6/rhNv+4qKjU/hu58tVXX927WTn7
+9r3WVlt74G31unv31u7cv//1uHpdN6WlD3YtX16+Tf11tv05pj7mc3H+qKu/
+nj8WFc2Or1+/fmNLS0uZdtqamptbD6jXbW4+vqGpqS2u396WsocffqR98eKy
+30fwdeb5L1H4pQu/8CuT4Zcu/MIv/PIbfunCL/zCL7/hly78wi/88ht+6cIv
+/MKvk4vFYp/Iycn5VE8fGzJkyMeHDh366dPdH7904Rd+4dfJ5eXlPWTzaur1
+w4YN+6hd/5b5dvvp7o9fuvALv/Dr5MynW82pzoEDB74v+Xq7br597KWsrKzz
+T3d//NKFX/iFXydnRg1xfzPVziE/n7jO7PqmXddl8+9nuj9+6cIv/MKvkzOj
+vhT+zef/Di+fZ369aG8f7Mv98UsXfuEXfp2cOz90548217rL7vWDbA6ZXxf0
+5f74pQu/8Au/Ts282m0zzf0s0qbB3u/z/0uJX7rwC7/w69TMqzJz62GbBTYr
+07kvfunCL/zCr1Mzv+43t7bZNOXk5Hwmnfvily78wi/8OrXc3Nwx4WvPTkj3
+vvilC7/wC79Ozf0Oq/m12f3sMd374pcu/MIv/Do5M+v75lebHYN99Wzuj1+6
+8Au/8GvAgIsvvvivBw8e/DEz61Kzq87murNdF7904Rd+4deJ88V14e+sHjDD
+Lj+XdfFLF37hF3698zurZtff+FgXv3ThF37hl9/wSxd+4Rd++Q2/dOEXfuGX
+3/BLF37hF375Db904Rd+4Zff8EsXfuEXfvkNv3ThF37hl9/wSxd+4de72S/7
+/ipVT3HxnPYlS1YfVa/b1BQsNr/iUWyz7csNtvYrbHPmp7ExeKK4uDSorKw+
+apbUaqet06ZZv27rIVs3HsG6tfPnL+hes6ZCvj+74wH7/tqrnpKSufEVK9a2
+R7D2YZsgim12x3327/w426zZ5uLi2UF19UaDpK1FPGZIW1cE67ba8VcQwbot
+5ldQXl4p35/te+uA+pjPxfmjLs4fOX98N58/qtd04Zcu/MIv/PIbfunCL/zC
+L7/hly78wi/88ht+6cIv/MIvv+GXLvzCL/zyG37pwi/8wi+/4Zcu/MIv/PIb
+funCL/zCL7/hly78wi/88ht+6cIv/MIvv+GXLvzCL/zyG37pwi/8wi+/4Zcu
+/MIv/PIbfunCL/zCL7/hly78wi/88ht+6cIv/MIvv+GXLvzCL/zyG37pwi/8
+wi+/9Re/YrFYnk1g8wn80oVf+JXJ+rNf9v53bFaqPgcffp3t54xf+JXhrzN+
+ZbCe/MrLy5v35+bX2X7O+IVfGf4641cGS/Vr3LgfvxVe/uPk5uZe3st9v2/z
+tn38a+bHb21a7HK9zeIhQ4Z83K4fZe9vtTluH9tnb6fY3d6TdP8r3OMfPtzw
+9WS/srOzP+uuz8nJ+a+k24632e4ey+aYPV6VzdDwYy/09XNODb/wK8NfZ/zK
+YKl+HT3autDeX2E2PDVw4MAPurGbvbeX+zq/ArvtDrPmW1lZWecPGzbsy3bd
+EZv9Nr+3y39vj/E+u81FdrnDmZV0/z75ZRZdGbroPtcv2fXfsMe7xd5+3X18
+0KBBH+jr55wafuFXhr/O+JXBejl/XNaXc7Ekv0anXP+Au97s+ofk6+12T9s8
+lnS7Pvll95lhl7cMSDp2S62vn3Nq+IVfGf4641cG8+GXHR/9S8r1t9tjtA1I
+8cau+6V97Jmk2/XJL3s/y6bZ3dce4wfueC71c8Ev/MKvP4VffffLnPlUyvXO
+r7dSbx/6VZF0ux79sus+l/r8V2hakXtce3vY3hYkO4Zf+IVffwq/Mu9X+Px+
+T379a6pfidxzXfY4V9vHG+ztz5IeG7/wC7/C+rlfv04+zzvNfc/Jr/A5/aC8
+fP1FyX7Z9Tf05lfSbWbY1CRd7tPnnBp+4VeGv86ftO+xdvWUlMwNysrWxyNY
+u8P8ClTrrVtX3ems2L+/rt3248DW7v71r5d2XXrppcGGDZs69+59s/3Agfoe
+71tZWeN+nhjU1r510vWPPbak64orRp+yDTNnFnVPmnTnH/+dHjzY1O5uV1z8
+YPeRI63BsWOd7VVVmzvGjr3uxO9AVFdv6XC3Kytb27ly5frOrVv3drjPx91m
+3LgfB3PmzO9KPFZfP+fUSWyz+utsa3YWF88OnntuU3dzc5t0zJDA3sbV6yat
+LV93/vxHg7Vrq+T7s32d3f78HfUUFpY2L1q0bLt63aamYKzbn1TrzZhRONlZ
+UVVVk2uXX7dZt2vX4UFmSPmIESOahg8f0Tpt2v139XTfWbN+XuDu+8wzzw5P
+vv622+54aMSISxpSbz927Li1o0dfuSX5unnzfnnDNdeM3TNy5KjA7tM8evRV
+mxYuXHytW7ekZN4tic9x5MiRu93Hhw8f3n7ZZT88OH78rY/V1h77XuJx+vo5
+9zBum9eqv872vX1dUVFpUFGxYWdT0/FnlWP7c2tTU+ub+nVbtzo31eu6seOv
+zuXLy7dFsD/H1Md8rv5y/phcA///oyzOH/vP+aN6TRd+6cIv/MIvv+GXLvzC
+L/zyG37pwi/8wi+/4Zcu/MIv/PIbfunCL/zCL7/hly78wi/88ht+6cIv/MIv
+v+GXLvzCL/zyG37pwi/8wi+/9Re/8vLy7o3FYq+49zPhl/tbqGf6e874hV/4
+5Tf88hN+9Rx+4Vcm62d+7XHv45cu/MKvTNbP/HKvEXRxfv7NrSNGjOiy647a
+zLbrPpR82/B1OCaHryXUbrPLXBpzusfvzS+7boQ9zvP2tnX48OHNU6bcE3d/
+Jzrp8yp0f2fV5rzUx3Te2scfSX4s9/fx3d+sDu/zgPs7h33ZfvzCrwx/nfEr
+g4V+1bvXEHr66Q2vPffctqWhLYfs7eKU2y60qQv/7vM/2/s3udcUOt2xVU9+
+2eVxNs7Je9zfWi0qmjXmvvsKnV/H3WuxudsMGzbsn8LXBhmU8jl8M/zbht8K
+L4+2y932dqr7O/z2/rDwc3+4L9uPX/iV4a8zfmWw0K8Tr8GRfP5olwcnvzZH
+aIO7PCrl/j93x2O9PX6qX/b++22O2ZQkbpM4f7Trnk15fY+NNouSH88uz7XZ
+GT62Ox48apdPOue16y5xpmVnZ3/hTNuPX/iV4a8zfmWw0K+33fvJfoWvqejc
+udJdjr3z+rHdqeeUdvlH4WulfbSnx0/1y71mY/j3qr+TuE3CL/tcJth0Js79
+7P1r3fmlzQWJx3LHfza3hY91YU/HaEOHDv10uGbumbYfv/Arw19n/MpgoV97
+3fupz9/b9U328Z+G708P3WlOmdbk47TUUv2yt98LL/9j4jYJv9xt3Mfca3e7
+682xD7vX9E48xxae17q/d/2J5MeKvfOa3Kmfl1sj/0zbj1/4leGvM35lsN6O
+v5LcyQ9vV+CeH3evp23Xf7GHeX9Pj9+DX1893fGXe14sfP3sE9nl/7PrN4Tv
+r3KvM5T4mD3Wv4WPldfL53TBmbYfv/Arw19n/Mpgiee/zKUvpzz/lRvakBVe
+/lp4rnZROo/fw/Nf58Xeef3G0sRtkp7/qkxYlciu+0+7Lu7cC4+9hiR97MRz
+aXb9tLPdfvzCrwx/nfErgyWOv9zPH9etq3qtpmbXk+HxzBG7rizltr+w6990
+x2TueSw3dl3MHTf19vg9/fzRPb/uLHK/i+HOO2fPfmhkYeFs9/PH9sTPFZNz
+vy8RPpd/OPW1t91rQYaPNdPmP+w2X7HH/B9nWl9+hwK/8CvDX2f8ymDOL5ti
+m6Hu978uueSS7vBneiWDBw/+y+TbumMn+9gt9nabs8adT9q8nK5fLmeMO95y
+z1W53/+688674mbXN3r5HCeGx34zevq4Oyaz+b17riw8Rjvgfn8iKyvr/DNt
+P37hV4a/zvgliv9/Wxd+4Vcmwy9d+IVf+OU3/NKFX/iFX37DL134hV/45Tf8
+0oVf+IVffsMvXfiFX+9mv+z7q1Q9xcVz2pcsWX1UvW5TU7DY/IpHsc22LzfY
+2q+wzZmfxsbgieLi0qCysvqoWVKrnbZOm2b9uq2HbN14BOvWzp+/oHvNmgr5
+/uyOB+ztXvWUlMyNr1ixtj2CtQ/Z/hREsc3uuM/eHmebMz/2fX2ouHh2UF29
+0SBpa1GOOwayt13qdW1abe0ggnVbzK+gvLxSvj/b99d+9TGfi/NHXZw/cv74
+bj5/VK/pwi9d+IVf+OU3/NKFX/iFX37DL134hV/45Tf80oVf+IVffsMvXfiF
+X/jlN/zShV/4hV9+wy9d+IVf+OU3/NKFX/iFX37DL134hV/45Tf80oVf+IVf
+fsMvXfiFX/jlN/zShV/4hV9+wy9d+IVf+OU3/NKFX/iFX37DL134hV/45Tf8
+0oVf+IVffsMvXfiFX/jlN/zShV/4hV9+wy9d+IVf+OU3/NKFX/iFX37DL134
+hV/45Tf80oVf+IVffsMvXfiFX/jlN/zShV/4hV9+wy9d+IVf+OU3/NKFX/iF
+X37DL134hV/45Tf80tVf/Zoy5Z74gw8+uGfVqlXPK6eiYkPrM89UvKled82a
+8m0VFZXB7t271/Unv2x/7lBPScncoKxsfVy9ru1PHT+ftzCYUDAxrp5bCiYF
+bvTrvrN2f9vmyy67LIjFYv1unnpqTby5ua1bOfPnPxqsXVsl35/d2H8fv62e
+wsLS5kWLlm1Tr2teXzPtvsLg+ocW77lx1aYa5Uyr2NY6Zd1Lb6vXvW315p0z
+frc9rl43aZuPRbHNPxw56sT+fOvEOzp/ctc9Haq58+5p8Tvvvqdbuaabq6+5
+Nu6298knn3ylpeV4tXLs+Ktz+fJy+f7c1BTkqY/5XFGeP06fWRQfs2DFH8ZU
+7C1TzowXDjfd9fzBA+p1b6rcv+FnNUfi6nUT2zx1o36bb67av+GHo6444Vf5
+8y++9fLR+iOq2f5GQ+f2o/XHlWu6mXZ/YZvb3scff3xLfzp/VK/pwi/8wi/8
+8rA/4xd+4Rd+4Vca4Rd+4Rd+edif8Qu/8Au/8CuN8Au/8Au/POzP+IVf+IVf
++JVG+IVf+IVfHvZn/MIv/MIv/Eoj/MIv/MIvD/szfuEXfuEXfqURfuEXfuGX
+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
+SW925eff/MSWLbt/YMdu3z6bMb/yzuX47Wzj/FEX54/aOH88uV7OHyt8/DyS
+57904Zcu/NLWV7/s/X25ubnZvtbFL134pQu/tPXBr3r31ve6+KULv3Thl7Yz
++DXQ5+98JYdfuvBLF35p4/9/1IRf2vBLF37pwi9d+KUNv3Thly780oVf2vBL
+E35pwy9d5+pXTk7O39l8JvX6QYMGfTgWi30xKyvr/N7ui1+a8Esbfuk6V7/y
+8vJuMqe6zbDPJ64bNmzY39r1u23mne6++KUJv7Thl65z9euiiy76K/PrmFlV
+7C7b+xfYbLbLv7CL7z3dffFLE35pwy9dPp7/MqummllN7lzS3lbaPGFz3pnu
+h1+a8Esbfuny4dfgwYM/Zl4dN8eO2ttVp3vOKzn80oRf2vBLlw+/zKwP2ewy
+v+LuGKyv98MvTfilDb90natf5tZfhH8XYpX51Wgzqa/3xS9N+KUNv3Sdi1+D
+Bg36gHn1tM268P1idw45cODAD/bl/vilCb+04Zeus/XLPcdlVpXZVLmfQbrr
+srOzv+B+lyI3N3dsXx4DvzThlzb80nU2frmfLbqfMZpdNe73JZI/Ztcts+te
+4eePp4ZfuvBL25+TX77CL034pQ2/dOGXLvzShV/a8EsXfunCL134pQ2/NOGX
+NvzShV+68EsXfmnDL134pQu/dOGXNvzShF/a8EsXfunCL134pQ2/dOGXLvzS
+hV/aovTr/wG2qN+/
+     "], {{0, 303}, {304, 0}}, {0, 255},
+     ColorFunction->RGBColor,
+     ImageResolution->96],
+    BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+    Selectable->False],
+   DefaultBaseStyle->"ImageGraphics",
+   ImageSize->{228., 227.25},
+   ImageSizeRaw->{228., 227.25},
+   PlotRange->{{0, 304}, {0, 303}}]], "Input",ExpressionUUID->
+  "139ce74e-a05d-46b2-a931-ae9db0d4f1f6"],
+ "\n\nWrite a function to find the rectangular intersection of two given love \
+rectangles.\nAs with the example above, love rectangles are always \
+\[OpenCurlyDoubleQuote]straight\[CloseCurlyDoubleQuote] and never \
+\[OpenCurlyDoubleQuote]diagonal.\[CloseCurlyDoubleQuote] More rigorously: \
+each side is parallel with either the x-axis or the y-axis.\nThey are defined \
+as dictionaries \:21b4 like this:\n",
+ StyleBox["  my_rectangle = {\n    # Coordinates of bottom-left corner\n    \
+\[OpenCurlyQuote]left_x\[CloseCurlyQuote]   : 1,\n    \
+\[OpenCurlyQuote]bottom_y\[CloseCurlyQuote] : 1,\n\n    # Width and height\n  \
+  \[OpenCurlyQuote]width\[CloseCurlyQuote]    : 6,\n    \
+\[OpenCurlyQuote]height\[CloseCurlyQuote]   : 3,\n\t}", "Program"],
+ "\nYour output rectangle should use this format as well."
+}], "Text",
+ CellChangeTimes->{{3.781531045553479*^9, 3.781531106855503*^9}, {
+  3.781531350843828*^9, 
+  3.781531372107727*^9}},ExpressionUUID->"c7542e35-06a9-4086-b6c8-\
+e43377f62641"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"e5d5dce6-6bc8-4cb3-b7f8-ddaa596522b7"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["7. Temperature Tracker (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/temperature-tracker"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/temperature-tracker"]], \
+"Subsection",
+ CellChangeTimes->{{3.781531126673411*^9, 3.7815311391267347`*^9}, {
+  3.781955906841854*^9, 3.781955907041545*^9}, {3.782240100656541*^9, 
+  3.782240111615973*^9}},ExpressionUUID->"abf8f113-a86e-4494-8c49-\
+6a3896c253f5"],
+
+Cell["\<\
+You decide to test if your oddly-mathematical heating company is fulfilling \
+its All-Time Max, Min, Mean and Mode Temperature Guarantee\[Trademark].
+
+Write a class TempTracker with these methods:
+
+1. insert()\[LongDash]records a new temperature
+2. get_max()\[LongDash]returns the highest temp we\[CloseCurlyQuote]ve seen \
+so far
+3. get_min()\[LongDash]returns the lowest temp we\[CloseCurlyQuote]ve seen so \
+far
+4. get_mean()\[LongDash]returns the mean \:21b4 of all temps we\
+\[CloseCurlyQuote]ve seen so far
+5. get_mode()\[LongDash]returns a mode \:21b4 of all temps we\
+\[CloseCurlyQuote]ve seen so far
+
+Optimize for space and time. Favor speeding up the getter methods get_max(), \
+get_min(), get_mean(), and get_mode() over speeding up the insert() method.
+
+get_mean() should return a float, but the rest of the getter methods can \
+return integers. Temperatures will all be inserted as integers. We\
+\[CloseCurlyQuote]ll record our temperatures in Fahrenheit, so we can assume \
+they\[CloseCurlyQuote]ll all be in the range 0..1100
+
+If there is more than one mode, return any of the modes.\
+\>", "Text",
+ CellChangeTimes->{{3.7815311589704313`*^9, 
+  3.781531190545683*^9}},ExpressionUUID->"0724e466-0f42-45e5-ad8b-\
+7b209d62900c"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"a6e7e349-e310-4c2b-a323-3948bf38030b"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["8. Balanced Binary Tree (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://leetcode.com/problems/balanced-binary-tree/"], None},
+ ButtonNote->
+  "https://leetcode.com/problems/balanced-binary-tree/"]], "Subsection",
+ CellChangeTimes->{{3.781451769744247*^9, 3.781451774622018*^9}, {
+  3.781451816886894*^9, 3.781451816887456*^9}, {3.781955917305805*^9, 
+  3.781955917545361*^9}, {3.7822401162319117`*^9, 
+  3.782240133663335*^9}},ExpressionUUID->"4e8e0d3e-b238-4e99-8bc3-\
+703c30e1badb"],
+
+Cell["\<\
+Given a binary tree, determine if it is height-balanced.
+For this problem, a height-balanced binary tree is defined as:
+a binary tree in which the left and right subtrees of every node differ in \
+height by no more than 1.
+Example 1:
+Given the following tree [3,9,20,null,null,15,7]:
+    3
+   / \\
+  9  20
+      /  \\
+   15   7
+Return true.
+
+Example 2:
+Given the following tree [1,2,2,3,3,null,null,4,4]:
+       1
+      / \\
+     2   2
+    / \\
+   3   3
+  / \\
+ 4   4
+Return false.\
+\>", "Text",
+ CellChangeTimes->{{3.7814517802942657`*^9, 
+  3.781451806317384*^9}},ExpressionUUID->"3f1d3a10-fdbb-4cbc-89e5-\
+49cb17105040"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"e895ff19-8775-43dd-8593-00798ceaba5e"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["9. Validate Binary Search Tree",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://leetcode.com/problems/validate-binary-search-tree/"], None},
+ ButtonNote->
+  "https://leetcode.com/problems/validate-binary-search-tree/"]], "Subsection",\
+
+ CellChangeTimes->{{3.781526082052087*^9, 3.7815260882195663`*^9}, {
+  3.781526186345928*^9, 
+  3.7815261863464108`*^9}},ExpressionUUID->"3f5dba6a-e88c-4690-8c9d-\
+444051b17c6c"],
+
+Cell["\<\
+Given a binary tree, determine if it is a valid binary search tree (BST).  \
+Assume a BST is defined as follows:
+
+- The left subtree of a node contains only nodes with keys less than the node\
+\[CloseCurlyQuote]s key.
+- The right subtree of a node contains only nodes with keys greater than the \
+node\[CloseCurlyQuote]s key.
+- Both the left and right subtrees must also be binary search trees.
+
+Example 1:
+    2
+   / \\
+1     3
+Input: [2,1,3], Output: true
+
+Example 2:
+    5
+   / \\
+1     4
+      /  \\
+   3      6
+Input: [5,1,4,null,null,3,6],  Output: false
+Explanation: The root node\[CloseCurlyQuote]s value is 5 but its right child\
+\[CloseCurlyQuote]s value is 4.\
+\>", "Text",
+ CellChangeTimes->{{3.781526109885797*^9, 3.7815261756336203`*^9}, {
+  3.7815263501975803`*^9, 3.781526380363841*^9}, {3.781526897156818*^9, 
+  3.781526927470636*^9}},ExpressionUUID->"c1062615-74ca-448f-8cc7-\
+d6f22a115153"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"f34871c5-ef5d-4c41-8fa6-17e06de3d238"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["10. Kth Smallest Element in BST",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://leetcode.com/problems/kth-smallest-element-in-a-bst/"], None},
+ 
+ ButtonNote->
+  "https://leetcode.com/problems/kth-smallest-element-in-a-bst/"]], \
+"Subsection",
+ CellChangeTimes->{{3.781526529868417*^9, 
+  3.781526548319392*^9}},ExpressionUUID->"1e62df4c-87f4-4f49-b1d6-\
+aacec0243952"],
+
+Cell["\<\
+Given a binary search tree, write a function kthSmallest to find the kth \
+smallest element in it.
+Note: You may assume k is always valid, 1 \[LessEqual] k \[LessEqual] BST\
+\[CloseCurlyQuote]s total elements.
+
+Example 1:
+Input: root = [3,1,4,null,2], k = 1
+   3
+  / \\
+1    4
+  \\
+   2
+Output: 1
+Example 2:
+
+Input: root = [5,3,6,2,4,null,null,1], k = 3
+       5
+      / \\
+    3   6
+    / \\
+  2   4
+  /
+1
+Output: 3
+Follow up: What if the BST is modified (insert/delete operations) often and \
+you need to find the kth smallest frequently? How would you optimize the \
+kthSmallest routine?\
+\>", "Text",
+ CellChangeTimes->{{3.7815265550608797`*^9, 
+  3.781526614118308*^9}},ExpressionUUID->"3cfc974c-bfd9-441c-93ec-\
+8e367607e736"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"50f1fd2a-20c1-4195-82dd-c38122bc283d"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["11. MillionGazillion (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/compress-url-list"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/compress-url-list"]], \
+"Subsection",
+ CellChangeTimes->{{3.781530726735564*^9, 3.781530732367415*^9}, {
+  3.78153122330767*^9, 3.781531223308182*^9}, {3.7819559461765957`*^9, 
+  3.781955946424197*^9}, {3.782240142215448*^9, 
+  3.782240148182776*^9}},ExpressionUUID->"7265ba4c-3cdd-4430-bbcf-\
+64e4d48d4a3b"],
+
+Cell["\<\
+I wrote a crawler that visits web pages, stores a few keywords in a database, \
+and follows links to other web pages. I noticed that my crawler was wasting a \
+lot of time visiting the same pages over and over, so I made a set, visited, \
+where I\[CloseCurlyQuote]m storing URLs I\[CloseCurlyQuote]ve already \
+visited. Now the crawler only visits a URL if it hasn\[CloseCurlyQuote]t \
+already been visited.
+
+Thing is, the crawler is running on my old desktop computer in my parents\
+\[CloseCurlyQuote] basement (where I totally don\[CloseCurlyQuote]t live \
+anymore), and it keeps running out of memory because visited is getting so \
+huge.
+
+How can I trim down the amount of space taken up by visited?\
+\>", "Text",
+ CellChangeTimes->{
+  3.781530742821065*^9},ExpressionUUID->"a62d8c5e-8afb-46f2-af38-\
+d2093f4383b2"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"00bb713a-4697-4d26-ae92-8a0c5f146716"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["12. Find in ordered set: Implement Binary Search",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/find-in-ordered-set"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/find-in-ordered-set"]], \
+"Subsection",
+ CellChangeTimes->{{3.781530822199244*^9, 3.781530868134686*^9}, {
+  3.781531233346629*^9, 
+  3.7815312333472137`*^9}},ExpressionUUID->"058c23e8-3846-40df-b06b-\
+9975a77cffcb"],
+
+Cell["\<\
+Suppose we had a list  of n integers sorted in ascending order. How quickly \
+could we check if a given integer is in the list?\
+\>", "Text",
+ CellChangeTimes->{{3.781530851577044*^9, 
+  3.781530856488386*^9}},ExpressionUUID->"20aafeca-f38f-42fe-80bf-\
+761cdecf7d4a"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"70b30168-c181-4fab-827c-20d340eb28ab"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["13. Find rotation point ",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/find-rotation-point"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/find-rotation-point"]], \
+"Subsection",
+ CellChangeTimes->{{3.781534200615267*^9, 3.781534216039185*^9}, {
+  3.7817019424691763`*^9, 3.781701943171898*^9}, {3.7817021568786373`*^9, 
+  3.781702157029914*^9}},ExpressionUUID->"d0b6798c-7233-4752-893f-\
+971cc0c77e26"],
+
+Cell["\<\
+I want to learn some big words so people think I\[CloseCurlyQuote]m smart.
+
+I opened up a dictionary to a page in the middle and started flipping \
+through, looking for words I didn\[CloseCurlyQuote]t know. I put each word I \
+didn\[CloseCurlyQuote]t know at increasing indices in a huge list I created \
+in memory. When I reached the end of the dictionary, I started from the \
+beginning and did the same thing until I reached the page I started at.
+
+Now I have a list of words that are mostly alphabetical, except they start \
+somewhere in the middle of the alphabet, reach the end, and then start from \
+the beginning of the alphabet. In other words, this is an alphabetically \
+ordered list that has been \[OpenCurlyDoubleQuote]rotated.\
+\[CloseCurlyDoubleQuote] For example:
+
+  words = [
+    \[OpenCurlyQuote]ptolemaic\[CloseCurlyQuote],
+    \[OpenCurlyQuote]retrograde\[CloseCurlyQuote],
+    \[OpenCurlyQuote]supplant\[CloseCurlyQuote],
+    \[OpenCurlyQuote]undulate\[CloseCurlyQuote],
+    \[OpenCurlyQuote]xenoepist\[CloseCurlyQuote],
+    \[OpenCurlyQuote]asymptote\[CloseCurlyQuote],  # <-- rotates here!
+    \[OpenCurlyQuote]babka\[CloseCurlyQuote],
+    \[OpenCurlyQuote]banoffee\[CloseCurlyQuote],
+    \[OpenCurlyQuote]engender\[CloseCurlyQuote],
+    \[OpenCurlyQuote]karpatka\[CloseCurlyQuote],
+    \[OpenCurlyQuote]othellolagkage\[CloseCurlyQuote],
+]
+
+Write a function for finding the index of the \[OpenCurlyDoubleQuote]rotation \
+point,\[CloseCurlyDoubleQuote] which is where I started working from the \
+beginning of the dictionary. This list is huge (there are lots of words I don\
+\[CloseCurlyQuote]t know) so we want to be efficient here.\
+\>", "Text",
+ CellChangeTimes->{{3.781534226546823*^9, 
+  3.7815342416775627`*^9}},ExpressionUUID->"8f3010d6-cd6e-4968-b7c3-\
+74cf488df398"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"e2d2be8f-ddc6-47b4-9ff5-65d7c9dc4936"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ ButtonBox["14. Inflight Entertainment / ",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://www.interviewcake.com/question/python3/inflight-\
+entertainment"], None},
+  ButtonNote->
+   "https://www.interviewcake.com/question/python3/inflight-entertainment"],
+ ButtonBox["TwoSum",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://leetcode.com/problems/two-sum/"], None},
+  ButtonNote->"https://leetcode.com/problems/two-sum/"]
+}], "Subsection",
+ CellChangeTimes->{{3.781534253687623*^9, 3.7815342709750147`*^9}, {
+  3.7817019038539753`*^9, 
+  3.781701917765377*^9}},ExpressionUUID->"8744d277-71bd-46d8-914a-\
+cfa24f912116"],
+
+Cell["\<\
+You\[CloseCurlyQuote]ve built an inflight entertainment system with on-demand \
+movie streaming.
+
+Users on longer flights like to start a second movie right when their first \
+one ends, but they complain that the plane usually lands before they can see \
+the ending. So you\[CloseCurlyQuote]re building a feature for choosing two \
+movies whose total runtimes will equal the exact flight length.
+
+Write a function that takes an integer flight_length (in minutes) and a list \
+of integers movie_lengths (in minutes) and returns a boolean indicating \
+whether there are two numbers in movie_lengths whose sum equals flight_length.
+
+When building your function:
+
+- Assume your users will watch exactly two movies
+- Don\[CloseCurlyQuote]t make your users watch the same movie twice
+- Optimize for runtime over memory
+\
+\>", "Text",
+ CellChangeTimes->{{3.781534279629528*^9, 3.781534292334443*^9}, {
+  3.781701868320372*^9, 
+  3.781701902023685*^9}},ExpressionUUID->"f8a517ef-3e93-4bf7-b351-\
+6370d922bd16"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"9c8a263f-7c73-4d6f-bf57-b3c22793e830"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  ButtonBox[
+   RowBox[{"15.", " ", "Fibonacci"}],
+   BaseStyle->"Hyperlink",
+   ButtonData->{
+     URL["https://www.interviewcake.com/question/python3/nth-fibonacci"], 
+     None},
+   ButtonNote->
+    "https://www.interviewcake.com/question/python3/nth-fibonacci"], 
+  TraditionalForm]],
+ FormatType->
+  "TraditionalForm",ExpressionUUID->"24aa7958-4125-41bf-a7d4-9d1fe5dc3252"]], \
+"Subsection",
+ CellChangeTimes->{{3.78153429822377*^9, 
+  3.78153432759072*^9}},ExpressionUUID->"460a327a-4a19-440a-82f2-\
+019750c5b641"],
+
+Cell["\<\
+Write a function fib() that takes an integer nn and returns the nnth \
+Fibonacci \:21b4 number.
+
+Let\[CloseCurlyQuote]s say our Fibonacci series is 0-indexed and starts with \
+0. So:
+
+fib(0)  # => 0
+fib(1)  # => 1
+fib(2)  # => 1
+fib(3)  # => 2
+fib(4)  # => 3
+...\
+\>", "Text",
+ CellChangeTimes->{
+  3.781534313326083*^9, {3.781788376209285*^9, 
+   3.7817883768565807`*^9}},ExpressionUUID->"c97f1b24-ce10-42b7-885a-\
+e6adbde7e97c"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"1b04965f-12d5-47a9-8e08-99d330ac9903"],
+
+Cell["\<\
+import unittest
+
+def fib(n):
+    # Compute the nth Fibonacci number
+    if 0 <= n <= 1:
+        return n
+    
+    f0, f1 = 0, 1
+    for x in range(2, n + 1):
+        res = f0 + f1
+        f0, f1 = f1, res
+    return res
+
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_zeroth_fibonacci(self):
+        actual = fib(0)
+        expected = 0
+        self.assertEqual(actual, expected)
+
+    def test_first_fibonacci(self):
+        actual = fib(1)
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_second_fibonacci(self):
+        actual = fib(2)
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_third_fibonacci(self):
+        actual = fib(3)
+        expected = 2
+        self.assertEqual(actual, expected)
+
+    def test_fifth_fibonacci(self):
+        actual = fib(5)
+        expected = 5
+        self.assertEqual(actual, expected)
+
+    def test_tenth_fibonacci(self):
+        actual = fib(10)
+        expected = 55
+        self.assertEqual(actual, expected)
+
+    def test_negative_fibonacci(self):
+        with self.assertRaises(Exception):
+            fib(-1)
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.7817882319428377`*^9, 3.7817882394789553`*^9}, {
+  3.781788307607814*^9, 
+  3.7817883215203533`*^9}},ExpressionUUID->"eb0a0344-006f-4f2f-9603-\
+bfb925c5a7a5"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"91c578d5-0a7d-4e23-9d2a-ff86e671e44c"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["16. Cake Thief",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/cake-thief"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/cake-thief"]], "Subsection",\
+
+ CellChangeTimes->{{3.781534344119483*^9, 
+  3.781534362440139*^9}},ExpressionUUID->"b839b347-1ac4-49bf-a379-\
+a53036f736b6"],
+
+Cell["\<\
+You are a renowned thief who has recently switched from stealing precious \
+metals to stealing cakes because of the insane profit margins. You end up \
+hitting the jackpot, breaking into the world\[CloseCurlyQuote]s largest \
+privately owned stock of cakes\[LongDash]the vault of the Queen of England.
+
+While Queen Elizabeth has a limited number of types of cake, she has an \
+unlimited supply of each type.
+
+Each type of cake has a weight and a value, stored in a tuple with two indices:
+
+An integer representing the weight of the cake in kilograms
+An integer representing the monetary value of the cake in British shillings
+
+For example:
+  # Weighs 7 kilograms and has a value of 160 shillings
+(7, 160)
+# Weighs 3 kilograms and has a value of 90 shillings
+(3, 90)
+
+You brought a duffel bag that can hold limited weight, and you want to make \
+off with the most valuable haul possible.
+Write a function max_duffel_bag_value() that takes a list of cake type tuples \
+and a weight capacity, and returns the maximum monetary value the duffel bag \
+can hold.
+
+For example:
+cake_tuples = [(7, 160), (3, 90), (2, 15)]
+capacity    = 20
+# Returns 555 (6 of the middle type of cake and 1 of the last type of cake)
+max_duffel_bag_value(cake_tuples, capacity)
+
+Weights and values may be any non-negative integer. Yes, \
+it\[CloseCurlyQuote]s weird to think about cakes that weigh nothing or duffel \
+bags that can\[CloseCurlyQuote]t hold anything. But we\[CloseCurlyQuote]re \
+not just super mastermind criminals\[LongDash]we\[CloseCurlyQuote]re also \
+meticulous about keeping our algorithms flexible and comprehensive.\
+\>", "Text",
+ CellChangeTimes->{{3.781534352218708*^9, 
+  3.781534384798971*^9}},ExpressionUUID->"56aed810-5f67-46c1-bbcf-\
+ba0f1ee86710"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"c1934d12-8bf8-432e-ac4f-2e4b41036ef9"],
+
+Cell["\<\
+import unittest
+
+def max_duffel_bag_value(cake_tuples, weight_capacity):
+
+    # Calculate the maximum value we can carry
+    n = len(cake_tuples)
+    dp = [[-2] * (weight_capacity + 1) for _ in range(n)]
+    
+    return maxValue(cake_tuples, n-1, weight_capacity, dp)
+    
+def maxValue(cake, i, c, dp):
+    if i < 0 or c <= 0:
+        return 0
+    
+    if dp[i][c] == -2:
+        
+        exclude_curr = maxValue(cake, i - 1, c , dp)
+        curr_weight, curr_val = cake[i]
+        if curr_val <= 0:
+            dp[i][c] = exclude_curr
+            
+        if curr_weight == 0:
+            dp[i][c] = float(\"inf\") if curr_val > 0 else exclude_curr
+            
+        else:
+            include_curr = curr_val + maxValue(cake, i , c - curr_weight, dp) \
+if curr_weight <= c else 0
+            dp[i][c] = max(include_curr, exclude_curr)
+    
+    return dp[i][c]
+
+# Tests
+class Test(unittest.TestCase):
+
+    def test_one_cake(self):
+        actual = max_duffel_bag_value([(2, 1)], 9)
+        expected = 4
+        self.assertEqual(actual, expected)
+
+    def test_two_cakes(self):
+        actual = max_duffel_bag_value([(4, 4), (5, 5)], 9)
+        expected = 9
+        self.assertEqual(actual, expected)
+
+    def test_only_take_less_valuable_cake(self):
+        actual = max_duffel_bag_value([(4, 4), (5, 5)], 12)
+        expected = 12
+        self.assertEqual(actual, expected)
+
+    def test_lots_of_cakes(self):
+        actual = max_duffel_bag_value([(2, 3), (3, 6), (5, 1), (6, 1), (7, \
+1), (8, 1)], 7)
+        expected = 12
+        self.assertEqual(actual, expected)
+
+    def test_value_to_weight_ratio_is_not_optimal(self):
+        actual = max_duffel_bag_value([(51, 52), (50, 50)], 100)
+        expected = 100
+        self.assertEqual(actual, expected)
+
+    def test_zero_capacity(self):
+        actual = max_duffel_bag_value([(1, 2)], 0)
+        expected = 0
+        self.assertEqual(actual, expected)
+
+    def test_cake_with_zero_value_and_weight(self):
+        actual = max_duffel_bag_value([(0, 0), (2, 1)], 7)
+        expected = 3
+        self.assertEqual(actual, expected)
+
+    def test_cake_with_non_zero_value_and_zero_weight(self):
+        actual = max_duffel_bag_value([(0, 5)], 5)
+        expected = float('inf')
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.781788021641346*^9, 3.7817880339834347`*^9}, 
+   3.7818068899761953`*^9},ExpressionUUID->"616c98b0-6586-4196-a2e1-\
+a5f66787c5da"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"5c072b41-6e37-41df-92f1-7981b9972a38"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["17. Javascript Scope *",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python/js-scope"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python/js-scope"]], "Subsection",
+ CellChangeTimes->{{3.781630869197466*^9, 3.781630902853277*^9}, {
+  3.781631067712562*^9, 3.7816310677129507`*^9}, {3.7819559698476763`*^9, 
+  3.78195597010326*^9}},ExpressionUUID->"b7868728-ebb7-43e0-8851-\
+a30360841552"],
+
+Cell[TextData[{
+ "If we execute this Javascript, what will the browser\[CloseCurlyQuote]s \
+console show?\n\n",
+ StyleBox["var text = \[OpenCurlyQuote]outside\[CloseCurlyQuote];\nfunction \
+logIt(){\n    console.log(text);\n    var text = \[OpenCurlyQuote]inside\
+\[CloseCurlyQuote];\n};\nlogIt();", "CodeText"]
+}], "Text",
+ CellChangeTimes->{{3.78163092586231*^9, 3.781630934738961*^9}, 
+   3.7817926011408777`*^9},ExpressionUUID->"44e3ee89-8f3b-480d-a885-\
+b0488f04b85a"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"76f69400-3966-40c5-bb15-2ca53cab6b71"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["18. What's wrong with this javascript *",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python/js-whats-wrong"], None},
+ 
+ ButtonNote->
+  "https://www.interviewcake.com/question/python/js-whats-wrong"]], \
+"Subsection",
+ CellChangeTimes->{{3.78163095317246*^9, 3.781630972643278*^9}, {
+  3.781631042141768*^9, 3.781631042142119*^9}, {3.7819559773829803`*^9, 
+  3.781955977551075*^9}},ExpressionUUID->"852e957f-f621-4921-ba0a-\
+5d4084387cc0"],
+
+Cell[TextData[{
+ "We\[CloseCurlyQuote]re building a web game where everybody wins and we are \
+all friends forever.\n\nIt\[CloseCurlyQuote]s simple\[LongDash]you click on \
+one of three boxes to see what nice thing you\[CloseCurlyQuote]ve won. You \
+always win something nice. Because we love you.\n\nHere\[CloseCurlyQuote]s \
+what we have so far. Something\[CloseCurlyQuote]s going wrong though. Can you \
+tell what it is?\n\n",
+ StyleBox["<button \
+id=\[CloseCurlyDoubleQuote]btn-0\[CloseCurlyDoubleQuote]>Button 1</button>\n\
+<button id=\[CloseCurlyDoubleQuote]btn-1\[CloseCurlyDoubleQuote]>Button \
+2</button>\n<button \
+id=\[CloseCurlyDoubleQuote]btn-2\[CloseCurlyDoubleQuote]>Button 3</button>\n\n\
+<script type=\[CloseCurlyDoubleQuote]text/javascript\[CloseCurlyDoubleQuote]>\
+\n  const prizes = [\[OpenCurlyQuote]A Unicorn!\[CloseCurlyQuote], \
+\[OpenCurlyQuote]A Hug!\[CloseCurlyQuote], \[OpenCurlyQuote]Fresh Laundry!\
+\[CloseCurlyQuote]];\n  for (var btnNum = 0; btnNum < prizes.length; \
+btnNum++) {\n\n    // For each of our buttons, when the user clicks it...\n   \
+ document.getElementById(`btn-${btnNum}`).onclick = () => {\n\n      // Tell \
+her what she\[CloseCurlyQuote]s won!\n      alert(prizes[btnNum]);\n    };\n  \
+}\n</script>", "CodeText"],
+ "\n\nThe syntax is just fine\[LongDash]the problem is some unexpected \
+behavior."
+}], "Text",
+ CellChangeTimes->{{3.781630997289976*^9, 3.7816310183292294`*^9}, 
+   3.781788386771806*^9},ExpressionUUID->"9ac6b85a-943a-42a9-9d48-\
+ac2f250f3072"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"5b2e0030-e408-40c4-8f4f-989b6631ea4b"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["19. Implement queue using two stacks",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://leetcode.com/problems/implement-queue-using-stacks/\
+description/"], None},
+ ButtonNote->
+  "https://leetcode.com/problems/implement-queue-using-stacks/description/"]],\
+ "Subsection",
+ CellChangeTimes->{{3.781631163345158*^9, 
+  3.7816312004156723`*^9}},ExpressionUUID->"bb37d9fa-8158-4198-a7e2-\
+401873ed2b4d"],
+
+Cell["\<\
+Implement the following operations of a queue using stacks.
+push(x) -- Push element x to the back of queue.
+pop() -- Removes the element from in front of queue.
+peek() -- Get the front element.
+empty() -- Return whether the queue is empty.
+
+Example:
+MyQueue queue = new MyQueue();
+queue.push(1);
+queue.push(2);  
+queue.peek();  // returns 1
+queue.pop();   // returns 1
+queue.empty(); // returns false
+
+Notes:
+You must use only standard operations of a stack -- which means only push to \
+top, peek/pop from top, size, and is empty operations are valid.
+Depending on your language, stack may not be supported natively. You may \
+simulate a stack by using a list or deque (double-ended queue), as long as \
+you use only standard operations of a stack.
+You may assume that all operations are valid (for example, no pop or peek \
+operations will be called on an empty queue).\
+\>", "Text",
+ CellChangeTimes->{
+  3.7816311785549192`*^9, {3.781631295333765*^9, 3.781631303389134*^9}, {
+   3.781788392712145*^9, 
+   3.781788449420744*^9}},ExpressionUUID->"2860073a-a32c-4854-b3c7-\
+040cfbf0d3a8"],
+
+Cell["\<\
+import unittest
+
+class QueueTwoStacks(object):
+
+    # Implement the enqueue and dequeue methods
+    def __init__(self):
+        self.insertStack= list()
+        self.removeStack = list()
+        self.size = 0
+
+    def enqueue(self, item):
+        self.size += 1
+        self.insertStack.append(item)
+
+    def dequeue(self):
+        if self.size == 0:
+            raise Exception(\"queue is not empty\")
+            
+        if not self.removeStack: # self.removeStack == []
+            # trasfer items from insertStack to removeStack
+            while self.insertStack:
+                popped = self.insertStack.pop()
+                self.removeStack.append(popped)
+        
+        self.size -= 1
+        return self.removeStack.pop()\
+\>", "Program",
+ CellChangeTimes->{{3.781791481574194*^9, 3.78179149935048*^9}, {
+   3.78179153157992*^9, 3.7817915406036654`*^9}, {3.7817924105050907`*^9, 
+   3.7817924214053907`*^9}, 
+   3.7818952215508003`*^9},ExpressionUUID->"a4c5338d-1cf0-4efc-b61c-\
+279378f2b9d9"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"82c24b67-8fe4-4b6a-b192-305e34fb9bc9"],
+
+Cell["\<\
+
+# Tests
+class Test(unittest.TestCase):
+
+    def test_basic_queue_operations(self):
+        queue = QueueTwoStacks()
+
+        queue.enqueue(1)
+        queue.enqueue(2)
+        queue.enqueue(3)
+
+        actual = queue.dequeue()
+        expected = 1
+        self.assertEqual(actual, expected)
+
+        actual = queue.dequeue()
+        expected = 2
+        self.assertEqual(actual, expected)
+
+        queue.enqueue(4)
+
+        actual = queue.dequeue()
+        expected = 3
+        self.assertEqual(actual, expected)
+
+        actual = queue.dequeue()
+        expected = 4
+        self.assertEqual(actual, expected)
+
+    def test_error_when_dequeue_from_new_queue(self):
+        queue = QueueTwoStacks()
+
+        with self.assertRaises(Exception):
+            queue.dequeue()
+
+    def test_error_when_dequeue_from_empty_queue(self):
+        queue = QueueTwoStacks()
+
+        queue.enqueue(1)
+        queue.enqueue(2)
+
+        actual = queue.dequeue()
+        expected = 1
+        self.assertEqual(actual, expected)
+
+        actual = queue.dequeue()
+        expected = 2
+        self.assertEqual(actual, expected)
+
+        with self.assertRaises(Exception):
+            queue.dequeue()
+            
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.781791481574194*^9, 3.78179149935048*^9}, {
+  3.78179153157992*^9, 3.7817915406036654`*^9}, {3.7817924105050907`*^9, 
+  3.7817924214053907`*^9}},ExpressionUUID->"d6b1efb3-5ad4-46d5-b8c4-\
+584c4cd90f5d"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"a0795f8f-33a5-469f-b1b1-8e545a59be53"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["20. Largest Stack",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python/largest-stack"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python/largest-stack"]], \
+"Subsection",
+ CellChangeTimes->{{3.781631335558814*^9, 3.781631363565721*^9}, {
+  3.781631440607572*^9, 
+  3.781631440607894*^9}},ExpressionUUID->"5cc1b6ec-4d50-4d24-9679-\
+20b71386e652"],
+
+Cell[TextData[{
+ "You want to be able to access the largest element in a stack. \:21b4\n\nYou\
+\[CloseCurlyQuote]ve already implemented this Stack class:\n\n",
+ StyleBox["  class Stack(object):\n    def __init__(self):\n        \
+\[OpenCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\
+Initialize an empty stack\[CloseCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\
+\[CloseCurlyDoubleQuote]\n        self.items = []\n\n    def push(self, \
+item):\n        \[OpenCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\
+\[CloseCurlyDoubleQuote]Push a new item onto the \
+stack\[CloseCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\
+\n        self.items.append(item)\n\n    def pop(self):\n        \
+\[OpenCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\[CloseCurlyDoubleQuote]Remove \
+and return the last item\[CloseCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\
+\[CloseCurlyDoubleQuote]\n        # If the stack is empty, return None\n      \
+  # (it would also be reasonable to throw an exception)\n        if not \
+self.items:\n            return None\n        return self.items.pop()\n\n    \
+def peek(self):\n        \[OpenCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\
+\[CloseCurlyDoubleQuote]Return the last item without removing it\
+\[CloseCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\[CloseCurlyDoubleQuote]\n    \
+    if not self.items:\n            return None\n        return \
+self.items[-1]", "CodeText"],
+ StyleBox["\n", "CodeText"],
+ "\.08\nUse your Stack class to implement a new class MaxStack with a method \
+get_max() that returns the largest element in the stack. get_max() should not \
+remove the item.\n\nYour stacks will contain only integers."
+}], "Text",
+ CellChangeTimes->{{3.781631395069656*^9, 3.781631413635929*^9}, {
+  3.781631470790556*^9, 
+  3.78163149211697*^9}},ExpressionUUID->"c1b4a7a0-d0b8-4a83-9859-\
+2853c7ab72fa"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"e9b1a2ef-f788-42b9-a2f1-b5c1982efedc"],
+
+Cell["\<\
+import unittest
+
+class Stack(object):
+
+    def __init__(self):
+        \"\"\"Initialize an empty stack\"\"\"
+        self.items = []
+
+    def push(self, item):
+        \"\"\"Push a new item onto the stack\"\"\"
+        self.items.append(item)
+
+    def pop(self):
+        \"\"\"Remove and return the last item\"\"\"
+        # If the stack is empty, return None
+        # (it would also be reasonable to throw an exception)
+        if not self.items:
+            return None
+
+        return self.items.pop()
+
+    def peek(self):
+        \"\"\"Return the last item without removing it\"\"\"
+        if not self.items:
+            return None
+        return self.items[-1]
+
+class MaxStack(object):
+
+    # Implement the push, pop, and get_max methods
+    def __init__(self):
+        self.s = Stack()
+        self.m = Stack()
+
+    def push(self, item):
+        self.s.push(item)
+        maxsofar = self.m.peek()
+        if maxsofar is None or maxsofar < item:
+            self.m.push(item)
+        else:
+            self.m.push(maxsofar)
+
+    def pop(self):
+        if self.s.peek():
+            self.m.pop()
+            return self.s.pop()
+        return None
+    
+    def get_max(self):
+        return self.m.peek()
+
+class MaxStackOptimizedForSpace(object):
+
+    # Implement the push, pop, and get_max methods
+    def __init__(self):
+        self.s = Stack()
+        self.m = Stack()
+
+    def push(self, item):
+        self.s.push(item)
+        maxsofar = self.m.peek()
+        if maxsofar is None or maxsofar <= item:
+            self.m.push(item)
+    
+    def pop(self):
+        if self.s.peek():
+            if self.m.peek() == self.s.peek():
+                self.m.pop()
+            return self.s.pop()
+        return None
+    
+    def get_max(self):
+        return self.m.peek()
+        \
+\>", "Program",
+ CellChangeTimes->{{3.7819462588036327`*^9, 3.78194629787344*^9}, {
+  3.781946505175609*^9, 3.7819465196605*^9}, {3.781947238304606*^9, 
+  3.781947248848381*^9}},ExpressionUUID->"a0ccd014-e6ba-42fa-9200-\
+2b1d59bb440e"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"048dd78a-3966-4914-b262-e900afaf5067"],
+
+Cell["\<\
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_stack_usage(self):
+        max_stack = MaxStack()
+
+        max_stack.push(5)
+
+        actual = max_stack.get_max()
+        expected = 5
+        self.assertEqual(actual, expected)
+
+        max_stack.push(4)
+        max_stack.push(7)
+        max_stack.push(7)
+        max_stack.push(8)
+
+        actual = max_stack.get_max()
+        expected = 8
+        self.assertEqual(actual, expected)
+
+        actual = max_stack.pop()
+        expected = 8
+        self.assertEqual(actual, expected)
+
+        actual = max_stack.get_max()
+        expected = 7
+        self.assertEqual(actual, expected)
+
+        actual = max_stack.pop()
+        expected = 7
+        self.assertEqual(actual, expected)
+
+        actual = max_stack.get_max()
+        expected = 7
+        self.assertEqual(actual, expected)
+
+        actual = max_stack.pop()
+        expected = 7
+        self.assertEqual(actual, expected)
+
+        actual = max_stack.get_max()
+        expected = 5
+        self.assertEqual(actual, expected)
+
+        actual = max_stack.pop()
+        expected = 4
+        self.assertEqual(actual, expected)
+
+        actual = max_stack.get_max()
+        expected = 5
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.7819462588036327`*^9, 
+  3.781946271999498*^9}},ExpressionUUID->"243015ee-bd0b-4315-a1eb-\
+8f77cb731c9e"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"581fbf37-7627-456f-bea2-1ee9e21df48c"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["21.  The Stolen Breakfast Drone",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python/find-unique-int-among-\
+duplicates"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python/find-unique-int-among-\
+duplicates"]], "Subsection",
+ CellChangeTimes->{{3.78163166981001*^9, 
+  3.781631720655093*^9}},ExpressionUUID->"c56975dd-a607-45f8-b000-\
+722cfdd48e35"],
+
+Cell["\<\
+Your company delivers breakfast via autonomous quadcopter drones. And \
+something mysterious has happened.
+
+Each breakfast delivery is assigned a unique ID, a positive integer. When one \
+of the company\[CloseCurlyQuote]s 100 drones takes off with a delivery, the \
+delivery\[CloseCurlyQuote]s ID is added to a list, delivery_id_confirmations. \
+When the drone comes back and lands, the ID is again added to the same list.
+
+After breakfast this morning there were only 99 drones on the tarmac. One of \
+the drones never made it back from a delivery. We suspect a secret agent from \
+Amazon placed an order and stole one of our patented drones. To track them \
+down, we need to find their delivery ID.
+
+Given the list of IDs, which contains many duplicate integers and one unique \
+integer, find the unique integer.
+
+The IDs are not guaranteed to be sorted or sequential. Orders aren\
+\[CloseCurlyQuote]t always fulfilled in the order they were received, and \
+some deliveries get cancelled before takeoff.\
+\>", "Text",
+ CellChangeTimes->{
+  3.781631700639991*^9},ExpressionUUID->"12911a81-7e45-42b0-b8e1-\
+a4089d3536a9"],
+
+Cell["\<\
+import unittest
+
+def find_unique_delivery_id(delivery_ids):
+
+    # Find the one unique ID in the list
+    unique = delivery_ids[0]
+    for x in delivery_ids[1:]:
+        unique ^= x
+
+    return unique
+
+# Tests
+class Test(unittest.TestCase):
+
+    def test_one_drone(self):
+        actual = find_unique_delivery_id([1])
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_unique_id_comes_first(self):
+        actual = find_unique_delivery_id([1, 2, 2])
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_unique_id_comes_last(self):
+        actual = find_unique_delivery_id([3, 3, 2, 2, 1])
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_unique_id_in_middle(self):
+        actual = find_unique_delivery_id([3, 2, 1, 2, 3])
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_many_drones(self):
+        actual = find_unique_delivery_id([2, 5, 4, 8, 6, 3, 1, 4, 2, 3, 6, 5, \
+1])
+        expected = 8
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.781948322109262*^9, 
+  3.781948328451767*^9}},ExpressionUUID->"2fd44789-c83f-4641-82dc-\
+3ffe3ea43744"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"b42aedea-4287-44c7-845b-7b9ead29856e"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["22. Delete Node",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/delete-node"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/delete-node"]], "Subsection",\
+
+ CellChangeTimes->{{3.781948734626034*^9, 
+  3.781948768412079*^9}},ExpressionUUID->"8d7949d1-8151-45cd-b5a2-\
+cdc0c6afeaaa"],
+
+Cell["\<\
+Delete a node from a singly-linked list, \:21b4 given only a variable \
+pointing to that node.The input could, for example, be the variable b below:
+
+class LinkedListNode(object):
+
+    def __init__(self, value):
+        self.value = value
+        self.next  = None
+
+a = LinkedListNode('A')
+b = LinkedListNode('B')
+c = LinkedListNode('C')
+
+a.next = b
+b.next = c
+
+delete_node(b)\
+\>", "Text",
+ CellChangeTimes->{{3.781948747113586*^9, 
+  3.781948752432691*^9}},ExpressionUUID->"2295a9f0-3220-49dd-946b-\
+0c4ad25bff2e"],
+
+Cell["\<\
+import unittest
+
+
+def delete_node(node_to_delete):
+
+    # Delete the input node from the linked list
+    next_node = node_to_delete.next
+    node_to_delete.value = next_node.value
+    node_to_delete.next = next_node.next\
+\>", "Program",
+ CellChangeTimes->{{3.7819488895670567`*^9, 
+  3.781948905693901*^9}},ExpressionUUID->"46401d85-8259-40a0-8972-\
+cbd47c333817"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"6f5bdbb8-e0fe-45bf-9b3b-89ed129f5e98"],
+
+Cell["\<\
+# Tests
+class Test(unittest.TestCase):
+
+    class LinkedListNode(object):
+
+        def __init__(self, value, next=None):
+            self.value = value
+            self.next  = next
+
+        def get_values(self):
+            node = self
+            values = []
+            while node is not None:
+                values.append(node.value)
+                node = node.next
+            return values
+
+    def setUp(self):
+        self.fourth = Test.LinkedListNode(4)
+        self.third = Test.LinkedListNode(3, self.fourth)
+        self.second = Test.LinkedListNode(2, self.third)
+        self.first = Test.LinkedListNode(1, self.second)
+
+    def test_node_at_beginning(self):
+        delete_node(self.first)
+        actual = self.first.get_values()
+        expected = [2, 3, 4]
+        self.assertEqual(actual, expected)
+
+    def test_node_in_middle(self):
+        delete_node(self.second)
+        actual = self.first.get_values()
+        expected = [1, 3, 4]
+        self.assertEqual(actual, expected)
+
+    def test_node_at_end(self):
+        with self.assertRaises(Exception):
+            delete_node(self.fourth)
+
+    def test_one_node_in_list(self):
+        unique = Test.LinkedListNode(1)
+        with self.assertRaises(Exception):
+            delete_node(unique)
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.7819488895670567`*^9, 
+  3.7819489117384653`*^9}},ExpressionUUID->"d0987a03-2b2b-42d0-b245-\
+824eac9ad371"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["23. Does this LinkedList have a cycle",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/linked-list-cycles"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/linked-list-cycles"]], \
+"Subsection",
+ CellChangeTimes->{{3.78194937456769*^9, 3.781949375087181*^9}, {
+  3.7819494144805603`*^9, 3.781949431664266*^9}, {3.781952497306734*^9, 
+  3.781952500529683*^9}},ExpressionUUID->"c3e753e4-4e62-41e6-8b3d-\
+6328f5713e9e"],
+
+Cell["\<\
+You have a singly-linked list \:21b4 and want to check if it contains a \
+cycle. A singly-linked list is built with nodes, where each node has:
+
+node.next\[LongDash]the next node in the list.
+node.value\[LongDash]the data held in the node. For example, if our linked \
+list stores people in line at the movies, node.value might be the person\
+\[CloseCurlyQuote]s name.
+
+For example:
+
+ class LinkedListNode(object):
+
+    def __init__(self, value):
+        self.value = value
+        self.next  = None
+
+A cycle occurs when a node\[CloseCurlyQuote]s next points back to a previous \
+node in the list. The linked list is no longer linear with a beginning and \
+end\[LongDash]instead, it cycles through a loop of nodes.
+Write a function contains_cycle() that takes the first node in a \
+singly-linked list and returns a boolean indicating whether the list contains \
+a cycle.\
+\>", "Text",
+ CellChangeTimes->{{3.7819494544850492`*^9, 
+  3.781949473286371*^9}},ExpressionUUID->"67ced437-32f7-4e60-8475-\
+f3db547ad8aa"],
+
+Cell["\<\
+import unittest
+
+def contains_cycle(first_node):
+
+    # Check if the linked list contains a cycle
+    slow = first_node
+    fast = first_node
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+
+    return False
+    \
+\>", "Program",
+ CellChangeTimes->{{3.781949390317917*^9, 3.7819494010426493`*^9}, {
+  3.78195243767728*^9, 
+  3.781952447564418*^9}},ExpressionUUID->"3b8e5301-bcbf-4679-98b9-\
+fb4dd6dbe2a7"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"51b0e743-3a5e-45b5-934e-962236f4fba6"],
+
+Cell["\<\
+
+# Tests
+class Test(unittest.TestCase):
+
+    class LinkedListNode(object):
+
+        def __init__(self, value, next=None):
+            self.value = value
+            self.next  = next
+
+    def test_linked_list_with_no_cycle(self):
+        fourth = Test.LinkedListNode(4)
+        third = Test.LinkedListNode(3, fourth)
+        second = Test.LinkedListNode(2, third)
+        first = Test.LinkedListNode(1, second)
+        result = contains_cycle(first)
+        self.assertFalse(result)
+
+    def test_cycle_loops_to_beginning(self):
+        fourth = Test.LinkedListNode(4)
+        third = Test.LinkedListNode(3, fourth)
+        second = Test.LinkedListNode(2, third)
+        first = Test.LinkedListNode(1, second)
+        fourth.next = first
+        result = contains_cycle(first)
+        self.assertTrue(result)
+
+    def test_cycle_loops_to_middle(self):
+        fifth = Test.LinkedListNode(5)
+        fourth = Test.LinkedListNode(4, fifth)
+        third = Test.LinkedListNode(3, fourth)
+        second = Test.LinkedListNode(2, third)
+        first = Test.LinkedListNode(1, second)
+        fifth.next = third
+        result = contains_cycle(first)
+        self.assertTrue(result)
+
+    def test_two_node_cycle_at_end(self):
+        fifth = Test.LinkedListNode(5)
+        fourth = Test.LinkedListNode(4, fifth)
+        third = Test.LinkedListNode(3, fourth)
+        second = Test.LinkedListNode(2, third)
+        first = Test.LinkedListNode(1, second)
+        fifth.next = fourth
+        result = contains_cycle(first)
+        self.assertTrue(result)
+
+    def test_empty_list(self):
+        result = contains_cycle(None)
+        self.assertFalse(result)
+
+    def test_one_element_linked_list_no_cycle(self):
+        first = Test.LinkedListNode(1)
+        result = contains_cycle(first)
+        self.assertFalse(result)
+
+    def test_one_element_linked_list_cycle(self):
+        first = Test.LinkedListNode(1)
+        first.next = first
+        result = contains_cycle(first)
+        self.assertTrue(result)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.781949390317917*^9, 
+  3.7819493989775333`*^9}},ExpressionUUID->"8e63a3d9-fb91-4fba-bca2-\
+a5d5b9e3ddd3"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["24 \.08. Reverse LinkedList",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/reverse-linked-list"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/reverse-linked-list"]], \
+"Subsection",
+ CellChangeTimes->{{3.7819524622524776`*^9, 
+  3.7819525062430983`*^9}},ExpressionUUID->"db7352a4-5f5c-4cc3-ac26-\
+54366805ead4"],
+
+Cell["\<\
+Hooray! It\[CloseCurlyQuote]s opposite day. Linked lists go the opposite way \
+today.
+Write a function for reversing a linked list. \:21b4 Do it in place. \:21b4
+Your function will have one input: the head of the list.
+Your function should return the new head of the list.
+
+Here\[CloseCurlyQuote]s a sample linked list node class:
+
+  class LinkedListNode(object):
+
+    def __init__(self, value):
+        self.value = value
+        self.next  = None\
+\>", "Text",
+ CellChangeTimes->{{3.781952522998952*^9, 
+  3.7819525277053337`*^9}},ExpressionUUID->"4cbf4d19-d926-48eb-9f03-\
+b5f040247696"],
+
+Cell["\<\
+import unittest
+
+# Recursive Implementation
+def reverse(head_of_list):
+
+    # Reverse the linked list in place
+    if head_of_list is None or head_of_list.next is None:
+        return head_of_list
+    return rev(head_of_list)
+
+def rev(curr):
+    if curr.next is None:
+        return curr
+    
+    next_node = curr.next
+    curr.next = None
+    reversed_next = rev(next_node)
+    next_node.next = curr
+    return reversed_next
+
+# Iterative Implementation   
+def reverse_iter(head_of_list):
+
+    # Reverse the linked list in place
+    if head_of_list is None or head_of_list.next is None:
+        return head_of_list
+        
+    prev = None
+    curr = head_of_list
+    while curr:
+        next_node = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next_node
+    
+    return prev
+# Tests\
+\>", "Program",
+ CellChangeTimes->{{3.781953284780631*^9, 3.781953297161379*^9}, {
+  3.781953502787374*^9, 
+  3.78195354269331*^9}},ExpressionUUID->"f84e3f62-d918-44fb-a1a4-\
+5f0c96b65c42"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"e9223586-f44f-4bf6-8e90-2aa40656deb8"],
+
+Cell["\<\
+
+class Test(unittest.TestCase):
+
+    class LinkedListNode(object):
+
+        def __init__(self, value, next=None):
+            self.value = value
+            self.next  = next
+
+        def get_values(self):
+            node = self
+            values = []
+            while node is not None:
+                values.append(node.value)
+                node = node.next
+            return values
+
+    def test_short_linked_list(self):
+        second = Test.LinkedListNode(2)
+        first = Test.LinkedListNode(1, second)
+
+        result = reverse(first)
+        self.assertIsNotNone(result)
+
+        actual = result.get_values()
+        expected = [2, 1]
+        self.assertEqual(actual, expected)
+
+    def test_long_linked_list(self):
+        sixth = Test.LinkedListNode(6)
+        fifth = Test.LinkedListNode(5, sixth)
+        fourth = Test.LinkedListNode(4, fifth)
+        third = Test.LinkedListNode(3, fourth)
+        second = Test.LinkedListNode(2, third)
+        first = Test.LinkedListNode(1, second)
+
+        result = reverse(first)
+        self.assertIsNotNone(result)
+
+        actual = result.get_values()
+        expected = [6, 5, 4, 3, 2, 1]
+        self.assertEqual(actual, expected)
+
+    def test_one_element_linked_list(self):
+        first = Test.LinkedListNode(1)
+
+        result = reverse(first)
+        self.assertIsNotNone(result)
+
+        actual = result.get_values()
+        expected = [1]
+        self.assertEqual(actual, expected)
+
+    def test_empty_linked_list(self):
+        result = reverse(None)
+        self.assertIsNone(result)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.781953284780631*^9, 3.781953297161379*^9}, {
+  3.781953502787374*^9, 
+  3.781953530263659*^9}},ExpressionUUID->"7d30b4a4-c062-46a1-a69a-\
+19aa4718a7de"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["25. Kth to the last node in singly linked list",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/kth-to-last-node-in-\
+singly-linked-list"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/kth-to-last-node-in-singly-\
+linked-list"]], "Subsection",
+ CellChangeTimes->{{3.781953924819895*^9, 3.7819539254743853`*^9}, {
+  3.781953975906168*^9, 
+  3.781953994536249*^9}},ExpressionUUID->"84af8ec6-eb48-464f-98ce-\
+a6d9b2fb40b2"],
+
+Cell[TextData[{
+ "You have a linked list \:21b4 and want to find the kkth to last node.\n\
+Write a function kth_to_last_node() that takes an integer kk and the \
+head_node of a singly-linked list, and returns the kkth to last node in the \
+list.\nFor example:\n",
+ StyleBox["\n  class LinkedListNode:\n\n    def __init__(self, value):\n      \
+  self.value = value\n        self.next  = None\n        \na = \
+LinkedListNode(\[OpenCurlyDoubleQuote]Angel Food\[CloseCurlyDoubleQuote])\nb \
+= LinkedListNode(\[OpenCurlyDoubleQuote]Bundt\[CloseCurlyDoubleQuote])\nc = \
+LinkedListNode(\[OpenCurlyDoubleQuote]Cheese\[CloseCurlyDoubleQuote])\nd = \
+LinkedListNode(\[OpenCurlyDoubleQuote]Devil\[CloseCurlyQuote]s Food\
+\[CloseCurlyDoubleQuote])\ne = LinkedListNode(\[OpenCurlyDoubleQuote]Eccles\
+\[CloseCurlyDoubleQuote])\n\na.next = b\nb.next = c\nc.next = d\nd.next = e\n\
+\n# Returns the node with value \
+\[OpenCurlyDoubleQuote]Devil\[CloseCurlyQuote]s Food\[CloseCurlyDoubleQuote] \
+(the 2nd to last node)\nkth_to_last_node(2, a)", "CodeText"]
+}], "Text",
+ CellChangeTimes->{{3.781954011581314*^9, 
+  3.781954025831415*^9}},ExpressionUUID->"c53001cc-ffc3-4803-bbf7-\
+910a3eae58bc"],
+
+Cell["\<\
+import unittest
+
+def kth_to_last_node(k, head):
+
+    # Return the kth to last node in the linked list
+    if k == 0:
+        raise Exception(\"error\")
+    start = 1
+    fast = head
+    while start <= k :
+        fast = fast.next
+        start += 1
+    
+    slow = head
+    while fast:
+        fast = fast.next
+        slow = slow.next
+
+    return slow\
+\>", "Program",
+ CellChangeTimes->{{3.781955722163521*^9, 
+  3.781955739031497*^9}},ExpressionUUID->"00fbcc37-b9cc-4579-b6f8-\
+6618910dce3a"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"8ec5600c-beb0-43dd-af7e-9ae097b2e538"],
+
+Cell["\<\
+# Tests
+
+class Test(unittest.TestCase):
+
+    class LinkedListNode(object):
+
+        def __init__(self, value, next=None):
+            self.value = value
+            self.next  = next
+
+        def get_values(self):
+            node = self
+            values = []
+            while node is not None:
+                values.append(node.value)
+                node = node.next
+            return values
+
+    def setUp(self):
+        self.fourth = Test.LinkedListNode(4)
+        self.third = Test.LinkedListNode(3, self.fourth)
+        self.second = Test.LinkedListNode(2, self.third)
+        self.first = Test.LinkedListNode(1, self.second)
+
+    def test_first_to_last_node(self):
+        actual = kth_to_last_node(1, self.first)
+        expected = self.fourth
+        self.assertEqual(actual, expected)
+
+    def test_second_to_last_node(self):
+        actual = kth_to_last_node(2, self.first)
+        expected = self.third
+        self.assertEqual(actual, expected)
+
+    def test_first_node(self):
+        actual = kth_to_last_node(4, self.first)
+        expected = self.first
+        self.assertEqual(actual, expected)
+
+    def test_k_greater_than_linked_list_length(self):
+        with self.assertRaises(Exception):
+            kth_to_last_node(5, self.first)
+
+    def test_k_is_zero(self):
+        with self.assertRaises(Exception):
+            kth_to_last_node(0, self.first)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.781955722163521*^9, 
+  3.7819557316625643`*^9}},ExpressionUUID->"a67202d5-838d-44c0-a47c-\
+4d3876d2253c"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["26. Reverse String in place",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/reverse-string-in-\
+place"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/reverse-string-in-place"]], \
+"Subsection",
+ CellChangeTimes->{{3.781976260578815*^9, 
+  3.7819762702053947`*^9}},ExpressionUUID->"594874b6-8f02-46ee-8f6e-\
+fa09b5a5e6ad"],
+
+Cell["\<\
+Write a function that takes a list of characters and reverses the letters in \
+place.  Why a list of characters instead of a string?
+The goal of this question is to practice manipulating strings in place. Since \
+we\[CloseCurlyQuote]re modifying the input, we need a mutable \:21b4 type \
+like a list, instead of Python 3.6\[CloseCurlyQuote]s immutable strings.\
+\>", "Text",
+ CellChangeTimes->{{3.781976287801641*^9, 
+  3.7819762983526487`*^9}},ExpressionUUID->"1dfb6113-3b41-4007-b4b7-\
+9a32f3e130c8"],
+
+Cell["\<\
+import unittest
+
+def reverse(nums):
+
+    # Reverse the input list of chars in place
+    def rev(first, last):
+        if first > last:
+            return 
+        nums[first], nums[last] = nums[last], nums[first]
+        rev(first + 1, last - 1)
+        
+    n = len(nums)
+    rev(0, n - 1)\
+\>", "Program",
+ CellChangeTimes->{{3.781976592992382*^9, 
+  3.7819766165967197`*^9}},ExpressionUUID->"501a54c7-07df-47f9-9685-\
+f87eb3b619b9"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"6a4a11ee-5f34-468c-b7e5-fbe10a840d83"],
+
+Cell["\<\
+# Tests
+class Test(unittest.TestCase):
+
+    def test_empty_string(self):
+        list_of_chars = []
+        reverse(list_of_chars)
+        expected = []
+        self.assertEqual(list_of_chars, expected)
+
+    def test_single_character_string(self):
+        list_of_chars = ['A']
+        reverse(list_of_chars)
+        expected = ['A']
+        self.assertEqual(list_of_chars, expected)
+
+    def test_longer_string(self):
+        list_of_chars = ['A', 'B', 'C', 'D', 'E']
+        reverse(list_of_chars)
+        expected = ['E', 'D', 'C', 'B', 'A']
+        self.assertEqual(list_of_chars, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.781976592992382*^9, 
+  3.781976605749216*^9}},ExpressionUUID->"0f13336b-72f9-44fd-be7f-\
+65d6431e1de0"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["27. Reverse Words",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/reverse-words"], None},
+ 
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/reverse-words"]], \
+"Subsection",
+ CellChangeTimes->{{3.781976714492998*^9, 
+  3.781976723893549*^9}},ExpressionUUID->"fcee07f4-b113-4a4b-a21e-\
+caa896310893"],
+
+Cell[TextData[{
+ "You\[CloseCurlyQuote]re working on a secret team solving coded \
+transmissions. Your team is scrambling to decipher a recent message, worried \
+it\[CloseCurlyQuote]s a plot to break into a major European National Cake \
+Vault. The message has been mostly deciphered, but all the words are \
+backward! Your colleagues have handed off the last step to you.\n\nWrite a \
+function reverse_words() that takes a message as a list of characters and \
+reverses the order of the words in place. \:21b4\n\nWhy a list of characters \
+instead of a string? The goal of this question is to practice manipulating \
+strings in place. Since we\[CloseCurlyQuote]re modifying the message, we need \
+a mutable \:21b4 type like a list, instead of Python 3.6\[CloseCurlyQuote]s \
+immutable strings.\n\nFor example:\n\n",
+ StyleBox[" message = [ \[OpenCurlyQuote]c\[CloseCurlyQuote], \
+\[OpenCurlyQuote]a\[CloseCurlyQuote], \[OpenCurlyQuote]k\[CloseCurlyQuote], \
+\[OpenCurlyQuote]e\[CloseCurlyQuote], \[OpenCurlyQuote] \[OpenCurlyQuote],\
+\[OpenCurlyQuote]p\[CloseCurlyQuote], \[OpenCurlyQuote]o\[CloseCurlyQuote], \
+\[OpenCurlyQuote]u\[CloseCurlyQuote], \[OpenCurlyQuote]n\[CloseCurlyQuote], \
+\[OpenCurlyQuote]d\[CloseCurlyQuote], \[OpenCurlyQuote] \[OpenCurlyQuote],\
+\[OpenCurlyQuote]s\[CloseCurlyQuote], \[OpenCurlyQuote]t\[CloseCurlyQuote], \
+\[OpenCurlyQuote]e\[CloseCurlyQuote], \[OpenCurlyQuote]a\[CloseCurlyQuote], \
+\[OpenCurlyQuote]l\[CloseCurlyQuote] ]\nreverse_words(message)\n# Prints: \
+\[OpenCurlyQuote]steal pound cake\[CloseCurlyQuote]\nprint(\[OpenCurlyQuote]\
+\[CloseCurlyQuote].join(message))", "CodeText"],
+ "\n\nWhen writing your function, assume the message contains only letters \
+and spaces, and all words are separated by one space."
+}], "Text",
+ CellChangeTimes->{{3.781976737936928*^9, 
+  3.781976798777379*^9}},ExpressionUUID->"62451146-5884-454e-b3a0-\
+f79f16399cda"],
+
+Cell["\<\
+import unittest
+
+def reverse_words(message):
+
+    # Decode the message by reversing the words
+    message.reverse()
+    n = len(message)
+    start = 0
+    for end, x in enumerate(message):
+        if x == \" \":
+            reverse_range(message, start, end-1)
+            start = end + 1
+        
+    reverse_range(message, start, n-1)
+  
+
+def reverse_range(nums, start, end):
+    if start > end:
+        return 
+    nums[start], nums[end] = nums[end], nums[start]
+    reverse_range(nums, start + 1, end - 1)
+        \
+\>", "Program",
+ CellChangeTimes->{{3.781992721510819*^9, 
+  3.781992733047017*^9}},ExpressionUUID->"a82105e8-a628-4a0e-bf3a-\
+1284fcefdaa8"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"c8fbd381-01bb-453e-9f88-95c36cdc33e5"],
+
+Cell["\<\
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_one_word(self):
+        message = list('vault')
+        reverse_words(message)
+        expected = list('vault')
+        self.assertEqual(message, expected)
+
+    def test_two_words(self):
+        message = list('thief cake')
+        reverse_words(message)
+        expected = list('cake thief')
+        self.assertEqual(message, expected)
+
+    def test_three_words(self):
+        message = list('one another get')
+        reverse_words(message)
+        expected = list('get another one')
+        self.assertEqual(message, expected)
+
+    def test_multiple_words_same_length(self):
+        message = list('rat the ate cat the')
+        reverse_words(message)
+        expected = list('the cat ate the rat')
+        self.assertEqual(message, expected)
+
+    def test_multiple_words_different_lengths(self):
+        message = list('yummy is cake bundt chocolate')
+        reverse_words(message)
+        expected = list('chocolate bundt cake is yummy')
+        self.assertEqual(message, expected)
+
+    def test_empty_string(self):
+        message = list('')
+        reverse_words(message)
+        expected = list('')
+        self.assertEqual(message, expected)
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.781992721510819*^9, 
+  3.781992739815096*^9}},ExpressionUUID->"3a19fd92-a18a-4dc4-9d7f-\
+c64cbd75a92f"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["28. Parenthesis Matching",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/matching-parens"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/matching-parens"]], \
+"Subsection",
+ CellChangeTimes->{{3.781992990719054*^9, 
+  3.781993018021904*^9}},ExpressionUUID->"cfb24fda-5b6c-4c95-92d9-\
+f65716ca5c50"],
+
+Cell["\<\
+I like parentheticals (a lot).
+\[OpenCurlyDoubleQuote]Sometimes (when I nest them (my parentheticals) too \
+much (like this (and this))) they get confusing.\[CloseCurlyDoubleQuote]
+Write a function that, given a sentence like the one above, along with the \
+position of an opening parenthesis, finds the corresponding closing \
+parenthesis.
+Example: if the example string above is input with the number 10 (position of \
+the first parenthesis), the output should be 79 (position of the last \
+parenthesis).\
+\>", "Text",
+ CellChangeTimes->{
+  3.781993040230356*^9, {3.7821211112734003`*^9, 
+   3.7821211148246307`*^9}},ExpressionUUID->"7e1fc89e-1bb7-43ab-8439-\
+510149a33de8"],
+
+Cell["\<\
+import unittest
+
+
+def get_closing_paren(sentence, opening_paren_index):
+
+    # Find the position of the matching closing parenthesis
+    d = bracket_table(sentence)
+    return d[opening_paren_index]
+
+def bracket_table(sentence):
+    s = list() # Stack
+    d = dict() # key => open bracket index, value => close bracket index
+    for i, x in enumerate(sentence):
+        if x == \"(\":
+            s.append(i)
+        if x == \")\":
+        \tif s:
+            \topen_paren_index = s.pop()
+            \td[open_paren_index] = i
+            else:
+            \traise Exception(\"error\")
+    return d\
+\>", "Program",
+ CellChangeTimes->{{3.782069369334209*^9, 3.7820693879915047`*^9}, {
+  3.782120945641653*^9, 3.782121098516246*^9}, {3.782122062234933*^9, 
+  3.782122082921022*^9}},ExpressionUUID->"23922b6b-19e0-499f-9175-\
+08f475185dfb"],
+
+Cell["\<\
+
+# Tests
+class Test(unittest.TestCase):
+
+    def test_all_openers_then_closers(self):
+        actual = get_closing_paren('((((()))))', 2)
+        expected = 7
+        self.assertEqual(actual, expected)
+
+
+    def test_mixed_openers_and_closers(self):
+        actual = get_closing_paren('()()((()()))', 5)
+        expected = 10
+        self.assertEqual(actual, expected)
+
+    def test_no_matching_closer(self):
+        with self.assertRaises(Exception):
+            get_closing_paren('()(()', 2)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.782069369334209*^9, 3.7820693879915047`*^9}, {
+  3.782120945641653*^9, 
+  3.78212108294118*^9}},ExpressionUUID->"04b8e771-5c9e-48d5-9528-\
+e8fe8f5bbd6a"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["29 \.08. Bracket Validator",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/bracket-validator"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/bracket-validator"]], \
+"Subsection",
+ CellChangeTimes->{{3.782123528080647*^9, 
+  3.782123543676737*^9}},ExpressionUUID->"0f12586d-8075-4adf-b9d0-\
+2a9ff2cbb8c7"],
+
+Cell["\<\
+Let\[CloseCurlyQuote]s say:
+\[OpenCurlyQuote](\[OpenCurlyQuote], \[OpenCurlyQuote]{\[OpenCurlyQuote], \
+\[OpenCurlyQuote][\[OpenCurlyQuote] are called \
+\[OpenCurlyDoubleQuote]openers.\[CloseCurlyDoubleQuote]
+\[OpenCurlyQuote])\[CloseCurlyQuote], \[OpenCurlyQuote]}\[CloseCurlyQuote], \
+\[OpenCurlyQuote]]\[CloseCurlyQuote] are called \
+\[OpenCurlyDoubleQuote]closers.\[CloseCurlyDoubleQuote]
+
+Write an efficient function that tells us whether or not an input string\
+\[CloseCurlyQuote]s openers and closers are properly nested.
+
+Examples:
+\[OpenCurlyDoubleQuote]{ [ ] ( ) }\[CloseCurlyDoubleQuote] should return True
+\[OpenCurlyDoubleQuote]{ [ ( ] ) }\[CloseCurlyDoubleQuote] should return \
+False
+\[OpenCurlyDoubleQuote]{ [ }\[CloseCurlyDoubleQuote] should return False\
+\>", "Text",
+ CellChangeTimes->{{3.7821235504377403`*^9, 
+  3.782123556054472*^9}},ExpressionUUID->"812a512d-e24b-4992-9013-\
+b9ed45201e77"],
+
+Cell["\<\
+import unittest
+
+
+def is_valid(code):
+
+    # Determine if the input code is valid
+    open_brackets = [ \"[\", \"{\", \"(\" ]
+    close_brackets = [ \"]\", \"}\", \")\" ]
+    bracket_table = dict(zip(open_brackets, close_brackets))
+    open_paren = list() # Used as Stack
+    for x in code:
+        if x in open_brackets:
+            open_paren.append(x)
+        if x in close_brackets:
+            if len(open_paren) == 0:
+                return False
+            pop_open = open_paren.pop()
+            if bracket_table[pop_open] != x:
+                return False
+    return len(open_paren) == 0\
+\>", "Program",
+ CellChangeTimes->{{3.782123574840364*^9, 3.78212357835638*^9}, {
+   3.7821237520332527`*^9, 3.782123756976801*^9}, {3.782123807456985*^9, 
+   3.782123813968424*^9}, 
+   3.782123969993034*^9},ExpressionUUID->"f1ef774d-fb24-4634-9bfc-\
+001a0b04cfdb"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"ed871326-cc58-445d-a740-09f771a0b158"],
+
+Cell["\<\
+
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_valid_short_code(self):
+        result = is_valid('()')
+        self.assertTrue(result)
+
+    def test_valid_longer_code(self):
+        result = is_valid('([]{[]})[]{{}()}')
+        self.assertTrue(result)
+
+    def test_interleaved_openers_and_closers(self):
+        result = is_valid('([)]')
+        self.assertFalse(result)
+
+    def test_mismatched_opener_and_closer(self):
+        result = is_valid('([][]}')
+        self.assertFalse(result)
+
+    def test_missing_closer(self):
+        result = is_valid('[[]()')
+        self.assertFalse(result)
+
+    def test_extra_closer(self):
+        result = is_valid('[[]]())')
+        self.assertFalse(result)
+
+    def test_empty_string(self):
+        result = is_valid('')
+        self.assertTrue(result)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.782123574840364*^9, 3.78212357835638*^9}, {
+  3.7821237520332527`*^9, 3.782123756976801*^9}, {3.782123807456985*^9, 
+  3.782123813968424*^9}},ExpressionUUID->"3f486f7e-d305-4e23-b463-\
+ef5312d3ab8e"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["30. Permutation Palindrome",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/permutation-\
+palindrome"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/permutation-palindrome"]], \
+"Subsection",
+ CellChangeTimes->{{3.782124654623313*^9, 
+  3.782124669863059*^9}},ExpressionUUID->"fe0e7a33-16b4-49f7-99e4-\
+cb66dea9dbdb"],
+
+Cell["\<\
+Write an efficient function that checks whether any permutation \:21b4 of an \
+input string is a palindrome.  You can assume the input string only contains \
+lowercase letters.
+Examples:
+\[OpenCurlyDoubleQuote]civic\[CloseCurlyDoubleQuote] should return True
+\[OpenCurlyDoubleQuote]ivicc\[CloseCurlyDoubleQuote] should return True
+\[OpenCurlyDoubleQuote]civil\[CloseCurlyDoubleQuote] should return False
+\[OpenCurlyDoubleQuote]livci\[CloseCurlyDoubleQuote] should return False
+\[OpenCurlyDoubleQuote]But \[OpenCurlyQuote]ivicc\[CloseCurlyQuote] isn\
+\[CloseCurlyQuote]t a palindrome!\[CloseCurlyDoubleQuote]
+
+If you had this thought, read the question again carefully. We\
+\[CloseCurlyQuote]re asking if any permutation of the string is a palindrome. \
+Spend some extra time ensuring you fully understand the question before \
+starting. Jumping in with a flawed understanding of the problem doesn\
+\[CloseCurlyQuote]t look good in an interview.\
+\>", "Text",
+ CellChangeTimes->{{3.7821246829308147`*^9, 
+  3.782124701739645*^9}},ExpressionUUID->"b4b60ef0-9706-4a1b-ad60-\
+b4e4a3c5e85b"],
+
+Cell["\<\
+import unittest
+
+
+def has_palindrome_permutation(the_string):
+
+    # Check if any permutation of the input is a palindrome
+    hset = set()
+    for x in the_string:
+        if x in hset:
+            hset.remove(x)
+        else:
+            hset.add(x)
+    
+    res = len(hset)
+    return res <= 1
+\
+\>", "Program",
+ CellChangeTimes->{{3.782124714256434*^9, 
+  3.782124723931963*^9}},ExpressionUUID->"e070c29a-bb79-42bd-be82-\
+bf59d308dd91"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"545c9445-2276-40c2-900a-f87c5462e6c3"],
+
+Cell["\<\
+
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_permutation_with_odd_number_of_chars(self):
+        result = has_palindrome_permutation('aabcbcd')
+        self.assertTrue(result)
+
+    def test_permutation_with_even_number_of_chars(self):
+        result = has_palindrome_permutation('aabccbdd')
+        self.assertTrue(result)
+
+    def test_no_permutation_with_odd_number_of_chars(self):
+        result = has_palindrome_permutation('aabcd')
+        self.assertFalse(result)
+
+    def test_no_permutation_with_even_number_of_chars(self):
+        result = has_palindrome_permutation('aabbcd')
+        self.assertFalse(result)
+
+    def test_empty_string(self):
+        result = has_palindrome_permutation('')
+        self.assertTrue(result)
+
+    def test_one_character_string(self):
+        result = has_palindrome_permutation('a')
+        self.assertTrue(result)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{
+  3.782124714256434*^9},ExpressionUUID->"5f3e11ac-faf8-4862-b699-\
+deb8650efd29"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["31. Recursive String Permutation",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/recursive-string-\
+permutations"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/recursive-string-\
+permutations"]], "Subsection",
+ CellChangeTimes->{{3.7821280340645943`*^9, 3.782128061280076*^9}, {
+  3.7821281128939342`*^9, 
+  3.782128112894404*^9}},ExpressionUUID->"f8be2c93-347e-42e2-ac00-\
+1deed8e98b91"],
+
+Cell["\<\
+Write a recursive function for generating all permutations of an input \
+string. Return them as a set.
+Don\[CloseCurlyQuote]t worry about time or space complexity\[LongDash]if we \
+wanted efficiency we\[CloseCurlyQuote]d write an iterative version.
+To start, assume every character in the input string is unique.
+Your function can have loops\[LongDash]it just needs to also be recursive.\
+\>", "Text",
+ CellChangeTimes->{
+  3.782128073653068*^9, {3.782128116615231*^9, 
+   3.78212811981417*^9}},ExpressionUUID->"03193145-0c9c-40f2-ab3e-\
+e0a8d98661fe"],
+
+Cell["\<\
+import unittest
+
+def get_permutations(string):
+
+    # Generate all permutations of the input string
+
+    res = set()
+    permute(list(string), 0, res)
+    return res
+    
+
+def permute(nums, i, res):
+    if i == len(nums):
+        temp = \"\".join(nums)
+        res.add(temp)
+        return 
+    
+    for j in range(i, len(nums)):
+        nums[i], nums[j] = nums[j], nums[i]
+        permute(nums, i + 1, res)
+        nums[i], nums[j] = nums[j], nums[i]
+      \
+\>", "Program",
+ CellChangeTimes->{{3.782128086523785*^9, 
+  3.782128122070054*^9}},ExpressionUUID->"df345cbd-1b9d-4cad-b8a1-\
+8029d1aa8061"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"8e4b6df1-d415-4aa2-a044-22269b9c8317"],
+
+Cell["\<\
+# Tests
+class Test(unittest.TestCase):
+
+    def test_empty_string(self):
+        actual = get_permutations('')
+        expected = set([''])
+        self.assertEqual(actual, expected)
+
+    def test_one_character_string(self):
+        actual = get_permutations('a')
+        expected = set(['a'])
+        self.assertEqual(actual, expected)
+
+    def test_two_character_string(self):
+        actual = get_permutations('ab')
+        expected = set(['ab', 'ba'])
+        self.assertEqual(actual, expected)
+
+    def test_three_character_string(self):
+        actual = get_permutations('abc')
+        expected = set(['abc', 'acb', 'bac', 'bca', 'cab', 'cba'])
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.782128086523785*^9, 
+  3.782128095766981*^9}},ExpressionUUID->"bc0eaaaa-d0c0-4865-9223-\
+9b169f1572cc"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["32. Top Scores",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/top-scores"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/top-scores"]], "Subsection",\
+
+ CellChangeTimes->{{3.782133464298156*^9, 
+  3.782133477724511*^9}},ExpressionUUID->"7cecbfa4-baa0-4511-8f18-\
+7429ebad22a0"],
+
+Cell[TextData[{
+ "You created a game that is more popular than Angry Birds.\n\nEach round, \
+players receive a score between 0 and 100, which you use to rank them from \
+highest to lowest. So far you\[CloseCurlyQuote]re using an algorithm that \
+sorts in O(nlgn) time, but players are complaining that their rankings aren\
+\[CloseCurlyQuote]t updated fast enough. You need a faster sorting algorithm.\
+\n\nWrite a function that takes:\n\na list of unsorted_scores\nthe \
+highest_possible_score in the game\nand returns a sorted list of scores in \
+less than O(nlgn) time.\n\nFor example:\n\n",
+ StyleBox["unsorted_scores = [37, 89, 41, 65, 91, 53]\nHIGHEST_POSSIBLE_SCORE \
+= 100\n\n# Returns [91, 89, 65, 53, 41, 37]\nsort_scores(unsorted_scores, \
+HIGHEST_POSSIBLE_SCORE)", "CodeText"],
+ "\n\nWe\[CloseCurlyQuote]re defining n as the number of unsorted_scores \
+because we\[CloseCurlyQuote]re expecting the number of players to keep \
+climbing.\n\nAnd, we\[CloseCurlyQuote]ll treat highest_possible_score as a \
+constant instead of factoring it into our big O time and space costs because \
+the highest possible score isn\[CloseCurlyQuote]t going to change. Even if we \
+do redesign the game a little, the scores will stay around the same order of \
+magnitude."
+}], "Text",
+ CellChangeTimes->{{3.78213348691047*^9, 
+  3.782133562612074*^9}},ExpressionUUID->"7e21f4b6-57de-41f1-8259-\
+dc995d561a2e"],
+
+Cell["\<\
+import unittest
+
+
+def sort_scores(unsorted_scores, highest_possible_score):
+
+    # Sort the scores in O(n) time
+    scoreTable = [0] * (highest_possible_score + 1)
+    
+    for x in unsorted_scores:
+        scoreTable[x] += 1
+
+    res = list()
+    for score in range(highest_possible_score, -1, -1):
+        count = scoreTable[score]
+        if count > 0:
+            for i in range(count):
+                res.append(score)
+                
+    return res\
+\>", "Program",
+ CellChangeTimes->{{3.7821595438175*^9, 
+  3.782159569295281*^9}},ExpressionUUID->"7c7d3d66-3fa0-4778-b984-\
+b67e32999abb"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"ec30b264-65a6-4120-85ee-af875c26d9dd"],
+
+Cell["\<\
+# Tests
+class Test(unittest.TestCase):
+
+    def test_no_scores(self):
+        actual = sort_scores([], 100)
+        expected = []
+        self.assertEqual(actual, expected)
+
+    def test_one_score(self):
+        actual = sort_scores([55], 100)
+        expected = [55]
+        self.assertEqual(actual, expected)
+
+    def test_two_scores(self):
+        actual = sort_scores([30, 60], 100)
+        expected = [60, 30]
+        self.assertEqual(actual, expected)
+
+    def test_many_scores(self):
+        actual = sort_scores([37, 89, 41, 65, 91, 53], 100)
+        expected = [91, 89, 65, 53, 41, 37]
+        self.assertEqual(actual, expected)
+
+    def test_repeated_scores(self):
+        actual = sort_scores([20, 10, 30, 30, 10, 20], 100)
+        expected = [30, 30, 20, 20, 10, 10]
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.7821595438175*^9, 
+  3.7821595764367027`*^9}},ExpressionUUID->"34ad82cc-6f91-42d0-8e50-\
+ae951471e301"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["33. Which Appears Twice",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/which-appears-twice"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/which-appears-twice"]], \
+"Subsection",
+ CellChangeTimes->{{3.782159813469219*^9, 
+  3.782159822549995*^9}},ExpressionUUID->"8090dbbc-3fd7-4282-a564-\
+150539dacb89"],
+
+Cell["\<\
+I have a list of n + 1 numbers. Every number in the range 1..n1..n appears \
+once except for one number that appears twice.
+
+Write a function for finding the number that appears twice.\
+\>", "Text",
+ CellChangeTimes->{{3.782159830242448*^9, 
+  3.782159833156519*^9}},ExpressionUUID->"35a0aefc-6402-46b5-b3c6-\
+8d18f2cd6380"],
+
+Cell["\<\
+import unittest
+
+
+def find_repeat(numbers_list):
+
+    # Find the number that appears twice
+    slow = numbers_list[0]
+    fast = numbers_list[0]
+    
+    while True:
+        slow = numbers_list[slow]
+        fast = numbers_list[fast]
+        fast = numbers_list[fast]
+        if slow == fast:
+            break
+    
+    slow = numbers_list[0]
+    while slow != fast:
+        slow = numbers_list[slow]
+        fast = numbers_list[fast]
+
+    return slow
+    \
+\>", "Program",
+ CellChangeTimes->{{3.782159848328933*^9, 
+  3.782159853502304*^9}},ExpressionUUID->"97aa0a95-7682-4741-acbb-\
+3b33b7c2c51f"],
+
+Cell["\<\
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_short_list(self):
+        actual = find_repeat([1, 2, 1])
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_medium_list(self):
+        actual = find_repeat([4, 1, 3, 4, 2])
+        expected = 4
+        self.assertEqual(actual, expected)
+
+    def test_long_list(self):
+        actual = find_repeat([1, 5, 9, 7, 2, 6, 3, 8, 2, 4])
+        expected = 2
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.782159848328933*^9, 
+  3.7821598564121113`*^9}},ExpressionUUID->"bd36e3ac-a6a5-4684-876e-\
+fe3d0456adc1"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["34. Word Cloud (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/word-cloud"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/word-cloud"]], "Subsection",\
+
+ CellChangeTimes->{{3.782160008425082*^9, 3.782160036960601*^9}, {
+  3.7822103049968433`*^9, 
+  3.7822103067559223`*^9}},ExpressionUUID->"96e7efb3-b672-4a85-8bb0-\
+2d7b13237733"],
+
+Cell["\<\
+You want to build a word cloud, an infographic where the size of a word \
+corresponds to how often it appears in the body of text.
+
+To do this, you\[CloseCurlyQuote]ll need data. Write code that takes a long \
+string and builds its word cloud data in a dictionary \:21b4 , where the keys \
+are words and the values are the number of times the words occurred.
+
+Think about capitalized words. For example, look at these sentences:
+
+\[OpenCurlyQuote]After beating the eggs, Dana read the next step:\
+\[CloseCurlyQuote]
+\[OpenCurlyQuote]Add milk and eggs, then add flour and sugar.\[CloseCurlyQuote]
+What do we want to do with \[OpenCurlyDoubleQuote]After\
+\[CloseCurlyDoubleQuote], \
+\[OpenCurlyDoubleQuote]Dana\[CloseCurlyDoubleQuote], and \
+\[OpenCurlyDoubleQuote]add\[CloseCurlyDoubleQuote]? In this example, your \
+final dictionary should include one \[OpenCurlyDoubleQuote]Add\
+\[CloseCurlyDoubleQuote] or \
+\[OpenCurlyDoubleQuote]add\[CloseCurlyDoubleQuote] with a value of 22. Make \
+reasonable (not necessarily perfect) decisions about cases like \
+\[OpenCurlyDoubleQuote]After\[CloseCurlyDoubleQuote] and \
+\[OpenCurlyDoubleQuote]Dana\[CloseCurlyDoubleQuote].
+
+Assume the input will only contain words and standard punctuation.\
+\>", "Text",
+ CellChangeTimes->{{3.782160021670179*^9, 
+  3.782160027128592*^9}},ExpressionUUID->"d85d256a-31d2-441a-9da2-\
+2ff52025d017"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["35. In place shuffle or Random Sampling",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/shuffle"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/shuffle"]], "Subsection",
+ CellChangeTimes->{{3.7822103179970083`*^9, 3.782210319620653*^9}, {
+  3.782210737912786*^9, 3.782210745687842*^9}, {3.7822107936196003`*^9, 
+  3.782210793619955*^9}},ExpressionUUID->"976a8064-c286-43bc-87a2-\
+f8b891e91122"],
+
+Cell["\<\
+Write a function for doing an in-place \:21b4 shuffle of a list. The shuffle \
+must be \[OpenCurlyDoubleQuote]uniform,\[CloseCurlyDoubleQuote] meaning each \
+item in the original list must have the same probability of ending up in each \
+spot in the final list. Assume that you have a function get_random(floor, \
+ceiling) for getting a random integer that is >= floor and <= ceiling.\
+\>", "Text",
+ CellChangeTimes->{{3.7822107477219257`*^9, 
+  3.782210759368341*^9}},ExpressionUUID->"80858ea1-5680-43b3-b838-\
+1d3805c8c7c8"],
+
+Cell["\<\
+import random
+
+
+def get_random(floor, ceiling):
+    return random.randrange(floor, ceiling + 1)
+
+
+def shuffle(the_list):
+
+    # Shuffle the input in place
+    n = len(the_list)
+    for i in range(n):
+        random_idx = get_random(i, n-1)
+        if random_idx != i:
+            the_list[i], the_list[random_idx] = the_list[random_idx], \
+the_list[i]
+    
+
+sample_list = [1, 2, 3, 4, 5]
+print('Sample list:', sample_list)
+
+print('Shuffling sample list...')
+shuffle(sample_list)
+print(sample_list)\
+\>", "Program",
+ CellChangeTimes->{
+  3.78221078166444*^9},ExpressionUUID->"0276541d-0568-4ce6-a5ed-8da601db5481"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["36. Cafe Order Checker",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/cafe-order-checker"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/cafe-order-checker"]], \
+"Subsection",
+ CellChangeTimes->{{3.782210920342784*^9, 
+  3.7822109472860537`*^9}},ExpressionUUID->"6c231b7d-3783-42df-912a-\
+abedc1d5bbbd"],
+
+Cell["\<\
+My cake shop is so popular, I\[CloseCurlyQuote]m adding some tables and \
+hiring wait staff so folks can have a cute sit-down cake-eating experience.
+
+I have two registers: one for take-out orders, and the other for the other \
+folks eating inside the cafe. All the customer orders get combined into one \
+list for the kitchen, where they should be handled first-come, first-served.
+
+Recently, some customers have been complaining that people who placed orders \
+after them are getting their food first. Yikes\[LongDash]that\
+\[CloseCurlyQuote]s not good for business!
+
+To investigate their claims, one afternoon I sat behind the registers with my \
+laptop and recorded:
+
+The take-out orders as they were entered into the system and given to the \
+kitchen. (take_out_orders)
+The dine-in orders as they were entered into the system and given to the \
+kitchen. (dine_in_orders)
+Each customer order (from either register) as it was finished by the kitchen. \
+(served_orders)
+Given all three lists, write a function to check that my service is \
+first-come, first-served. All food should come out in the same order \
+customers requested it.
+
+We\[CloseCurlyQuote]ll represent each customer order as a unique integer.
+
+As an example,
+
+ Take Out Orders: [1, 3, 5]
+ Dine In Orders: [2, 4, 6]
+ Served Orders: [1, 2, 4, 6, 5, 3]
+would not be first-come, first-served, since order 3 was requested before \
+order 5 but order 5 was served first.
+
+But,
+
+ Take Out Orders: [1, 3, 5]
+ Dine In Orders: [2, 4, 6]
+ Served Orders: [1, 2, 3, 5, 4, 6]
+would be first-come, first-served.\
+\>", "Text",
+ CellChangeTimes->{{3.782210934939289*^9, 
+  3.782210965532693*^9}},ExpressionUUID->"3b1c5d1b-ab6b-4056-9b4d-\
+ef702f0bd9ad"],
+
+Cell["\<\
+import unittest
+
+def is_first_come_first_served(take_out_orders, dine_in_orders, served_orders):
+
+    # Check if we're serving orders first-come, first-served
+    nD = len(dine_in_orders)
+    nC = len(take_out_orders)
+    nS = len(served_orders)
+    d = 0
+    c = 0
+    
+    if nS != (nD + nC):
+        return False
+    
+    for x in served_orders:
+        if d < len(dine_in_orders) and x == dine_in_orders[d]:
+            nD -= 1
+            d += 1
+        if c < len(take_out_orders) and x == take_out_orders[c]:
+            nC -= 1
+            c += 1
+        nS -= 1
+        if nS != (nD + nC):
+            return False
+    return True
+\
+\>", "Program",
+ CellChangeTimes->{{3.782215050910138*^9, 
+  3.782215060182719*^9}},ExpressionUUID->"ba813b2b-e5ab-4fa0-8a8e-\
+b03d57aec410"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"15601973-749a-476f-9f6e-aa726413d826"],
+
+Cell["\<\
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_both_registers_have_same_number_of_orders(self):
+        result = is_first_come_first_served([1, 4, 5], [2, 3, 6], [1, 2, 3, \
+4, 5, 6])
+        self.assertTrue(result)
+
+    def test_registers_have_different_lengths(self):
+        result = is_first_come_first_served([1, 5], [2, 3, 6], [1, 2, 6, 3, 5])
+        self.assertFalse(result)
+
+    def test_one_register_is_empty(self):
+        result = is_first_come_first_served([], [2, 3, 6], [2, 3, 6])
+        self.assertTrue(result)
+
+    def test_served_orders_is_missing_orders(self):
+        result = is_first_come_first_served([1, 5], [2, 3, 6], [1, 6, 3, 5])
+        self.assertFalse(result)
+
+    def test_served_orders_has_extra_orders(self):
+        result = is_first_come_first_served([1, 5], [2, 3, 6], [1, 2, 3, 5, \
+6, 8])
+        self.assertFalse(result)
+
+    def test_one_register_has_extra_orders(self):
+        result = is_first_come_first_served([1, 9], [7, 8], [1, 7, 8])
+        self.assertFalse(result)
+
+    def test_one_register_has_unserved_orders(self):
+        result = is_first_come_first_served([55, 9], [7, 8], [1, 7, 8, 9])
+        self.assertFalse(result)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.782215050910138*^9, 
+  3.782215059013029*^9}},ExpressionUUID->"3007d56e-464b-46d0-a8d0-\
+8891306c7011"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["37. Simulate 5 Sided Die",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/simulate-5-sided-die"],
+    None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/simulate-5-sided-die"]], \
+"Subsection",
+ CellChangeTimes->{{3.782222111187994*^9, 
+  3.78222213764395*^9}},ExpressionUUID->"78caecfb-61b5-4903-afee-\
+f9da292e3dbd"],
+
+Cell["\<\
+You have a function rand7() that generates a random integer from 1 to 7. Use \
+it to write a function rand5() that generates a random integer from 1 to 5.
+rand7() returns each integer with equal probability. rand5() must also return \
+each integer with equal probability.\
+\>", "Text",
+ CellChangeTimes->{{3.78222214417304*^9, 
+  3.782222147218951*^9}},ExpressionUUID->"40213d48-67eb-4405-86f5-\
+eab896c29aaf"],
+
+Cell["\<\
+import random
+
+
+def rand7():
+    return random.randint(1, 7)
+
+
+def rand5():
+
+    # Implement rand5() using rand7()
+    res = rand7()
+    if res <= 5:
+        return res
+    else:
+        return rand5()
+
+    ret
+
+
+print('Rolling 5-sided die...')
+print(rand5())
+print([rand5() for _ in range(10)])\
+\>", "Program",
+ CellChangeTimes->{
+  3.782222117271824*^9},ExpressionUUID->"83c682f2-4c1a-4b48-8366-\
+3cb967d7003a"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["38. Simulate 7 Sided Die",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/simulate-7-sided-die"],
+    None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/simulate-7-sided-die"]], \
+"Subsection",
+ CellChangeTimes->{{3.782222192581842*^9, 3.782222199438347*^9}, {
+  3.782222240638689*^9, 
+  3.782222240639114*^9}},ExpressionUUID->"2d2a57a7-0f24-4155-b81f-\
+582789949d72"],
+
+Cell["\<\
+You have a function rand5() that generates a random integer from 1 to 5. Use \
+it to write a function rand7() that generates a random integer from 1 to 7.
+rand5() returns each integer with equal probability. rand7() must also return \
+each integer with equal probability.\
+\>", "Text",
+ CellChangeTimes->{{3.782222247218944*^9, 
+  3.782222248678643*^9}},ExpressionUUID->"a022d4bd-83ff-4bbe-b709-\
+2b830e05b930"],
+
+Cell["\<\
+import random
+
+def rand5():
+    return random.randint(1, 5)
+
+
+def rand7():
+
+    # Implement rand7() using rand5()
+    table = [
+                [1,2,3,4,5], 
+                [6,7,1,2,3], 
+                [4,5,6,7,1],
+                [2,3,4,5,6], 
+                [7,0,0,0,0]
+            ];
+    
+    row = rand5() - 1
+    col = rand5() - 1
+    res = table[row][col]
+    if res == 0:
+        return rand7()
+    else:
+        return res
+
+
+print('Rolling 7-sided die...')
+print(rand7())
+print([rand7() for x in range(30)])\
+\>", "Program",
+ CellChangeTimes->{{3.7822228495787287`*^9, 
+  3.782222852023616*^9}},ExpressionUUID->"94f59301-7151-40e1-a504-\
+85a7c19c3449"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["39. Two Egg Problem (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/two-egg-problem"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/two-egg-problem"]], \
+"Subsection",
+ CellChangeTimes->{{3.78222307933823*^9, 3.7822230919624023`*^9}, {
+  3.78223793451306*^9, 3.7822379378732567`*^9}, {3.7822392959106083`*^9, 
+  3.782239298062305*^9}},ExpressionUUID->"bee3d205-0bde-4c41-915b-\
+8c1d42554a42"],
+
+Cell["\<\
+A building has 100 floors. One of the floors is the highest floor an egg can \
+be dropped from without breaking.
+If an egg is dropped from above that floor, it will break. If it is dropped \
+from that floor or below, it will be completely undamaged and you can drop \
+the egg again.
+Given two eggs, find the highest floor an egg can be dropped from without \
+breaking, with as few drops as possible.\
+\>", "Text",
+ CellChangeTimes->{{3.782223107526115*^9, 
+  3.7822231144890833`*^9}},ExpressionUUID->"3784a721-c359-4cdd-869f-\
+f76bc70f3d5d"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["40. Find Duplicates Space Edition",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/find-duplicate-\
+optimize-for-space"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/find-duplicate-optimize-for-\
+space"]], "Subsection",
+ CellChangeTimes->{{3.782237941473714*^9, 3.782237941897216*^9}, {
+  3.782238263812283*^9, 3.7822382687475033`*^9}, {3.782238375865019*^9, 
+  3.782238375865534*^9}, {3.7822393008381433`*^9, 
+  3.782239303438121*^9}},ExpressionUUID->"369003c2-820e-4999-8edb-\
+3df252b2baba"],
+
+Cell["\<\
+Find a duplicate, Space Edition. We have a list of integers, where:
+
+The integers are in the range 1..n. The list has a length of n+1. 
+It follows that our list has at least one integer which appears at least \
+twice. But it may have several duplicates, and each duplicate may appear more \
+than twice.
+
+Write a function which finds an integer that appears more than once in our \
+list. (If there are multiple duplicates, you only need to find one of them.)
+
+We\[CloseCurlyQuote]re going to run this function on our new, super-hip \
+MacBook Pro With Retina Display\[Trademark]. Thing is, the damn thing came \
+with the RAM soldered right to the motherboard, so we can\[CloseCurlyQuote]t \
+upgrade our RAM. So we need to optimize for space!\
+\>", "Text",
+ CellChangeTimes->{{3.782238283997736*^9, 
+  3.782238298371561*^9}},ExpressionUUID->"c9f2e411-bf53-48be-9e93-\
+1c23f66c5840"],
+
+Cell["\<\
+import unittest
+
+
+def find_repeat(numbers):
+
+    # Find a number that appears more than once
+    slow = numbers[0]
+    fast = numbers[0]
+    
+    while True:
+        slow = numbers[slow]
+        fast = numbers[fast]
+        fast = numbers[fast]
+        if slow  == fast:
+            break
+    
+    slow = numbers[0]
+    while slow != fast:
+        slow = numbers[slow]
+        fast = numbers[fast]
+    
+
+    return slow\
+\>", "Program",
+ CellChangeTimes->{{3.782238351154064*^9, 
+  3.782238364068508*^9}},ExpressionUUID->"97eab79d-b0d9-44dc-b8e5-\
+4119172c1954"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"7c8ce8ac-8654-4864-830b-6ebe18df42cc"],
+
+Cell["\<\
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_just_the_repeated_number(self):
+        actual = find_repeat([1, 1])
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_short_list(self):
+        actual = find_repeat([1, 2, 3, 2])
+        expected = 2
+        self.assertEqual(actual, expected)
+
+    def test_medium_list(self):
+        actual = find_repeat([1, 2, 5, 5, 5, 5])
+        expected = 5
+        self.assertEqual(actual, expected)
+
+    def test_long_list(self):
+        actual = find_repeat([4, 1, 4, 8, 3, 2, 7, 6, 5])
+        expected = 4
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.782238351154064*^9, 
+  3.782238356067665*^9}},ExpressionUUID->"fa45051d-0699-4424-8bac-\
+b5e4877428a7"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["41. Find a duplicate, Space Edition\[Trademark] \
+BEAST MODE",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/find-duplicate-\
+optimize-for-space-beast-mode"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/find-duplicate-optimize-for-\
+space-beast-mode"]], "Subsection",
+ CellChangeTimes->{{3.782238381508376*^9, 3.782238381891694*^9}, {
+  3.7822384636301537`*^9, 3.78223847474822*^9}, {3.78223930647818*^9, 
+  3.782239308798259*^9}},ExpressionUUID->"9bc8257d-81d4-4e1e-a878-\
+651c5118873a"],
+
+Cell[TextData[{
+ "In Find a duplicate, Space Edition\[Trademark], we were given a list of \
+integers where:\n\nthe integers are in the range 1..n1..n\nthe list has a \
+length of n+1n+1\nThese properties mean the list must have at least 1 \
+duplicate. Our challenge was to find a duplicate number, while optimizing for \
+space. We used a divide and conquer approach, iteratively cutting the list in \
+half to find a duplicate integer in O(n\\lg{n})O(nlgn) time and O(1)O(1) \
+space (sort of a modified binary search).\n\nBut we can actually do better. \
+We can find a duplicate integer in O(n)O(n) time while keeping our space cost \
+at O(1)O(1).\n\nThis is a tricky one to derive (unless you have a strong \
+background in graph theory), so we\[CloseCurlyQuote]ll get you started:\n\n\
+Imagine each item in the list as a node in a linked list. In any linked list, \
+\:21b4 each node has a value and a \[OpenCurlyDoubleQuote]next\
+\[CloseCurlyDoubleQuote] pointer. In this case:\n\nThe value is the integer \
+from the list.\nThe \[OpenCurlyDoubleQuote]next\[CloseCurlyDoubleQuote] \
+pointer points to the value-eth node in the list (numbered starting from 1). \
+For example, if our value was 3, the \[OpenCurlyDoubleQuote]next\
+\[CloseCurlyDoubleQuote] node would be the third node.\n\
+Here\[CloseCurlyQuote]s a full example:\n\n",
+ Cell[BoxData[
+  GraphicsBox[
+   TagBox[RasterBox[CompressedData["
+1:eJztnQ20ZWVZx/e9Q8KkhYEWSGKDY0BmTo43RwIHde44c2fu3Dt35pSR1AKc
+gQkcdGBApcxBMEAQDVHEhalJUZpFFvYBRmJkhmNZa6GLsmaVGDbWtCiSdEn/
+373PO7M9c849X/ucvc+9/99a7z1n7332u5/77nc/7/N+7OdZdu7FM9tHsyy7
+5Cj9mTnn8pfu2nXOG7Y8VRu1nZfsOH/ntlev33nptvO37Vp17hLt3Kl09EiW
+HZEZY4wxxhhjjDHGGGOMMcYYY4wxi5Yj165duzylsoUxi4/TTjvte1LS5kjZ
+8pj2mJqaurRWqz2R0vr165/Xyfk65+lKyycmJp6VVfy+b9y48WnIqnTCypUr
+v6tseVqxevXqIyjfbAGX6/T09A+nurd169b/jf/XDAEzMzOXbdmy5eFOz6OO
+6D7fntc7SvuoP/2Qs0dG9H++PS+r/udvKp1ZtmDNkA34TMn8qYo/T0WWK3l9
+fHx8/PuLFtL0h251x6ZNm14S9eWi2H4h28rvt7Q5WrigPSC5fiTq9Vu0ObJ5
+8+bj9f0Rpf3a/6Sy5csjW+MoyXRx7nl8VG3zsWXL1YiCy9W6Y8joVnfovInQ
+FSexre9LyYf7r+9Lipe0ezZs2PB8ZFXdXhW7RrR9RxXbdMmzMuz3v1FZ3o2M
+VdUdBZdr17qDvp3arhdldX072rN169YdyXfsOMl0nsry53WdU/R9merrRv3m
+pdhJSmtJVWtLqky3umNqauqpOvedujffy3Zed2TVszueIrmuoa7HLur4R2jT
+lY4uVbg6JOP3SaYdk5OTPyCZb6uy7ii4XLvWHYyxUvfq2izy20s5pjEV6bjX
+Kb1G+29F1+icX8JOpp+lzzfoN1dQjzu9/mKlW91Rj+7Rj4WNfVYRcvURbOtX
+Iqvq1LayhZmH2eewyrqjjl7LtSfdgZ5ooDtm89P+cfRwo3O1/zmq/w9mFWvv
+hoGCdMco5a96/lnsx0IE6wOq0+fmxvS/VPE25qD9X3XdUVC59k13xDzQAdXR
+D8pOfnb+XLV5z21gs5g2KEB3cI9u496k/ktVwcZmLll1/VXRJz9Q4edyaHRH
+QeXaN92RZKTPEjruqizGRqw7uqdH3UH9vqHiz2BDGFOgHjFWVrYsTRga3ZGn
+h3Ltq+5IYIPkx3KtO7qnB91B3b6C+TjdnyenfYw99TJ3QfswNTX1Q1mB66EY
+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
+
+     "], {{0, 110}, {271, 0}}, {0, 255},
+     ColorFunction->RGBColor,
+     ImageResolution->72],
+    BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+    Selectable->False],
+   DefaultBaseStyle->"ImageGraphics",
+   ImageSize->Automatic,
+   ImageSizeRaw->{271., 110.},
+   PlotRange->{{0, 271}, {0, 110}}]], "Input",ExpressionUUID->
+  "3f1ac219-d0c0-4fc2-8a22-a3abfd19d957"],
+ "\n\nA list [2, 3, 1, 3], so 2 is in the first position and points to 3 in \
+the second position.\n\nNotice we\[CloseCurlyQuote]re using \
+\[OpenCurlyDoubleQuote]positions\[CloseCurlyDoubleQuote] and not \
+\[OpenCurlyDoubleQuote]indices.\[CloseCurlyDoubleQuote] For this problem, we\
+\[CloseCurlyQuote]ll use the word \[OpenCurlyDoubleQuote]position\
+\[CloseCurlyDoubleQuote] to mean something like \[OpenCurlyDoubleQuote]index,\
+\[CloseCurlyDoubleQuote] but different: indices start at 0, while positions \
+start at 1. More rigorously: position = index + 1.\n\nUsing this, find a \
+duplicate integer in O(n)time while keeping our space cost at O(1).\n\n\
+Drawing pictures will help a lot with this one. Grab some paper and pencil \
+(or a whiteboard, if you have one)."
+}], "Text",
+ CellChangeTimes->{
+  3.7822384942845173`*^9, {3.782238534782217*^9, 3.782238550938733*^9}, 
+   3.782238598268009*^9},ExpressionUUID->"f21c6c12-5316-49ba-96d2-\
+60e9f21f65be"],
+
+Cell["\<\
+import unittest
+
+
+def find_duplicate(int_list):
+
+    # Find a number that appears more than once ... in O(n) time
+    slow = int_list[0]
+    fast = int_list[0]
+    
+    while True:
+        slow = int_list[slow]
+        fast = int_list[int_list[fast]]
+        
+        if slow == fast:
+            break
+    
+    slow = int_list[0]
+    while slow != fast:
+        slow = int_list[slow]
+        fast = int_list[fast]
+
+    return slow\
+\>", "Program",
+ CellChangeTimes->{{3.782238688422969*^9, 
+  3.782238695317367*^9}},ExpressionUUID->"2fc7534b-33ed-4355-8d84-\
+83f58fd48500"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"825e494c-9314-4e16-bd74-b39b88cccbfd"],
+
+Cell["\<\
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_just_the_repeated_number(self):
+        actual = find_duplicate([1, 1])
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_short_list(self):
+        actual = find_duplicate([1, 2, 3, 2])
+        expected = 2
+        self.assertEqual(actual, expected)
+
+    def test_medium_list(self):
+        actual = find_duplicate([1, 2, 5, 5, 5, 5])
+        expected = 5
+        self.assertEqual(actual, expected)
+
+    def test_long_list(self):
+        actual = find_duplicate([4, 1, 4, 8, 3, 2, 7, 6, 5])
+        expected = 4
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{{3.782238688422969*^9, 
+  3.7822386980677223`*^9}},ExpressionUUID->"1eacd655-9f3c-48ef-b364-\
+6c0ad55d7053"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["42 \.08. Find Duplicate Files (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/find-duplicate-files"],
+    None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/find-duplicate-files"]], \
+"Subsection",
+ CellChangeTimes->{{3.78223876741149*^9, 3.7822387951234713`*^9}, {
+  3.782238867333825*^9, 3.782238868900077*^9}, {3.7822393108461933`*^9, 
+  3.782239313478281*^9}},ExpressionUUID->"739284dd-9146-4a43-81da-\
+26efffcab46f"],
+
+Cell[TextData[{
+ "You left your computer unlocked and your friend decided to troll you by \
+copying a lot of your files to random spots all over your file system.\n\n\
+Even worse, she saved the duplicate files with random, embarrassing names (\
+\[OpenCurlyDoubleQuote]this_is_like_a_digital_wedgie.txt\
+\[CloseCurlyDoubleQuote] was clever, I\[CloseCurlyQuote]ll give her that).\n\n\
+Write a function that returns a list of all the duplicate files. We\
+\[CloseCurlyQuote]ll check them by hand before actually deleting them, since \
+programmatically deleting files is really scary. To help us confirm that two \
+files are actually duplicates, return a list of tuples \:21b4 where:\n\nthe \
+first item is the duplicate file\nthe second item is the original file\n\nFor \
+example:\n\n",
+ StyleBox["  [(\[OpenCurlyQuote]/tmp/parker_is_dumb.mpg\[CloseCurlyQuote], \
+\[OpenCurlyQuote]/home/parker/secret_puppy_dance.mpg\[CloseCurlyQuote]),\n (\
+\[OpenCurlyQuote]/home/trololol.mov\[CloseCurlyQuote], \
+\[OpenCurlyQuote]/etc/apache2/httpd.conf\[CloseCurlyQuote])]", "CodeText"],
+ "\n\nYou can assume each file was only duplicated once."
+}], "Text",
+ CellChangeTimes->{{3.782238807007927*^9, 
+  3.782238834891836*^9}},ExpressionUUID->"d3f224e1-485d-4efb-b534-\
+d208f5d47ece"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[ButtonBox["43. Merge Sorted Arrays",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/merge-sorted-arrays"], 
+   None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/merge-sorted-arrays"]], \
+"Subsection",
+ CellChangeTimes->{{3.782239317470585*^9, 
+  3.782239334182488*^9}},ExpressionUUID->"76bd2eae-ad3d-41df-ba6f-\
+a1629ca3cafa"],
+
+Cell[TextData[{
+ "In order to win the prize for most cookies sold, my friend Alice and I are \
+going to merge our Girl Scout Cookies orders and enter as one unit.\n\nEach \
+order is represented by an \[OpenCurlyDoubleQuote]order id\
+\[CloseCurlyDoubleQuote] (an integer).\n\nWe have our lists of orders sorted \
+numerically already, in lists. Write a function to merge our lists of orders \
+into one sorted list.\n\nFor example:\n\n",
+ StyleBox["my_list     = [3, 4, 6, 10, 11, 15]\nalices_list = [1, 5, 8, 12, \
+14, 19]\n\n# Prints [1, 3, 4, 5, 6, 8, 10, 11, 12, 14, 15, 19]\n\
+print(merge_lists(my_list, alices_list))", "CodeText"]
+}], "Text",
+ CellChangeTimes->{{3.782239345733446*^9, 
+  3.7822393487580423`*^9}},ExpressionUUID->"e91d5744-7d68-4636-ba85-\
+3b447836fc7f"],
+
+Cell["\<\
+import unittest
+
+
+def merge_lists(my_list, alices_list):
+
+    # Combine the sorted lists into one large sorted list
+    n1 = len(my_list)
+    n2 = len(alices_list)
+    
+    res = list()
+    m1, m2 = 0, 0
+    
+    while m1 < n1 and m2 < n2:
+        if my_list[m1] < alices_list[m2]:
+            res.append(my_list[m1])
+            m1 += 1
+        else:
+            res.append(alices_list[m2])
+            m2 += 1
+    
+    while m1 < n1:
+        res.append(my_list[m1])
+        m1 += 1
+    
+    while m2 < n2:
+        res.append(alices_list[m2])
+        m2 += 1
+        
+        
+    return res
+
+
+def merge_lists_alternative(my_list, alices_list):
+
+    # Combine the sorted lists into one large sorted list
+    n1 = len(my_list)
+    n2 = len(alices_list)
+    n3 = n1 + n2
+    res = [0] * n3
+    
+    last_idx = n3 - 1
+    last_n1 = n1 - 1
+    last_n2 = n2 - 1
+    
+    while last_n1 >= 0 and last_n2 >= 0:
+        if my_list[last_n1] > alices_list[last_n2]:
+            res[last_idx] = my_list[last_n1]
+            last_n1 -= 1
+        else:
+            res[last_idx] = alices_list[last_n2]
+            last_n2 -= 1
+        last_idx -= 1
+    
+    while last_n1 >= 0:
+        res[last_idx] = my_list[last_n1]
+        last_n1 -= 1
+        last_idx -= 1
+    
+    while last_n2 >= 0:
+        res[last_idx] = alices_list[last_n2]
+        last_n2 -= 1
+        last_idx -= 1
+        
+    return res\
+\>", "Program",
+ CellChangeTimes->{
+  3.782239382976904*^9, {3.7822398832532454`*^9, 
+   3.7822399130620337`*^9}},ExpressionUUID->"bed9534d-a221-458a-a359-\
+8743432777ca"],
+
+Cell["", "PageBreak",
+ PageBreakBelow->True,ExpressionUUID->"714f1e25-e095-402f-a892-9ccabbf7d055"],
+
+Cell["\<\
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_both_lists_are_empty(self):
+        actual = merge_lists([], [])
+        expected = []
+        self.assertEqual(actual, expected)
+
+    def test_first_list_is_empty(self):
+        actual = merge_lists([], [1, 2, 3])
+        expected = [1, 2, 3]
+        self.assertEqual(actual, expected)
+
+    def test_second_list_is_empty(self):
+        actual = merge_lists([5, 6, 7], [])
+        expected = [5, 6, 7]
+        self.assertEqual(actual, expected)
+
+    def test_both_lists_have_some_numbers(self):
+        actual = merge_lists([2, 4, 6], [1, 3, 7])
+        expected = [1, 2, 3, 4, 6, 7]
+        self.assertEqual(actual, expected)
+
+    def test_lists_are_different_lengths(self):
+        actual = merge_lists([2, 4, 6, 8], [1, 7])
+        expected = [1, 2, 4, 6, 7, 8]
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)\
+\>", "Program",
+ CellChangeTimes->{
+  3.782239382976904*^9, {3.7822398832532454`*^9, 
+   3.782239915789413*^9}},ExpressionUUID->"2d3725a3-81f2-4a6c-b965-\
+9fe79919fe2e"]
+}, Closed]],
+
+Cell[TextData[ButtonBox["44. URL Shortener (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/url-shortener"], None},
+ 
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/url-shortener"]], \
+"Subsection",
+ CellChangeTimes->{{3.7822402217004213`*^9, 3.782240226186652*^9}, {
+  3.782240333826353*^9, 
+  3.7822403454977407`*^9}},ExpressionUUID->"f3cf3332-e352-4444-9678-\
+d7c1965d477a"],
+
+Cell[TextData[ButtonBox["45. Graph Coloring (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/graph-coloring"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/graph-coloring"]], \
+"Subsection",
+ CellChangeTimes->{{3.782240228834188*^9, 3.782240231819621*^9}, {
+  3.782240326115138*^9, 
+  3.7822403314005623`*^9}},ExpressionUUID->"fc490d24-b3c5-4418-9205-\
+31bdbfcee35a"],
+
+Cell[TextData[ButtonBox["46. Mesh Message (TODO)",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["https://www.interviewcake.com/question/python3/mesh-message"], None},
+ ButtonNote->
+  "https://www.interviewcake.com/question/python3/mesh-message"]], \
+"Subsection",
+ CellChangeTimes->{{3.782240234515175*^9, 3.782240249778593*^9}, {
+  3.782240366137244*^9, 
+  3.782240373594358*^9}},ExpressionUUID->"5810b637-d128-4b0c-b8f3-\
+4ed2e7c201e3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Language Question (Python):", "Chapter",
+ CellChangeTimes->{{3.782240511071665*^9, 
+  3.782240526862062*^9}},ExpressionUUID->"2ebd456b-4289-4cf2-bcd5-\
+95308ddc80a8"],
+
+Cell["1. Garbage Collection", "Subsection",
+ CellChangeTimes->{{3.7822405291742496`*^9, 
+  3.782240536005728*^9}},ExpressionUUID->"9f830c3f-4474-47a1-97b7-\
+1e2ce3f14560"],
+
+Cell["2. Closure", "Subsection",
+ CellChangeTimes->{{3.782240543181405*^9, 
+  3.7822405477007227`*^9}},ExpressionUUID->"b1a888ee-0c53-4f60-8f27-\
+92149cd1b942"],
+
+Cell["3. Shallow and Deep Copy", "Subsection",
+ CellChangeTimes->{{3.782240550692665*^9, 
+  3.782240556060913*^9}},ExpressionUUID->"6b8db5d7-6a5e-4b66-af60-\
+7ad0130e3cc0"],
+
+Cell["4. Iterators and Generators", "Subsection",
+ CellChangeTimes->{{3.782240559468451*^9, 
+  3.782240563556748*^9}},ExpressionUUID->"b7389561-c60e-4592-9f52-\
+1e49781f46b5"],
+
+Cell["5. @decorator", "Subsection",
+ CellChangeTimes->{{3.782240566557961*^9, 
+  3.782240576068242*^9}},ExpressionUUID->"f96877f8-d58e-4b77-b35a-\
+d3a4c26883b6"],
+
+Cell["6. List vs Tuple", "Subsection",
+ CellChangeTimes->{{3.7822405786362057`*^9, 
+  3.7822405840679817`*^9}},ExpressionUUID->"c3a37127-be31-41dc-8cc4-\
+b85b81819fa8"],
+
+Cell["7. *args and *kwargs", "Subsection",
+ CellChangeTimes->{{3.782240586371931*^9, 
+  3.782240592963684*^9}},ExpressionUUID->"094a1829-9caf-4398-9430-\
+ece4a4aed51b"],
+
+Cell["8. Python code", "Subsection",
+ CellChangeTimes->{{3.7822405965494347`*^9, 
+  3.782240599690939*^9}},ExpressionUUID->"9f24b54f-7a07-40b1-94b0-\
+378ab2da2948"],
+
+Cell["\.089. Exception Handling", "Subsection",
+ CellChangeTimes->{{3.782240603899459*^9, 
+  3.782240608611018*^9}},ExpressionUUID->"a90d2abb-3927-47ed-b2ac-\
+cf5b7a29b910"],
+
+Cell["10. Scoping", "Subsection",
+ CellChangeTimes->{{3.7822406121307983`*^9, 
+  3.7822406200108433`*^9}},ExpressionUUID->"a20d33c6-8e05-4681-89a0-\
+8f9ba4e0542c"],
+
+Cell["11. Function arguments", "Subsection",
+ CellChangeTimes->{{3.7822406219786863`*^9, 
+  3.78224062647468*^9}},ExpressionUUID->"5d56ce1b-67fb-4d4e-80ee-\
+79ee57c9a1d4"]
+}, Open  ]],
+
+Cell["Design and Patterns: Object-Oriented Design", "Chapter",
+ CellChangeTimes->{{3.782240634918564*^9, 3.782240681173071*^9}, {
+  3.782240789315296*^9, 
+  3.78224079793867*^9}},ExpressionUUID->"8ac326b2-00ad-431e-96e1-\
+24a069caf059"]
+},
+WindowSize->{726, 780},
+WindowMargins->{{Automatic, 19}, {1, Automatic}},
+PrintingCopies->1,
+PrintingPageRange->{17, 22},
+PrintingOptions->{"PaperOrientation"->"Portrait",
+"PaperSize"->{Automatic, Automatic},
+"PostScriptOutputFile"->"/home/anmolb/print.pdf"},
+FrontEndVersion->"12.1 for Mac OS X x86 (64-bit) (October 14, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 412, 9, 69, "Chapter",ExpressionUUID->"4c3b9cdd-2892-4202-b4cd-b0875f52cc24"],
+Cell[995, 33, 405, 10, 104, "Text",ExpressionUUID->"7d39e3bc-5e16-4d14-9292-3f4a5c4db69a"],
+Cell[CellGroupData[{
+Cell[1425, 47, 432, 10, 54, "Subsection",ExpressionUUID->"f881c6e8-2cae-4626-b807-2993a702b7a2"],
+Cell[1860, 59, 1473, 35, 587, "Text",ExpressionUUID->"f8604fac-0806-48f1-a13f-9cae05da0efc"],
+Cell[3336, 96, 729, 24, 355, "Program",ExpressionUUID->"d8a3ae70-a400-4a03-8bdd-a42876a7e070"],
+Cell[4068, 122, 99, 1, 1, "PageBreak",ExpressionUUID->"5ce9b017-b559-49a5-a4d9-d8415e8ed3ec",
+ PageBreakBelow->True],
+Cell[4170, 125, 1252, 44, 712, "Program",ExpressionUUID->"d22ccf21-7881-4305-95ac-a6ba842df4a9"],
+Cell[5425, 171, 99, 1, 1, "PageBreak",ExpressionUUID->"c2c43042-8229-44a2-ad0a-1db2ccd8020f",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5561, 177, 431, 10, 38, "Subsection",ExpressionUUID->"85a70092-0235-486a-b5f2-63c048fada23"],
+Cell[5995, 189, 694, 16, 196, "Text",ExpressionUUID->"0ee30d51-357b-4537-820c-a281b0642270"],
+Cell[6692, 207, 748, 35, 559, "Program",ExpressionUUID->"9a09c825-da78-4013-bf54-dd4c5e62e293"],
+Cell[7443, 244, 99, 1, 1, "PageBreak",ExpressionUUID->"7c22516c-62c0-4129-a39f-d2cd3c41bd95",
+ PageBreakBelow->True],
+Cell[7545, 247, 1655, 48, 780, "Program",ExpressionUUID->"66346af3-1ff9-4adc-b9fd-a6e6bfe1a317"],
+Cell[9203, 297, 99, 1, 1, "PageBreak",ExpressionUUID->"310e6c3b-d0c9-43fa-bdb2-b81a534bf55c",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[9339, 303, 417, 10, 38, "Subsection",ExpressionUUID->"c9b0b6c2-64c4-425e-a62a-df49908afd0a"],
+Cell[9759, 315, 356, 7, 35, "Text",ExpressionUUID->"c2435950-0ac5-4aff-954a-c68718f11c8e"],
+Cell[10118, 324, 969, 44, 712, "Program",ExpressionUUID->"6e193280-6717-43ae-8418-9201905f3ab3"],
+Cell[11090, 370, 99, 1, 4, "PageBreak",ExpressionUUID->"753f97c1-67fe-402d-95cf-92958160e93f",
+ PageBreakBelow->True],
+Cell[11192, 373, 1401, 47, 763, "Program",ExpressionUUID->"e0d9d31f-de10-413a-bc93-e2775006c2e4"],
+Cell[12596, 422, 99, 1, 4, "PageBreak",ExpressionUUID->"fedb2636-54f4-42fe-b1c1-e3cec7b986c1",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[12732, 428, 445, 10, 38, "Subsection",ExpressionUUID->"ef5ebbff-50ce-4c17-81e7-53194fe4101a"],
+Cell[13180, 440, 1590, 29, 449, "Text",ExpressionUUID->"a761efa8-a271-48e9-8698-9dfdd666c2d3"],
+Cell[14773, 471, 754, 34, 542, "Program",ExpressionUUID->"8931f2d7-053b-42a4-94d7-d29ade17f62a"],
+Cell[15530, 507, 99, 1, 4, "PageBreak",ExpressionUUID->"e0d37e48-875f-41cf-ab94-6305e3d10e23",
+ PageBreakBelow->True],
+Cell[15632, 510, 1633, 51, 831, "Program",ExpressionUUID->"e977b0d2-1331-4d95-862d-cdd22a2f4076"],
+Cell[17268, 563, 99, 1, 1, "PageBreak",ExpressionUUID->"07a79a38-bfac-41bc-ab43-c89e43958ece",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[17404, 569, 593, 15, 40, "Subsection",ExpressionUUID->"f724a3ea-bd67-4b91-90db-edfd079c0906"],
+Cell[18000, 586, 888, 25, 449, "Text",ExpressionUUID->"e9f83d68-acdb-482b-a97c-1aa278aa1e71"],
+Cell[18891, 613, 99, 1, 4, "PageBreak",ExpressionUUID->"f1bda67a-0c8a-4ae6-9bdb-97d57585168d",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[19027, 619, 503, 11, 38, "Subsection",ExpressionUUID->"2db39349-4671-4362-b846-9b3bca895a98"],
+Cell[19533, 632, 11228, 189, 722, "Text",ExpressionUUID->"c7542e35-06a9-4086-b6c8-e43377f62641"],
+Cell[30764, 823, 99, 1, 1, "PageBreak",ExpressionUUID->"e5d5dce6-6bc8-4cb3-b7f8-ddaa596522b7",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[30900, 829, 512, 11, 38, "Subsection",ExpressionUUID->"abf8f113-a86e-4494-8c49-6a3896c253f5"],
+Cell[31415, 842, 1250, 28, 380, "Text",ExpressionUUID->"0724e466-0f42-45e5-ad8b-7b209d62900c"],
+Cell[32668, 872, 99, 1, 4, "PageBreak",ExpressionUUID->"a6e7e349-e310-4c2b-a323-3948bf38030b",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[32804, 878, 526, 10, 38, "Subsection",ExpressionUUID->"4e8e0d3e-b238-4e99-8bc3-703c30e1badb"],
+Cell[33333, 890, 633, 27, 518, "Text",ExpressionUUID->"3f1d3a10-fdbb-4cbc-89e5-49cb17105040"],
+Cell[33969, 919, 99, 1, 4, "PageBreak",ExpressionUUID->"e895ff19-8775-43dd-8593-00798ceaba5e",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[34105, 925, 449, 10, 38, "Subsection",ExpressionUUID->"3f5dba6a-e88c-4690-8c9d-444051b17c6c"],
+Cell[34557, 937, 919, 29, 495, "Text",ExpressionUUID->"c1062615-74ca-448f-8cc7-d6f22a115153"],
+Cell[35479, 968, 99, 1, 4, "PageBreak",ExpressionUUID->"f34871c5-ef5d-4c41-8fa6-17e06de3d238",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[35615, 974, 403, 10, 38, "Subsection",ExpressionUUID->"1e62df4c-87f4-4f49-b1d6-aacec0243952"],
+Cell[36021, 986, 742, 31, 564, "Text",ExpressionUUID->"3cfc974c-bfd9-441c-93ec-8e367607e736"],
+Cell[36766, 1019, 99, 1, 4, "PageBreak",ExpressionUUID->"50f1fd2a-20c1-4195-82dd-c38122bc283d",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[36902, 1025, 554, 12, 38, "Subsection",ExpressionUUID->"7265ba4c-3cdd-4430-bbcf-64e4d48d4a3b"],
+Cell[37459, 1039, 829, 17, 173, "Text",ExpressionUUID->"a62d8c5e-8afb-46f2-af38-d2093f4383b2"],
+Cell[38291, 1058, 99, 1, 4, "PageBreak",ExpressionUUID->"00bb713a-4697-4d26-ae92-8a0c5f146716",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[38427, 1064, 485, 11, 38, "Subsection",ExpressionUUID->"058c23e8-3846-40df-b06b-9975a77cffcb"],
+Cell[38915, 1077, 277, 6, 58, "Text",ExpressionUUID->"20aafeca-f38f-42fe-80bf-761cdecf7d4a"],
+Cell[39195, 1085, 99, 1, 4, "PageBreak",ExpressionUUID->"70b30168-c181-4fab-827c-20d340eb28ab",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[39331, 1091, 509, 11, 38, "Subsection",ExpressionUUID->"d0b6798c-7233-4752-893f-971cc0c77e26"],
+Cell[39843, 1104, 1808, 36, 656, "Text",ExpressionUUID->"8f3010d6-cd6e-4968-b7c3-74cf488df398"],
+Cell[41654, 1142, 99, 1, 4, "PageBreak",ExpressionUUID->"e2d2be8f-ddc6-47b4-9ff5-65d7c9dc4936",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[41790, 1148, 658, 17, 38, "Subsection",ExpressionUUID->"8744d277-71bd-46d8-914a-cfa24f912116"],
+Cell[42451, 1167, 1012, 23, 380, "Text",ExpressionUUID->"f8a517ef-3e93-4bf7-b351-6370d922bd16"],
+Cell[43466, 1192, 99, 1, 4, "PageBreak",ExpressionUUID->"9c8a263f-7c73-4d6f-bf57-b3c22793e830",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[43602, 1198, 558, 16, 40, "Subsection",ExpressionUUID->"460a327a-4a19-440a-82f2-019750c5b641"],
+Cell[44163, 1216, 440, 17, 242, "Text",ExpressionUUID->"c97f1b24-ce10-42b7-885a-e6adbde7e97c"],
+Cell[44606, 1235, 99, 1, 4, "PageBreak",ExpressionUUID->"1b04965f-12d5-47a9-8e08-99d330ac9903",
+ PageBreakBelow->True],
+Cell[44708, 1238, 1353, 57, 916, "Program",ExpressionUUID->"eb0a0344-006f-4f2f-9603-bfb925c5a7a5"],
+Cell[46064, 1297, 99, 1, 1, "PageBreak",ExpressionUUID->"91c578d5-0a7d-4e23-9d2a-ff86e671e44c",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[46200, 1303, 378, 9, 38, "Subsection",ExpressionUUID->"b839b347-1ac4-49bf-a379-a53036f736b6"],
+Cell[46581, 1314, 1760, 40, 633, "Text",ExpressionUUID->"56aed810-5f67-46c1-bbcf-ba0f1ee86710"],
+Cell[48344, 1356, 99, 1, 4, "PageBreak",ExpressionUUID->"c1934d12-8bf8-432e-ac4f-2e4b41036ef9",
+ PageBreakBelow->True],
+Cell[48446, 1359, 2482, 81, 1307, "Program",ExpressionUUID->"616c98b0-6586-4196-a2e1-a5f66787c5da"],
+Cell[50931, 1442, 99, 1, 1, "PageBreak",ExpressionUUID->"5c072b41-6e37-41df-92f1-7981b9972a38",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[51067, 1448, 476, 9, 38, "Subsection",ExpressionUUID->"b7868728-ebb7-43e0-8851-a30360841552"],
+Cell[51546, 1459, 473, 9, 184, "Text",ExpressionUUID->"44e3ee89-8f3b-480d-a885-b0488f04b85a"],
+Cell[52022, 1470, 99, 1, 4, "PageBreak",ExpressionUUID->"76f69400-3966-40c5-bb15-2ca53cab6b71",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[52158, 1476, 507, 11, 38, "Subsection",ExpressionUUID->"852e957f-f621-4921-ba0a-5d4084387cc0"],
+Cell[52668, 1489, 1513, 25, 532, "Text",ExpressionUUID->"9ac6b85a-943a-42a9-9d48-ac2f250f3072"],
+Cell[54184, 1516, 99, 1, 4, "PageBreak",ExpressionUUID->"5b2e0030-e408-40c4-8f4f-989b6631ea4b",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[54320, 1522, 432, 10, 38, "Subsection",ExpressionUUID->"bb37d9fa-8158-4198-a7e2-401873ed2b4d"],
+Cell[54755, 1534, 1099, 28, 426, "Text",ExpressionUUID->"2860073a-a32c-4854-b3c7-040cfbf0d3a8"],
+Cell[55857, 1564, 1017, 32, 474, "Program",ExpressionUUID->"a4c5338d-1cf0-4efc-b61c-279378f2b9d9"],
+Cell[56877, 1598, 99, 1, 4, "PageBreak",ExpressionUUID->"82c24b67-8fe4-4b6a-b192-305e34fb9bc9",
+ PageBreakBelow->True],
+Cell[56979, 1601, 1471, 58, 933, "Program",ExpressionUUID->"d6b1efb3-5ad4-46d5-b8c4-584c4cd90f5d"],
+Cell[58453, 1661, 99, 1, 4, "PageBreak",ExpressionUUID->"a0795f8f-33a5-469f-b1b1-8e545a59be53",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[58589, 1667, 434, 10, 38, "Subsection",ExpressionUUID->"5cc1b6ec-4d50-4d24-9679-20b71386e652"],
+Cell[59026, 1679, 1851, 29, 658, "Text",ExpressionUUID->"c1b4a7a0-d0b8-4a83-9859-2853c7ab72fa"],
+Cell[60880, 1710, 99, 1, 4, "PageBreak",ExpressionUUID->"e9b1a2ef-f788-42b9-a2f1-b5c1982efedc",
+ PageBreakBelow->True],
+Cell[60982, 1713, 2035, 79, 1290, "Program",ExpressionUUID->"a0ccd014-e6ba-42fa-9200-2b1d59bb440e"],
+Cell[63020, 1794, 99, 1, 4, "PageBreak",ExpressionUUID->"048dd78a-3966-4914-b262-e900afaf5067",
+ PageBreakBelow->True],
+Cell[63122, 1797, 1423, 60, 984, "Program",ExpressionUUID->"243015ee-bd0b-4315-a1eb-8f77cb731c9e"],
+Cell[64548, 1859, 99, 1, 4, "PageBreak",ExpressionUUID->"581fbf37-7627-456f-bea2-1ee9e21df48c",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[64684, 1865, 438, 10, 38, "Subsection",ExpressionUUID->"c56975dd-a607-45f8-b000-722cfdd48e35"],
+Cell[65125, 1877, 1131, 23, 265, "Text",ExpressionUUID->"12911a81-7e45-42b0-b8e1-a4089d3536a9"],
+Cell[66259, 1902, 1230, 46, 729, "Program",ExpressionUUID->"2fd44789-c83f-4641-82dc-3ffe3ea43744"],
+Cell[67492, 1950, 99, 1, 4, "PageBreak",ExpressionUUID->"b42aedea-4287-44c7-845b-7b9ead29856e",
+ PageBreakBelow->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[67628, 1956, 381, 9, 38, "Subsection",ExpressionUUID->"8d7949d1-8151-45cd-b5a2-cdc0c6afeaaa"],
+Cell[68012, 1967, 526, 21, 380, "Text",ExpressionUUID->"2295a9f0-3220-49dd-946b-0c4ad25bff2e"],
+Cell[68541, 1990, 375, 13, 185, "Program",ExpressionUUID->"46401d85-8259-40a0-8972-cbd47c333817"],
+Cell[68919, 2005, 99, 1, 4, "PageBreak",ExpressionUUID->"6f5bdbb8-e0fe-45bf-9b3b-89ed129f5e98",
+ PageBreakBelow->True],
+Cell[69021, 2008, 1452, 49, 797, "Program",ExpressionUUID->"d0987a03-2b2b-42d0-b245-824eac9ad371"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[70510, 2062, 517, 11, 38, "Subsection",ExpressionUUID->"c3e753e4-4e62-41e6-8b3d-6328f5713e9e"],
+Cell[71030, 2075, 1022, 26, 357, "Text",ExpressionUUID->"67ced437-32f7-4e60-8475-f3db547ad8aa"],
+Cell[72055, 2103, 501, 20, 287, "Program",ExpressionUUID->"3b8e5301-bcbf-4679-98b9-fb4dd6dbe2a7"],
+Cell[72559, 2125, 99, 1, 4, "PageBreak",ExpressionUUID->"51b0e743-3a5e-45b5-934e-962236f4fba6",
+ PageBreakBelow->True],
+Cell[72661, 2128, 2185, 68, 1120, "Program",ExpressionUUID->"8e63a3d9-fb91-4fba-bca2-a5d5b9e3ddd3"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[74883, 2201, 417, 10, 38, "Subsection",ExpressionUUID->"db7352a4-5f5c-4cc3-ac26-54366805ead4"],
+Cell[75303, 2213, 600, 17, 288, "Text",ExpressionUUID->"4cbf4d19-d926-48eb-9f03-b5f040247696"],
+Cell[75906, 2232, 1009, 42, 661, "Program",ExpressionUUID->"f84e3f62-d918-44fb-a1a4-5f0c96b65c42"],
+Cell[76918, 2276, 99, 1, 1, "PageBreak",ExpressionUUID->"e9223586-f44f-4bf6-8e90-2aa40656deb8",
+ PageBreakBelow->True],
+Cell[77020, 2279, 1786, 64, 1035, "Program",ExpressionUUID->"7d30b4a4-c062-46a1-a69a-19aa4718a7de"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[78843, 2348, 519, 11, 38, "Subsection",ExpressionUUID->"84af8ec6-eb48-464f-98ce-a6d9b2fb40b2"],
+Cell[79365, 2361, 1179, 19, 501, "Text",ExpressionUUID->"c53001cc-ffc3-4803-bbf7-910a3eae58bc"],
+Cell[80547, 2382, 505, 23, 355, "Program",ExpressionUUID->"00fbcc37-b9cc-4579-b6f8-6618910dce3a"],
+Cell[81055, 2407, 99, 1, 4, "PageBreak",ExpressionUUID->"8ec5600c-beb0-43dd-af7e-9ae097b2e538",
+ PageBreakBelow->True],
+Cell[81157, 2410, 1560, 53, 865, "Program",ExpressionUUID->"a67202d5-838d-44c0-a47c-4d3876d2253c"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[82754, 2468, 421, 10, 38, "Subsection",ExpressionUUID->"594874b6-8f02-46ee-8f6e-fa09b5a5e6ad"],
+Cell[83178, 2480, 513, 9, 58, "Text",ExpressionUUID->"1dfb6113-3b41-4007-b4b7-9a32f3e130c8"],
+Cell[83694, 2491, 445, 17, 253, "Program",ExpressionUUID->"501a54c7-07df-47f9-9685-f87eb3b619b9"],
+Cell[84142, 2510, 99, 1, 4, "PageBreak",ExpressionUUID->"6a4a11ee-5f34-468c-b7e5-fbe10a840d83",
+ PageBreakBelow->True],
+Cell[84244, 2513, 776, 27, 423, "Program",ExpressionUUID->"0f13336b-72f9-44fd-be7f-65d6431e1de0"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[85057, 2545, 389, 10, 38, "Subsection",ExpressionUUID->"fcee07f4-b113-4a4b-a21e-caa896310893"],
+Cell[85449, 2557, 1895, 28, 372, "Text",ExpressionUUID->"62451146-5884-454e-b3a0-f79f16399cda"],
+Cell[87347, 2587, 671, 26, 406, "Program",ExpressionUUID->"a82105e8-a628-4a0e-bf3a-1284fcefdaa8"],
+Cell[88021, 2615, 99, 1, 4, "PageBreak",ExpressionUUID->"c8fbd381-01bb-453e-9f88-95c36cdc33e5",
+ PageBreakBelow->True],
+Cell[88123, 2618, 1386, 45, 729, "Program",ExpressionUUID->"3a19fd92-a18a-4dc4-9d7f-c64cbd75a92f"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[89546, 2668, 402, 10, 38, "Subsection",ExpressionUUID->"cfb24fda-5b6c-4c95-92d9-f65716ca5c50"],
+Cell[89951, 2680, 686, 14, 104, "Text",ExpressionUUID->"7e1fc89e-1bb7-43ab-8439-510149a33de8"],
+Cell[90640, 2696, 848, 27, 406, "Program",ExpressionUUID->"23922b6b-19e0-499f-9175-08f475185dfb"],
+Cell[91491, 2725, 725, 26, 389, "Program",ExpressionUUID->"04b8e771-5c9e-48d5-9528-e8fe8f5bbd6a"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[92253, 2756, 408, 10, 38, "Subsection",ExpressionUUID->"0f12586d-8075-4adf-b9d0-2a9ff2cbb8c7"],
+Cell[92664, 2768, 923, 20, 242, "Text",ExpressionUUID->"812a512d-e24b-4992-9013-b9ed45201e77"],
+Cell[93590, 2790, 875, 26, 372, "Program",ExpressionUUID->"f1ef774d-fb24-4634-9bfc-001a0b04cfdb"],
+Cell[94468, 2818, 99, 1, 4, "PageBreak",ExpressionUUID->"ed871326-cc58-445d-a740-09f771a0b158",
+ PageBreakBelow->True],
+Cell[94570, 2821, 1080, 40, 627, "Program",ExpressionUUID->"3f486f7e-d305-4e23-b463-ef5312d3ab8e"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[95687, 2866, 416, 10, 38, "Subsection",ExpressionUUID->"fe0e7a33-16b4-49f7-99e4-cb66dea9dbdb"],
+Cell[96106, 2878, 1096, 20, 242, "Text",ExpressionUUID->"b4b60ef0-9706-4a1b-ad60-b4e4a3c5e85b"],
+Cell[97205, 2900, 450, 20, 304, "Program",ExpressionUUID->"e070c29a-bb79-42bd-be82-bf59d308dd91"],
+Cell[97658, 2922, 99, 1, 1, "PageBreak",ExpressionUUID->"545c9445-2276-40c2-900a-f87c5462e6c3",
+ PageBreakBelow->True],
+Cell[97760, 2925, 1023, 35, 559, "Program",ExpressionUUID->"5f3e11ac-faf8-4862-b699-deb8650efd29"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[98820, 2965, 489, 11, 38, "Subsection",ExpressionUUID->"f8be2c93-347e-42e2-ac00-1deed8e98b91"],
+Cell[99312, 2978, 562, 11, 104, "Text",ExpressionUUID->"03193145-0c9c-40f2-ab3e-e0a8d98661fe"],
+Cell[99877, 2991, 611, 26, 406, "Program",ExpressionUUID->"df345cbd-1b9d-4cad-b8a1-8029d1aa8061"],
+Cell[100491, 3019, 99, 1, 4, "PageBreak",ExpressionUUID->"8e4b6df1-d415-4aa2-a044-22269b9c8317",
+ PageBreakBelow->True],
+Cell[100593, 3022, 875, 29, 457, "Program",ExpressionUUID->"bc0eaaaa-d0c0-4865-9223-9b169f1572cc"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[101505, 3056, 378, 9, 38, "Subsection",ExpressionUUID->"7cecbfa4-baa0-4511-8f18-7429ebad22a0"],
+Cell[101886, 3067, 1400, 22, 531, "Text",ExpressionUUID->"7e21f4b6-57de-41f1-8259-dc995d561a2e"],
+Cell[103289, 3091, 607, 23, 355, "Program",ExpressionUUID->"7c7d3d66-3fa0-4778-b984-b67e32999abb"],
+Cell[103899, 3116, 99, 1, 4, "PageBreak",ExpressionUUID->"ec30b264-65a6-4120-85ee-af875c26d9dd",
+ PageBreakBelow->True],
+Cell[104001, 3119, 1003, 34, 542, "Program",ExpressionUUID->"34ad82cc-6f91-42d0-8e50-ae951471e301"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[105041, 3158, 409, 10, 38, "Subsection",ExpressionUUID->"8090dbbc-3fd7-4282-a564-150539dacb89"],
+Cell[105453, 3170, 334, 8, 81, "Text",ExpressionUUID->"35a0aefc-6402-46b5-b3c6-8d18f2cd6380"],
+Cell[105790, 3180, 609, 27, 423, "Program",ExpressionUUID->"97aa0a95-7682-4741-acbb-3b33b7c2c51f"],
+Cell[106402, 3209, 658, 25, 389, "Program",ExpressionUUID->"bd36e3ac-a6a5-4684-876e-fe3d0456adc1"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[107097, 3239, 438, 10, 38, "Subsection",ExpressionUUID->"96e7efb3-b672-4a85-8bb0-2d7b13237733"],
+Cell[107538, 3251, 1383, 28, 311, "Text",ExpressionUUID->"d85d256a-31d2-441a-9da2-2ff52025d017"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[108958, 3284, 494, 9, 38, "Subsection",ExpressionUUID->"976a8064-c286-43bc-87a2-f8b891e91122"],
+Cell[109455, 3295, 536, 9, 58, "Text",ExpressionUUID->"80858ea1-5680-43b3-b838-1d3805c8c7c8"],
+Cell[109994, 3306, 623, 27, 423, "Program",ExpressionUUID->"0276541d-0568-4ce6-a5ed-8da601db5481"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[110654, 3338, 408, 10, 38, "Subsection",ExpressionUUID->"6c231b7d-3783-42df-912a-abedc1d5bbbd"],
+Cell[111065, 3350, 1714, 44, 679, "Text",ExpressionUUID->"3b1c5d1b-ab6b-4056-9b4d-ef702f0bd9ad"],
+Cell[112782, 3396, 793, 30, 474, "Program",ExpressionUUID->"ba813b2b-e5ab-4fa0-8a8e-b03d57aec410"],
+Cell[113578, 3428, 99, 1, 4, "PageBreak",ExpressionUUID->"15601973-749a-476f-9f6e-aa726413d826",
+ PageBreakBelow->True],
+Cell[113680, 3431, 1366, 40, 610, "Program",ExpressionUUID->"3007d56e-464b-46d0-a8d0-8891306c7011"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[115083, 3476, 411, 10, 38, "Subsection",ExpressionUUID->"78caecfb-61b5-4903-afee-f9da292e3dbd"],
+Cell[115497, 3488, 420, 8, 58, "Text",ExpressionUUID->"40213d48-67eb-4405-86f5-eab896c29aaf"],
+Cell[115920, 3498, 424, 26, 406, "Program",ExpressionUUID->"83c682f2-4c1a-4b48-8366-3cb967d7003a"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[116381, 3529, 461, 11, 38, "Subsection",ExpressionUUID->"2d2a57a7-0f24-4155-b81f-582789949d72"],
+Cell[116845, 3542, 421, 8, 58, "Text",ExpressionUUID->"a022d4bd-83ff-4bbe-b709-2b830e05b930"],
+Cell[117269, 3552, 673, 33, 525, "Program",ExpressionUUID->"94f59301-7151-40e1-a504-85a7c19c3449"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[117979, 3590, 503, 11, 38, "Subsection",ExpressionUUID->"bee3d205-0bde-4c41-915b-8c1d42554a42"],
+Cell[118485, 3603, 551, 11, 81, "Text",ExpressionUUID->"3784a721-c359-4cdd-869f-f76bc70f3d5d"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[119073, 3619, 593, 12, 38, "Subsection",ExpressionUUID->"369003c2-820e-4999-8edb-3df252b2baba"],
+Cell[119669, 3633, 889, 18, 219, "Text",ExpressionUUID->"c9f2e411-bf53-48be-9e93-1c23f66c5840"],
+Cell[120561, 3653, 572, 27, 423, "Program",ExpressionUUID->"97eab79d-b0d9-44dc-b8e5-4119172c1954"],
+Cell[121136, 3682, 99, 1, 4, "PageBreak",ExpressionUUID->"7c8ce8ac-8654-4864-830b-6ebe18df42cc",
+ PageBreakBelow->True],
+Cell[121238, 3685, 806, 30, 474, "Program",ExpressionUUID->"fa45051d-0699-4424-8bac-b5e4877428a7"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[122081, 3720, 589, 12, 38, "Subsection",ExpressionUUID->"9bc8257d-81d4-4e1e-a878-651c5118873a"],
+Cell[122673, 3734, 9524, 159, 720, "Text",ExpressionUUID->"f21c6c12-5316-49ba-96d2-60e9f21f65be"],
+Cell[132200, 3895, 584, 26, 406, "Program",ExpressionUUID->"2fc7534b-33ed-4355-8d84-83f58fd48500"],
+Cell[132787, 3923, 99, 1, 4, "PageBreak",ExpressionUUID->"825e494c-9314-4e16-bd74-b39b88cccbfd",
+ PageBreakBelow->True],
+Cell[132889, 3926, 820, 30, 474, "Program",ExpressionUUID->"1eacd655-9f3c-48ef-b364-6c0ad55d7053"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[133746, 3961, 522, 11, 38, "Subsection",ExpressionUUID->"739284dd-9146-4a43-81da-26efffcab46f"],
+Cell[134271, 3974, 1266, 20, 376, "Text",ExpressionUUID->"d3f224e1-485d-4efb-b534-d208f5d47ece"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[135574, 3999, 409, 10, 38, "Subsection",ExpressionUUID->"76bd2eae-ad3d-41df-ba6f-a1629ca3cafa"],
+Cell[135986, 4011, 773, 13, 301, "Text",ExpressionUUID->"e91d5744-7d68-4636-ba85-3b447836fc7f"],
+Cell[136762, 4026, 1572, 69, 1120, "Program",ExpressionUUID->"bed9534d-a221-458a-a359-8743432777ca"],
+Cell[138337, 4097, 99, 1, 4, "PageBreak",ExpressionUUID->"714f1e25-e095-402f-a892-9ccabbf7d055",
+ PageBreakBelow->True],
+Cell[138439, 4100, 1071, 36, 559, "Program",ExpressionUUID->"2d3725a3-81f2-4a6c-b965-9fe79919fe2e"]
+}, Closed]],
+Cell[139525, 4139, 449, 11, 38, "Subsection",ExpressionUUID->"f3cf3332-e352-4444-9678-d7c1965d477a"],
+Cell[139977, 4152, 448, 10, 38, "Subsection",ExpressionUUID->"fc490d24-b3c5-4418-9205-31bdbfcee35a"],
+Cell[140428, 4164, 440, 10, 38, "Subsection",ExpressionUUID->"5810b637-d128-4b0c-b8f3-4ed2e7c201e3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[140905, 4179, 172, 3, 69, "Chapter",ExpressionUUID->"2ebd456b-4289-4cf2-bcd5-95308ddc80a8"],
+Cell[141080, 4184, 171, 3, 54, "Subsection",ExpressionUUID->"9f830c3f-4474-47a1-97b7-1e2ce3f14560"],
+Cell[141254, 4189, 160, 3, 38, "Subsection",ExpressionUUID->"b1a888ee-0c53-4f60-8f27-92149cd1b942"],
+Cell[141417, 4194, 172, 3, 38, "Subsection",ExpressionUUID->"6b8db5d7-6a5e-4b66-af60-7ad0130e3cc0"],
+Cell[141592, 4199, 175, 3, 38, "Subsection",ExpressionUUID->"b7389561-c60e-4592-9f52-1e49781f46b5"],
+Cell[141770, 4204, 161, 3, 38, "Subsection",ExpressionUUID->"f96877f8-d58e-4b77-b35a-d3a4c26883b6"],
+Cell[141934, 4209, 168, 3, 38, "Subsection",ExpressionUUID->"c3a37127-be31-41dc-8cc4-b85b81819fa8"],
+Cell[142105, 4214, 168, 3, 38, "Subsection",ExpressionUUID->"094a1829-9caf-4398-9430-ece4a4aed51b"],
+Cell[142276, 4219, 164, 3, 38, "Subsection",ExpressionUUID->"9f24b54f-7a07-40b1-94b0-378ab2da2948"],
+Cell[142443, 4224, 173, 3, 38, "Subsection",ExpressionUUID->"a90d2abb-3927-47ed-b2ac-cf5b7a29b910"],
+Cell[142619, 4229, 163, 3, 38, "Subsection",ExpressionUUID->"a20d33c6-8e05-4681-89a0-8f9ba4e0542c"],
+Cell[142785, 4234, 171, 3, 38, "Subsection",ExpressionUUID->"5d56ce1b-67fb-4d4e-80ee-79ee57c9a1d4"]
+}, Open  ]],
+Cell[142971, 4240, 236, 4, 69, "Chapter",ExpressionUUID->"8ac326b2-00ad-431e-96e1-24a069caf059"]
+}
+]
+*)
+
