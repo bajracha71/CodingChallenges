@@ -1,4 +1,4 @@
-# [Interview Cake Programming Problems:](https://www.interviewcake.com/all-questions/python3git )
+# [Interview Cake Programming Problems:](https://www.interviewcake.com/all-questions/python3)
 1. [Apple Stock: Best time to buy and sell stocks (Easy)](https://www.interviewcake.com/question/python/stock-price)
     - [Best Time to buy and sell stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/#)
 2. [Product of All Other numbers (Medium) **](https://www.interviewcake.com/question/python/product-of-other-numbers)
