@@ -20,8 +20,75 @@
 
 import unittest
 
+"""
+
+Idea:
+amount = 4
+denomination = [1, 2, 3]
+index        = [0, 1, 2]
+
+let ways[amount][c] be number of ways to make amount using coins(0), coins(1), ... coins(c)
+
+
+            coins
+        1    2     3
+amt 0   1    1     1
+    1   1    1     1 
+    2   1    2     2
+    3   1    2     3
+    4   1    3     4
+    
+ways[0][0] = 1
+
+ways[4][0] = includingCurr(amount, 0) + excludingCurr(amount, [] ) 
+                = ways[amount - coin[0]][0] + 0
+                = ways[3][0]
+ways[4][1] = ways[3][1] + ways[4][0]
+
+ways[amt][c] = ways[amt - coins[c]][c] + ways[amt][c-1]
+             = ways[remain][c] + ways[amt][c-1]
+
+if amt < 0 : # where n is len(coins)
+    ways = 0
+    
+when amt = 0, ways[0][c] = 1
+
+"""
+import unittest
+
 
 def change_possibilities(amount, denominations):
+
+    if amount == 0:
+        return 1
+    if len(denominations) == 0:
+        return 0
+    # Calculate the number of ways to make change
+    ncol = len(denominations)
+    nrow = amount  + 1
+    ways = [[0] * ncol for _ in range(nrow) ]
+
+    # when amt is 0
+    for c in range(ncol):
+        ways[0][c] = 1
+
+    for amt in range(1, nrow):
+        for c in range(ncol):
+            curr_coin = denominations[c]
+            remain = amt - curr_coin
+
+            if remain >= 0:
+                ways[amt][c] = ways[remain][c] + ways[amt][c-1]
+            else:
+                ways[amt][c] = ways[amt][c-1]
+
+
+
+    return ways[nrow-1][ncol-1]
+
+
+
+def change_possibilities_memoize(amount, denominations):
 
     # Calculate the number of ways to make change
     
