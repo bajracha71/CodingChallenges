@@ -1,35 +1,70 @@
 # Merge Meeting times
 import unittest
 
-def merge_ranges(meetings):
+"""
+Idea:
 
-    # Merge meeting ranges
-    n = len(meetings)
-    if n <= 1:
-        return meetings
+Merging two intervals:
+=====================
+Let interval1 = (s1, e1) and interval2 = (s2, e2) be two intervals then 
 
-    meetings.sort(key = lambda x: x[0])
-    result = [meetings[0]]
+1. interval1 and interval2 becomes one interval if and only if 
+    
+    Case 1
+    s1------------e1    mergedInterval = (s1, e1) 
+        s2----e2        
+     
+    if s1 <= s2 and e2 <= e1 
+        
+    Case 2
+    s1------------e1         mergedInterval = (s1, e2)
+            s2-----------e2
+            
+    s1------------e1
+                  s2----------e2
+                  
+    if s1 <= s2 and e1 < e2
+    
+    
+    
+2. interval1 and interval2 wont merge if and only if
 
-    for x in meetings:
-        first = result.pop()
-        merge = merge_two(first, x)
-        result.extend(merge)
+    s1------------e1
+                        s2------------e2
+    if s2 > e1
+                        
 
-    return result
+"""
+import unittest
 
-
-def merge_two(interval1, interval2 ):
+def mergeTwoIntervals(interval1, interval2):
     s1, e1 = interval1
     s2, e2 = interval2
 
-    if e1 <= e2:
-        res = [interval1, interval2] if e1 < s2 else [(s1, e2)]
+    if s2 > e1:
+        return [interval1, interval2]
     else:
-        res = [interval1]
+        if e2 < e1:
+            return [interval1]
+        else:
+            return[(s1, e2)]
+
+
+def merge_ranges(meetings):
+
+    # Merge meeting ranges
+
+    meetings.sort(key = lambda x: x[0])
+
+    res = list()
+    res.append(meetings[0])
+    for m in meetings[1:]:
+        last = res.pop()
+        merge2 = mergeTwoIntervals(last, m)
+        res.extend(merge2)
+
 
     return res
-
 
 # Tests
 class Test(unittest.TestCase):
