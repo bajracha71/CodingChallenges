@@ -16,40 +16,65 @@
 # https://leetcode.com/problems/product-of-array-except-self/description/
 # https://www.interviewcake.com/question/python3/product-of-other-numbers
 
+"""
+Idea:
+====
+
+nums:  [1, 7, 3, 4]
+Index:  [0, 1, 2, 3]
+output: [7 * 3 * 4,  1 * 3 * 4,  1 * 7 * 4,  1 * 7 * 3] = [84, 12, 28, 21]
+
+LeftP:  [1, 1, 7,  21]
+rightP: [84, 12, 4, 1]
+output: [1 * 84, 1 * 12, 7 * 4, 21 * 1 ] = [84, 12, 28, 21]
+
+LeftP(0) = 1
+LeftP(1) = LeftP(0) * nums(0) = 1 * 1 = 1
+LeftP(2) = LeftP(1) * nums(1) = 1 * 7 = 7
+LeftP(t) = LeftP(t-1) * nums[t-1]
+
+n = len(num)
+last = n - 1 = 3
+
+rightP(3) = 1
+rightP(2) = rightP(3) * nums(3) = 1 * 4 = 4
+rightP(t) = rightP(t + 1) * nums(t + 1)
+
+"""
 import unittest
 
-
 def get_products_of_all_ints_except_at_index(int_list):
-    if len(int_list) <= 1:
-        raise Exception("error")
+
+    if len(int_list) < 2:
+        raise Exception("invalid list")
+
+
     # Make a list with the products
-    lprod = left_product(int_list)
-    rprod = right_product(int_list)
+    leftP = left_prod(int_list)
+    rightP = right_prod(int_list)
 
-    return list(map(lambda x, y: x * y, lprod, rprod))
+    return [ l * r for l,r in zip(leftP, rightP) ]
 
-
-def left_product(nums):
+def left_prod(nums):
     n = len(nums)
-    res = [1] * n
+    leftP = [1] * n
+    for i in range(1, n):
+        leftP[i] = leftP[i-1] * nums[i - 1]
 
-    for i in range(0, n - 1):
-        res[i + 1] = res[i] * nums[i]
+    return leftP
 
-    return res
-
-
-def right_product(nums):
+def right_prod(nums):
     n = len(nums)
-    res = [1] * n
+    last = n - 1
+    rightP = [1] * n
+    for i in range(last-1, -1, -1):
+        rightP[i]  = rightP[i+1] * nums[i + 1]
 
-    for i in range(n - 1, 0, -1):
-        res[i - 1] = res[i] * nums[i]
-
-    return res
+    return rightP
 
 
 # Tests
+
 class Test(unittest.TestCase):
 
     def test_small_list(self):
@@ -92,7 +117,6 @@ class Test(unittest.TestCase):
 
 
 unittest.main(verbosity=2)
-
 # Complexity:
 # Time: O(n) where n is the length of array
 # Space: O(1), note: The output array does not count as extra space for the purpose of space complexity analysis.
